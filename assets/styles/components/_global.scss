@@ -1,0 +1,71 @@
+html, body {
+  background-color: $black;
+  color: $white;
+  letter-spacing: 0.5px;
+  margin: 0;
+  &.is-light {
+    background-color: $white;
+    color: $black;
+  }
+}
+
+a {
+  transition: all 0.5s ease;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $grey-light;
+  strong {
+    color: $grey-light!important;
+  }
+}
+h3 {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: $grey-light;
+}
+p {
+  color: $grey;
+  line-height: 1.66;
+}
+blockquote {
+  p {
+    font-weight: 200;
+    line-height: 1.25;
+  }
+}
+
+// ORDER
+@include touch() {
+  .columns.flex {
+    display: flex;
+    flex-wrap: wrap;
+    .column {
+      flex: 1 0 100%;
+    }
+  }
+  .is-order-1-touch {
+    order: 1;
+  }
+  .is-order-2-touch {
+    order: 2;
+  }
+}
+
+// FLEX
+.flex-center-v {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flex-center-h {
+  &-mobile {
+    @include touch() {
+      display: flex!important;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
