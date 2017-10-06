@@ -113,7 +113,7 @@ export default {
       }
       &:hover {
         &:after {
-          background: green;
+          background: $grey-light;
           width: 100%;
         }
       }
