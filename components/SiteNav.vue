@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <div class="navbar-item" >
-        <Logo color="#fff" :animate="true"/>
+        <Logo :color="logoColor" :animate="true"/>
       </div>
       <div class="navbar-burger burger" :class="{'is-active': mobileNav}" @click="showMobileNav">
         <span></span>
@@ -17,28 +17,52 @@
           <nuxt-link to="#featured" class="navbar-item " v-smooth-scroll="{offset: -100, duration: 1000}">
             Featured Work
           </nuxt-link>
-          <nuxt-link to="#contact" class="navbar-item is-button">
+          <a href="#contact" class="navbar-item" @click.prevent="toggleModal">
             Contact
-          </nuxt-link>
+          </a>
         </div>
       </transition>
     </div>
+    <Modal @changeModalVis="toggleModal" :modalVisible="modal">
+      <div slot="body">
+        <p>Thank you for your patience as we are currently updating our site with new work and new agency capabilities.</p>
+
+        <p>Our new site is set to launch November 1st, 2017.</p>
+
+        <p>If you aren’t able to find what you are looking for below please reach out to us at newbusiness@processcreative.co with any questions that you might have.</p>
+      </div>
+    </Modal>
   </nav>
 </template>
 
 <script>
 import {TweenMax} from 'gsap'
 import Logo from '~/components/Logo'
-import Logo2 from '~/components/Logo2'
+import Modal from '~/components/Modal'
 
 import { mapGetters } from 'vuex'
 export default {
   components: {
     Logo,
-    Logo2
+    Modal
+  },
+  data () {
+    return {
+      logoColor: '#ffffff',
+      modal: false
+    }
   },
   computed: {
     ...mapGetters(['mobileNav', 'breakpoint'])
+  },
+  watch: {
+    modal (m) {
+      if (m === true) {
+        this.logoColor = '#000000'
+      } else {
+        this.logoColor = '#ffffff'
+      }
+    }
   },
   methods: {
     showMobileNav () {
@@ -55,6 +79,7 @@ export default {
             autoAlpha: 1
           }, 0.125)
         } else {
+          this.modal = false
           TweenMax.set(navmenu, {
             display: 'block'
           })
@@ -62,6 +87,13 @@ export default {
             autoAlpha: 0
           }, 0.125)
         }
+      }
+    },
+    toggleModal (m) {
+      if (m) {
+        this.modal = m
+      } else {
+        this.modal = !this.modal
       }
     }
   }

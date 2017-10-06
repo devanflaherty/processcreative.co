@@ -39,7 +39,7 @@ module.exports = {
   css: [
     { src: '~assets/styles/main.scss', lang: 'scss' }
   ],
-  loading: { color: '#fff' },
+  loading: { color: '#ffffff' },
   /*
   ** Add modules
   */

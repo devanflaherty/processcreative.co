@@ -26,12 +26,19 @@ export default {
 </script>
 
 <style lang="scss">
-.modal {
-  z-index: 200;
+@import '~bulma/bulma';
+.modal-background {
+  background-color: rgba(white, 0.95)
 }
 .modal-content {
-  border-radius: 15px;
-  background: white;
   padding: 1rem;
+}
+.modal-close {
+  &::before, &::after {
+    color: #000;
+  }
+  @include touch() {
+    display: none
+  }
 }
 </style>
