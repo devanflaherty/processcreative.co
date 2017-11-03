@@ -1,6 +1,6 @@
 <template>
   <div class="columns is-mobile is-multiline is-centered">
-    <div ref="logo" class="client-logo column is-4-tablet is-4-mobile"
+    <div ref="logo" class="client-logo column is-4-tablet is-5-mobile"
       v-for="(logo, index) in logos" :key="index" >
       <div class="logo-pad">
         <img :src="logo.src" :style="`height:${logo.height}px`">
@@ -23,20 +23,20 @@ export default {
           height: 76
         },
         {
-          src: '/images/logos/olympics.png',
-          height: 52
+          src: '/images/logos/patron.png',
+          height: 66
         },
         {
-          src: '/images/logos/kk.png',
-          height: 57.5
+          src: '/images/logos/don-julio.png',
+          height: 71
         },
         {
           src: '/images/logos/subaru.png',
           height: 58
         },
         {
-          src: '/images/logos/hurley.png',
-          height: 66
+          src: '/images/logos/opkix.png',
+          height: 35.5
         },
         {
           src: '/images/logos/nissan.png',
@@ -60,16 +60,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~bulma/bulma';
 .client-logo {
   display: flex;
   justify-content: center;
   align-items: center;
   .logo-pad {
-    padding: 50px 0;
+    padding: 35px 0;
   }
   img {
     display: block;
     max-width: none;
+    @include mobile() {
+      max-width: 100%;
+    }
   }
 }
 </style>

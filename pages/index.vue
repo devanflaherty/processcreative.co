@@ -1,98 +1,82 @@
 <template>
-  <section class="section">
-    <div id="welcome" class="container" v-scroll-reveal="{duration: 1000}">
-      <div class="columns is-centered is-mobile">
-        <div class="column is-11">
-          <h3>In-a-nutshell</h3>
-          <blockquote>
-            <p class="has-text-grey is-size-2">
-              We are an agency rooted in film production. Our in-house team of directors, designers and producers is eqquiped to serve individuals, agencies and brands with creative solutions.
-            </p>
-          </blockquote>
-        </div>
+  <section id="page"
+    v-waypoint="{offset: 0}" 
+    @collision="updateBg('#000')"
+    :data-wio-id="document.id">
+    <section class="hero is-success is-fullheight is-paddingless">
+      <div class="hero-body is-paddingless">
+        <heroSlider :gallery="home.hero_slider" />
       </div>
-    </div>
+    </section>
     
-    <div id="featured" class="container">
-      <h2 class="has-text-centered"><strong>Featured Work</strong></h2>
-      <section class="video-features">
-        <video-feature contentAligned="right">
-          <img src="http://placehold.it/1600x900" slot="video">
-          <template slot="content">
-            <h3>Stephen Kenn’s  Encounter Collection</h3>
-            <p>We combine creativity, design and story into impacting products, content and strategies. Wheter that something is a single video or a year long strategy.</p>
-          </template>
-        </video-feature>
-
-        <video-feature contentAligned="left">
-          <img src="http://placehold.it/1600x900" slot="video">
-          <template slot="content">
-            <h3>Don Julio</h3>
-            <p>We combine creativity, design and story into impacting products, content and strategies. Wheter that something is a single video or a year long strategy.</p>
-          </template>
-        </video-feature>
-
-        <video-feature contentAligned="right">
-          <img src="http://placehold.it/1600x900" slot="video">
-          <template slot="content">
-            <h3>Nissan</h3>
-            <p>We combine creativity, design and story into impacting products, content and strategies. Wheter that something is a single video or a year long strategy.We combine creativity, design and story into impacting products, content and strategies. Wheter that something is a single video or a year long strategy.</p>
-          </template>
-        </video-feature>
-
-        <video-feature contentAligned="left">
-          <img src="http://placehold.it/1600x900" slot="video">
-          <template slot="content">
-            <h3>OPKIX</h3>
-            <p>We combine creativity, design and story into impacting products, content and strategies. Wheter that something is a single video or a year long strategy.</p>
-          </template>
-        </video-feature>
-      </section>
+    <div id="welcome" class="container" v-scroll-reveal="{duration: 1000}">
+      <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
+      <div class="opening-statement" v-html="$prismic.asHtml(home.opening_statement)"></div>
+      <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
+      <div class="work-headline" v-html="$prismic.asHtml(home.work_headline)"></div>
+      <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
     </div>
-
-    <div id="clients" class='container'>
-      <div class="columns is-mobile is-centered">
-        <div class="column has-text-centered-desktop is-half-tablet is-11-mobile">
-          <h2>Our Clients</h2>
-          <p>
-            We believe that honesty and friendships are at the heart of successful collaboration. We build long lasting relationships with our clients and invest ourselves into each opportunity we are given. Here are some of our clients.
-          </p>
-        </div>
-      </div>
-
-      <ClientLogos/>
+    <div>
+      <section id="featuredWork" v-waypoint="{offset: '25%'}" @collision="updateBg('#fff')">
+        <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+      </section>
     </div>
   </section>
 </template>
 
 <script>
-import VideoFeature from '~/components/VideoFeature'
-import ClientLogos from '~/components/ClientLogos'
+import heroSlider from '~/components/home/heroSlider'
+
+if (process.browser) {
+  require('waypoints/lib/noframework.waypoints.js')
+  require('waypoints/lib/shortcuts/inview.js')
+}
+// import VideoFeature from '~/components/VideoFeature'
+// import ClientLogos from '~/components/ClientLogos'
 
 export default {
+  components: {
+    heroSlider
+  },
+  asyncData ({ params, app }) {
+    return app.$prismic.initApi().then((ctx) => {
+      return ctx.api.getSingle('home', {'fetchLinks': 'work.title, work.feature_image, work.involvement'}).then((res) => {
+        return {
+          document: res,
+          home: res.data
+        }
+      })
+    })
+  },
   head () {
     return {
       title: 'Home'
     }
   },
-  components: {
-    VideoFeature,
-    ClientLogos
-  },
   data () {
     return {
-
+      entry: {}
     }
+  },
+  mounted () {
+    this.$prismic.initApi().then((ctx) => {
+      ctx.toolbar()
+    })
   }
 }
 </script>
 
 <style scoped lang="scss">
+@import '~bulma/bulma';
 #welcome {
   height: calc(100vh - 196px);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @include mobile() {
+    height: calc(100vh - 300px);
+    margin-bottom: 4rem;
+  }
 }
 #featured {
   h2 {

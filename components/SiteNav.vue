@@ -4,18 +4,16 @@
       <div class="navbar-item" >
         <Logo :color="logoColor" :animate="true"/>
       </div>
-      <div class="navbar-burger burger" :class="{'is-active': mobileNav}" @click="showMobileNav">
-        <span></span>
-        <span></span>
+      <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
         <span></span>
       </div>
     </div>
 
-    <div id="navMenu" class="navbar-menu" :class="{'is-active': mobileNav}">
+    <div id="navMenu" class="navbar-menu" v-if="breakpoint >= 3">
       <transition name="fade-in" appear>
         <div class="navbar-end" v-if="mobileNav || breakpoint > 2">
-          <nuxt-link to="#featured" class="navbar-item " v-smooth-scroll="{offset: -100, duration: 1000}">
-            Featured Work
+          <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
+            {{link.link_label}}
           </nuxt-link>
           <a href="#contact" class="navbar-item" @click.prevent="toggleModal">
             Contact
@@ -23,24 +21,36 @@
         </div>
       </transition>
     </div>
+
+    <div id="mobileNav" :class="{'is-active': mobileNav}">
+      <div class="mobile-nav-wrap">
+        <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
+          {{link.link_label}}
+        </nuxt-link>
+        <a href="#contact" class="navbar-item" @click.prevent="toggleModal">
+          Contact
+        </a>
+      </div>
+    </div>
+
     <Modal @changeModalVis="toggleModal" :modalVisible="modal">
       <div slot="body">
-        <p>Thank you for your patience as we are currently updating our site with new work and new agency capabilities.</p>
-
-        <p>Our new site is set to launch November 1st, 2017.</p>
-
-        <p>If you aren’t able to find what you are looking for below please reach out to us at newbusiness@processcreative.co with any questions that you might have.</p>
+        <p class="is-size-4 is-size-6-mobile">Thank you for your patience as we are currently updating our site with new work and new agency capabilities.</p>
+        <br>
+        <p class="is-size-4 is-size-6-mobile"><strong>Our new site is set to launch November 1st, 2017.</strong></p>
+        <br>
+        <p class="is-size-4 is-size-6-mobile">If you aren’t able to find what you are looking for below please reach out to us at newbusiness@processcreative.co with any questions that you might have.</p>
       </div>
     </Modal>
   </nav>
 </template>
 
 <script>
-import {TweenMax} from 'gsap'
 import Logo from '~/components/Logo'
 import Modal from '~/components/Modal'
 
 import { mapGetters } from 'vuex'
+
 export default {
   components: {
     Logo,
@@ -53,7 +63,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['mobileNav', 'breakpoint'])
+    ...mapGetters(['mobileNav', 'navigationMenu', 'breakpoint'])
   },
   watch: {
     modal (m) {
@@ -62,38 +72,44 @@ export default {
       } else {
         this.logoColor = '#ffffff'
       }
+    },
+    breakpoint (newV, oldV) {
+      if (newV > oldV && oldV < 3) {
+        this.$store.dispatch('toggleMobileNav', false)
+        this.disableScroll(false)
+      }
     }
   },
   methods: {
     showMobileNav () {
-      var navmenu = document.getElementById('navMenu')
-      if (TweenMax.isTweening(navmenu) === false) {
-        this.$store.dispatch('toggleMobileNav', !this.mobileNav)
+      var page = document.querySelector('#page')
+      this.$store.dispatch('toggleMobileNav', !this.mobileNav)
 
-        if (this.mobileNav) {
-          TweenMax.set(navmenu, {
-            autoAlpha: 0,
-            display: 'block'
-          })
-          TweenMax.to(navmenu, 1, {
-            autoAlpha: 1
-          }, 0.125)
-        } else {
-          this.modal = false
-          TweenMax.set(navmenu, {
-            display: 'block'
-          })
-          TweenMax.to(navmenu, 1, {
-            autoAlpha: 0
-          }, 0.125)
-        }
+      if (this.mobileNav) {
+        page.style.transform = 'translate(400px, 0)'
+        this.disableScroll(true)
+      } else {
+        page.style.transform = 'translate(0, 0)'
+        this.disableScroll(false)
+        this.modal = false
       }
     },
     toggleModal (m) {
       if (m) {
+        this.disableScroll(true)
         this.modal = m
       } else {
+        this.disableScroll(false)
         this.modal = !this.modal
+      }
+    },
+    disableScroll (bool) {
+      if (bool) {
+        document.getElementsByTagName('html')[0].style.overflow = 'hidden'
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+      } else {
+        document.getElementsByTagName('html')[0].style.overflow = null
+        document.getElementsByTagName('body')[0].style.overflow = null
       }
     }
   }
@@ -104,11 +120,20 @@ export default {
 @import '../assets/styles/components/settings';
 @import "~bulma/bulma";
 .navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: transparent;
-  padding: 3rem 0;
+  padding: 3rem 4rem;
+  @include mobile() {
+    padding: 1rem;
+  }
   .navbar-brand {
     position: relative;
     z-index: 100;
+    justify-content: space-between;
+
     .navbar-burger {
       transition: all 0.5s ease;
       background: none;
@@ -121,6 +146,8 @@ export default {
   }
   .navbar-menu {
     z-index: 90;
+    padding-left: 4rem;
+    padding-right: 4rem;
     .navbar-end {
       align-items: center;
     }
@@ -150,23 +177,192 @@ export default {
         }
       }
     }
-    // For Mobile Menu
-    @include touch(){
-      padding-top: 200px;
-      position: fixed;
-      top: 0;
+  }
+}
+
+#mobileNav {
+  z-index: 10;
+  display: none;
+  visibility: hidden;
+  @include touch(){
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .mobile-nav-wrap {
+      z-index: 10;
+      position: absolute;
+      top: 200px; 
+      left: -100%;
+      margin: auto;
       width: 100%;
       height: 100%;
-      background: rgba($white, 0.9);
+      padding-left: 4rem;
+      padding-right: 4rem;
+      @include mobile() {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
       .navbar-item {
         color: $black;
         background: none!important;
-      }
-      .is-active {
-        z-index: 100;
-        display: none;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          margin: 0 auto;
+          display: block;
+          height: 0px;
+          background: transparent;
+          width: 2px;
+          transition: all 0.5s ease;
+        }
+        &:hover {
+          &:after {
+            height: 100%;
+            background: $black;
+          }
+        }
       }
     }
+    &::before, &::after {
+      content:'';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+    }
+    // Transition timing Out
+    .mobile-nav-wrap {
+      transition: all 0.33s ease;
+    }
+    &::before {
+      z-index: 8;
+      background: white;
+      transition: all 0.33s 0.125s ease;
+    }
+    &::after {
+      z-index: 7;
+      background: gray;
+      transition: all 0.33s 0.4s ease;
+    }
+    &.is-active {
+      visibility: visible;
+      
+      .mobile-nav-wrap, &::before, &::after {
+        left: 0;
+      }
+      // Transitions In
+      &::after {
+        transition: all 0.33s ease;
+      }
+      &::before {
+        transition: all 0.33s 0.25s ease;
+      }
+      .mobile-nav-wrap {
+        transition: all 0.33s 0.33s ease;
+      }
+    }
+    // &:not(.is-active) {
+    //   animation: reset 1s ease;
+    // }
+  }
+}
+
+@keyframes set {
+  0% {
+    border-radius: 1000px;
+    width: 0;
+    height: 0;
+    display: none;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    display: block;
+  }
+}
+
+@keyframes reset {
+  0% {
+    display: block;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    display: none;
+  }
+}
+
+
+.nav-burg {
+  color: $white;
+  width: 2rem;
+  position: relative;
+  z-index: 100;
+  float: right;
+  flex: 0 1 auto;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include desktop() {
+    display: none;
+  }
+  &:hover {
+    background: none;
+  }
+  span {
+    background-color: transparent!important;
+    cursor: pointer;
+    border-radius: 2px;
+    height: 0;
+    width: 1.5rem;
+    position: absolute;
+    display: block;
+    content: '';
+    transition: all .66s cubic-bezier(.75,0,.50, 2);
+  }
+  span:after, span:before {
+    cursor: pointer;
+    border-radius: 6px;
+    height: 2px;
+    width: 1.5rem;
+    background: $white;
+    position: absolute;
+    display: block;
+    content: '';
+    transition: all .66s cubic-bezier(.75,0,.50, 2);
+  }
+  span:before {
+    top: -4px;
+  }
+  span:after {
+    bottom: -4px;
+  }
+  &.is-active span {
+    background-color: transparent;
+  }
+  &.is-active span:before {
+    background: $black;
+    transform-origin: center center;
+    transform: translate(0, 3px) rotate(-45deg);
+  }
+  &.is-active span:after {
+    background: $black;
+    transform-origin: center center;
+    transform: translate(0, -3px) rotate(45deg);
   }
 }
 </style>

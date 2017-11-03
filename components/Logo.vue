@@ -1,5 +1,6 @@
 <template>
-  <router-link to="/" class="processLogo" :class="{'ready': ready}">
+<div @mouseleave="hover('leave')" @mouseover="hover('enter')" :class="status">
+  <router-link to="/" class="processLogo" :class="{'ready': ready}, status">
     <svg viewBox="0 0 584 483" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g class="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g class="logoFill" ref="logoFill" fill="white" transform="translate(0.000000, -1.000000)" :class="{'is-mobile': mobileNav}">
@@ -11,11 +12,12 @@
         </g>
     </svg>
   </router-link>
+  </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import {TimelineMax, Back} from 'gsap'
+import {TimelineMax, TweenMax} from 'gsap'
 var logoAnimation = new TimelineMax()
 
 export default {
@@ -32,10 +34,32 @@ export default {
   },
   data () {
     return {
-      ready: false
+      ready: false,
+      status: null
+    }
+  },
+  watch: {
+    status (s) {
+      if (s === 'enter') {
+        TweenMax
+          .to(this.$refs.slash, 1, {
+            x: 100,
+            repeat: -1,
+            yoyo: true
+          })
+      } else {
+        TweenMax.killTweensOf(this.$refs.slash)
+        TweenMax
+          .to(this.$refs.slash, 1, {
+            x: 0
+          })
+      }
     }
   },
   methods: {
+    hover (status) {
+      this.status = status
+    },
     animateIn () {
       var filler = this.$refs.logoFill
       var slash = this.$refs.slash
@@ -50,21 +74,20 @@ export default {
 
       logoAnimation
         .set(slash, {
-          x: 200
+          x: 300
         })
         .set(p, {
           autoAlpha: 0,
-          x: -80
+          x: -180
         })
-        .to(slash, 0.66, {
-          x: 0,
-          ease: Back.easeOut
-        })
+        .to(slash, 1, {
+          x: 0
+        }, 1)
         .to(p, 1, {
           autoAlpha: 1,
           x: 0,
           onComplete: this.onReady
-        }, 0.5)
+        }, 1.5)
     },
     onReady () {
       this.ready = true
@@ -87,33 +110,52 @@ export default {
   padding-top: 82.70%;
   position: relative;
   z-index: 100;
+  display: inline-block;
   svg {
     position: absolute;
     top: 0;
     left: 0;
-    .slash {
-      transition: all 0.5s ease;
-    }
+    transition: fill 0.5s ease;
     .logoFill.is-mobile {
       fill: black!important;
     }
   }
-  &:hover svg .slash {
-    // fill: green!important;
-    animation: process 2s ease infinite;
+  &:hover svg {
+    polygon, path {
+      fill: yellow
+    }
+    .slash {
+      animation: process 2s ease infinite;
+    }
   }
   &.ready:not(:hover) svg .slash {
-    transform: translate(0, 0);
+    animation: process 2s ease;
   }
 }
 
-@keyframes process {
-  0% {
-    transform: translate(0px, 0);
-  }
-  50% {
-    transform: translate(100px, 0);
-    fill: green!important;
-  }
-}
+// @keyframes process {
+//   0% {
+//     transform: translate(0px, 0);
+//   }
+//   50% {
+//     transform: translate(100px, 0);
+//   }
+//   100% {
+//     transform: translate(0px, 0);
+//   }
+// }
+// @keyframes reset {
+//   0% {
+//   }
+//   50% {
+//     transform: translate(100px, 0);
+//   }
+//   100% {
+//     transform: translate(0, 0);
+//   }
+
+  // 100% {
+  //   fill: yellow!important;
+  // }
+// }
 </style>

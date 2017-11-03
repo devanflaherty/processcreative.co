@@ -1,77 +1,98 @@
 <template>
 <transition name="slide-up">
-  <footer class="section">
+  <footer class="section" v-waypoint.inview @enter="updateBg('#000')">
+
     <div class="container">
-      <div class="columns is-centered is-mobile is-multiline">
-        <div class="column is-half-desktop is-9-tablet is-11-mobile">
-          <h2><strong>Full Service</strong></h2>
-          <p>
-            Something about us offering a new and full service offering and a contact button.  We believe that honesty and friendships are at the heart of successful collaboration. We build long lasting relationships with our  clients and invest ourselves into each opportunity we are given. Here are some of our clients.
-          </p>
+      <div class="columns is-mobile is-multiline">
+        
+        <div class="column is-6-touch is-2-desktop">
+          <h4>Navigation</h4>
+          <ul>
+            <li v-for="(link, index) in navigationMenu" :key="index">
+              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+            </li>
+          </ul>
         </div>
-        <div class="column contact-info is-half-desktop is-9-tablet is-11-mobile">
-          <a href="mailto:newbusiness@ProcessCreative.co?subject=New Business Inquiry">newbusiness@ProcessCreative.co</a>
-          <a href="tel:949-412-6944">949 412 6944</a>
+
+        <div class="column is-6-touch is-2-desktop">
+          <h4>Connect</h4>
+          <ul>
+            <li v-for="(link, index) in connectMenu" :key="index">
+              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+            </li>
+          </ul>
+        </div>
+
+        <div class="new-business column is-12-touch is-4-desktop is-offset-4-desktop">
+          <h4>New Business</h4>
+          <div v-html="$prismic.asHtml(contact.newBusiness)"></div>
         </div>
       </div>
     </div>
 
-    <div id="footerBar" class="container">
-      <div class="columns is-centered is-mobile is-multiline">
-        <div class="column is-11-touch is-narrow-desktop flex-center-h-mobile">
-          <div class="footer-logo-wrap">
-            <Logo color="#ffffff"/>
-          </div>
-        </div>
-        <div class="column is-11-touch">
-          <p class="has-text-dark is-size-6 has-text-centered-touch">&copy; 2017 ProcessCreative. All Rights Reserved.</p>
-        </div>
-      </div>
+    <div id="copyright" class="container">
+      <p class="has-text-dark">&copy; 2017 ProcessCreative.<br class="is-hidden-tablet"> All Rights Reserved.</p>
     </div>
+
   </footer>
 </transition>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import Logo from '~/components/Logo'
+
 export default {
   components: {
     Logo
+  },
+  computed: {
+    ...mapGetters(['navigationMenu', 'connectMenu', 'contact'])
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~assets/styles/components/settings';
 @import "~bulma/bulma";
 
 footer {
-  h2 {
-    margin-bottom: 2rem;
+  margin-top: 10rem;
+  max-height: 100vh;
+  min-height: 500px;
+  h4 {
+    margin-bottom: 1.25rem;
+    font-weight: 600;
   }
-  .contact-info {
-    a {
-      display: block;
-      color: $white;
-      font-size: 2rem;
-      @include mobile() {
+  ul {
+    li {
+      a {
         font-size: 1.5rem;
       }
+    }
+  }
+  .new-business {
+    @include mobile() {
+      margin-top: 2rem;
+    }
+    p {
+      color: $white;
+      font-size: 1.5rem;
+    }
+    a {
       &:hover {
         color: $blue;
-      }
-      &:first-child {
-        margin-top: 1.25rem;
       }
     }
   }
 }
 
-#footerBar {
-  padding: 18rem 0;
-  .footer-logo-wrap {
-    width: 40px; 
-    height: 34px;
+#copyright {
+  padding-top: 10rem;
+  p {
+    @include mobile() {
+      font-size: 1rem;
+    }
   }
 }
 </style>

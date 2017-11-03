@@ -1,9 +1,9 @@
 <template>
 <article ref="feature">
   <transition name="slide-up">
-    <div class="columns flex">
+    <div class="columns is-centered flex">
       <template v-if="alignment === 'left'">
-        <div class="column flex-center is-order-2-touch">
+        <div class="column flex-center is-half is-order-2-touch">
           <div class="content-cell has-text-right">
             <slot name="content">
               <h3 class="has-text-right">Don Julio</h3>
@@ -13,14 +13,14 @@
         </div>
       </template>
       
-      <div class="column is-order-1-touch">
-        <slot name="video">
-          <img src="http://placehold.it/1600x900">
-        </slot>
+      <div class="column is-half is-order-1-touch">
+        <div class="video-player">
+          <WistiaVideo :aspect-ratio="'56.25'" :video-id="videoId" />
+        </div>
       </div>
 
       <template v-if="alignment === 'right'">
-        <div class="column flex-center is-order-2-touch">
+        <div class="column flex-center is-half is-order-2-touch">
           <div class="content-cell">
             <slot name="content">
               <h3>Don Julio</h3>
@@ -35,8 +35,13 @@
 </template>
 
 <script>
+import WistiaVideo from '~/components/utilities/WistiaVideo'
+
 export default {
-  props: ['contentAligned', 'origin'],
+  props: ['contentAligned', 'origin', 'videoId'],
+  components: {
+    WistiaVideo
+  },
   data () {
     return {
       reveal: false
@@ -64,13 +69,19 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/bulma';
+article {
+  @include mobile() {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+}
 .flex-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .content-cell {
-  padding: 4rem;
+  padding: 0 4rem;
   @include touch() {
     padding: 2rem;
     text-align: left!important;

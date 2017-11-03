@@ -1,8 +1,8 @@
 <template>
   <main class="main">
-    <SiteNav></SiteNav>
-    <nuxt/>
-    <SiteFooter></SiteFooter>
+    <SiteNav />
+    <nuxt />
+    <SiteFooter />
   </main>
 </template>
 
@@ -17,7 +17,10 @@ export default {
     SiteNav,
     SiteFooter
   },
-  mixins: [breakpoints]
+  mixins: [breakpoints],
+  created () {
+    this.$store.dispatch('getMenus')
+  }
 }
 </script>
 
