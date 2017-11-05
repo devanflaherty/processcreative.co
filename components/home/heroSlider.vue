@@ -1,85 +1,145 @@
 <template>
-  <div id="slider" v-swiper:mySwiper="swiperOption" ref="mySwiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(slide, index) in gallery" :key="index">
-        <transition name="fade-in">
-          <div v-if="slide.slide_caption" class="slide-caption is-overlay">
-            <div class="lower-caption">
-              <div v-html="$prismic.asHtml(slide.slide_description)"></div>
-              <h1>{{slide.slide_title}}</h1>
-              <span class="caption">{{slide.slide_caption}}</span>
+<transition name="fade-in">
+  <section v-show="ready" id="heroSlider" class="hero is-fullheight is-paddingless"
+    v-waypoint.down="{offset: '-50%'}"
+    @collision="scrollTo('#welcome')">
+    <div class="hero-body is-paddingless">
+        
+      <div id="slider" class="swiper-container" ref="mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" :class="`slide-ui-${slide.contrast}`" v-for="(slide, index) in gallery" :key="index">
+            
+            <div class="slide-caption is-overlay">
+              <div class="container">
+                <div class="caption" 
+                  data-swiper-parallax="-300" 
+                  data-swiper-parallax-duration="500"
+                  data-swiper-parallax-opacity="0.5" v-html="$prismic.asHtml(slide.slide_description)"></div>
+              </div>
             </div>
-          </div>
-        </transition>
-        <div class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
-      </div>
-    </div>
 
-    <div class="swiper-button-prev swiper-arrow"><i class="fa fa-angle-left"></i></div>
-    <div class="swiper-button-next swiper-arrow"><i class="fa fa-angle-right"></i></div>
-    <div ref="pagination" class="swiper-custom-pagination">
-      <a :class="{'active': activeSlide == index}" class="pagination-bullet" @click="slideTo(index)" :href="`#${index}`" v-for="(slide, index) in gallery" :key="index">
-        {{slide.slide_title}}<br>
-        {{slide.slide_caption}}
-      </a>
+            <div
+                data-swiper-parallax
+                data-swiper-parallax-duration="500"
+                data-swiper-parallax-scale="1.2" class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
+          </div>
+        </div>
+
+        <SliderUi 
+            ref="pagination" 
+            :tabs="gallery" 
+            :slideUi="slideUi" 
+            :activeSlide="activeSlide" 
+            @slideToEmit="slideTo"
+            @pauseSliderEmit="pauseSlider()"
+            @playSliderEmit="playSlider()"
+            />
+      </div>
+      <!-- close swiper -->
     </div>
-  </div>
-  <!-- close swiper -->
+  </section>
+</transition>
 </template>
 
 <script>
+// import {TimelineMax, TweenMax, Power4} from 'gsap'
+import SliderUi from '~/components/slices/imageGallery/_sliderUi'
+import heroTransitions from './_transitions'
+
 export default {
-  props: ['gallery'],
+  components: {
+    SliderUi
+  },
+  props: ['gallery', 'ready'],
+  mixins: [heroTransitions],
   data () {
     return {
       activeSlide: 0,
+      slideUi: 'Light',
       swiperOption: {
-        autoplay: 5000,
+        speed: 1000,
         initialSlide: 0,
         loop: true,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
+        slidesPerView: 1,
         observer: true,
         lazyLoading: true,
-        autoplayDisableOnInteraction: false,
-        onSlideChangeEnd: swiper => {
-          this.activeSlide = swiper.realIndex
-          console.log('onSlideChangeEnd', this.activeSlide)
+        parallax: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false
+        },
+        on: {
+          slideChange: (swiper) => {
+            this.activeSlide = this.$refs.mySwiper.swiper.realIndex
+          }
         }
       }
     }
   },
-  methods: {
-    slideTo (index) {
-      this.mySwiper.slideTo(index)
+  watch: {
+    activeSlide (index) {
+      var contrast = this.gallery[index].contrast
+      this.slideUi = contrast
+    },
+    slideUi (style, previousStyle) {
+      this.setHeroUiContrast(style, previousStyle)
     }
   },
+  methods: {
+    slideTo (index) {
+      var i = index + 1
+      this.$refs.mySwiper.swiper.slideTo(i)
+    },
+    pauseSlider () {
+      this.$refs.mySwiper.swiper.autoplay.stop()
+    },
+    playSlider () {
+      this.$refs.mySwiper.swiper.autoplay.start()
+    },
+    setHeroUiContrast (style, previousStyle) {
+      var body = document.querySelector('body')
+      if (previousStyle) {
+        body.classList.remove(`hero-ui-${previousStyle}`)
+      }
+      body.classList.add(`hero-ui-${style}`)
+    },
+    initSwiper () {
+      if (this.ready) {
+        this.$swiper('#slider', this.swiperOption)
+        this.$refs.mySwiper.swiper.on('progress', () => {
+          var swiper = this.$refs.mySwiper.swiper
+          var imgs = document.querySelectorAll('.slide-img')
+          var slides = document.querySelectorAll('.swiper-slide')
+          slides.forEach((slide, i) => {
+            var img = imgs[i]
+            var x = (slide.offsetLeft + swiper.translate) * -1 / 3
+            img.style.transform = 'translateX(' + x + 'px)'
+          })
+        })
+        this.setHeroUiContrast(this.slideUi)
+      }
+    }
+  },
+  created () {
+    this.slideUi = this.gallery[0].contrast
+  },
   mounted () {
-    this.mySwiper.on('slideChange', function () {
-      console.log('hi')
-    })
-    // 
-    // console.log(this.mySwiper.activeIndex)
+    this.initSwiper()
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~swiper/dist/css/swiper.css';
-@import '~bulma/sass/utilities/mixins';
+@import '~bulma/bulma';
+
+#heroSlider {
+  position: relative;
+  overflow: hidden;
+}
 #slider {
   position: relative;
   width: 100%;
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: 10;
-    left: 0; top: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: inset 0px -160px 80px -85px rgba(black, 1);
-  }
   .slide-caption {
     z-index: 5;
     display: flex;
@@ -87,14 +147,12 @@ export default {
     padding: 2rem 3rem;
     color: black;
     line-height: 1;
-    .title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: white;
+    p {
+      font-size: 1.25rem;
       margin-bottom: 0;
     }
     .caption {
-      font-size: 1rem;
+      transition: all 0.5s ease;
     }
   }
 }
@@ -105,10 +163,16 @@ export default {
 .swiper-container {
   display: flex;
   .swiper-wrapper {
-    position: fixed;
+    // position: fixed;
     .swiper-slide {
       flex: 1 0 100%;
       position: relative;
+      overflow: hidden;
+      .container {
+        @include touch () {
+          margin: 0;
+        }
+      }
 
       .slide-img {
         height: 105vh;
@@ -119,6 +183,7 @@ export default {
     }
   }
 }
+
 .swiper-arrow {
   background: none;
   color: white;
@@ -133,9 +198,21 @@ export default {
   }
 }
 
+.slide-ui {
+  height: 100%;
+  width: 100%;
+  top: 0; left: 0;
+  position: absolute;
+  .container {
+    height: 100%;
+    @include touch() {
+      margin: 0 3rem;
+    }
+  }
+}
 .swiper-custom-pagination {
-  z-index: 8;
-  position: fixed;
+  z-index: 15;
+  position: absolute;
   width: 100%;
   bottom: 100px;
   background: none;
@@ -144,19 +221,27 @@ export default {
   justify-content: center;
   .pagination-bullet {
     opacity: 1;
-    max-width: 33%;
     flex: 1 0 auto;
     display: inline-block;
     position: relative;
     margin: 0 2px;
-    color: rgba(white, 0.25);
+    padding-bottom: .75rem;
+    span {
+      display: inline-block;
+      color: rgba(white, 0.25);
+      transition: all 0.5s ease;
+    }
+    &:hover span {
+      color: rgba(white, 1);
+      transform: translate(0, -20px);
+    }
     &::after, &::before {
       content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       display: block;
-      height: 2px;
+      height: 1px;
     }
     &::after {
       width: 0;
@@ -168,14 +253,72 @@ export default {
       background: rgba(white, 0.25);
     }
     &.active {
-      color: white;
+      span {
+        color: white;
+      }
       &::after {
         width: 100%;
-        transition: width 5s ease;
+        transition: width 6s ease;
       }
     }
   }
 }
+
+
+// Color themes
+.slide-ui-Dark {
+  .caption {
+    h2, h3, h4, h5 {
+      color: black;
+    }
+    p, a, span {
+      color: black;
+    }
+  }
+  .pagination-bullet {
+    span {
+      color: rgba(black, 0.5);
+    }
+    &:hover span, &.active span {
+      color: rgba(black, 1);
+    }
+    &::after {
+      background: rgba(black, 1);
+    }
+    &::before {
+      background: rgba(black, 0.25);
+    }
+  }
+}
+
+.slide-ui-Light {
+  .caption {
+    h2, h3, h4, h5 {
+      color: white;
+    }
+    p, a, span {
+      color: white;
+    }
+  }
+  .pagination-bullet {
+    span {
+      color: rgba(white, 0.5);
+    }
+    &:hover span, &.active span {
+      color: rgba(white, 1);
+    }
+    &::after {
+      background: rgba(white, 1);
+    }
+    &::before {
+      background: rgba(white, 0.25);
+    }
+    &.active {
+      color: white;
+    }
+  }
+}
+
 @keyframes progress {
   0% {
     width: 0

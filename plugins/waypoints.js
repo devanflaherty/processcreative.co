@@ -29,6 +29,12 @@ var VueWaypoint = {
           if (binding.modifiers.once) {
             options.destroy = true
           }
+          if (binding.modifiers.down) {
+            options.direction = 'down'
+          }
+          if (binding.modifiers.up) {
+            options.direction = 'up'
+          }
         }
 
         if (binding.value) {
@@ -54,7 +60,12 @@ const newWaypoint = (el, emit, vnode, options) => {
   var waypoint = new Waypoint({
     element: el,
     handler: function (direction) {
-      emit(vnode, 'collision', {el: el, direction: direction})
+      console.log(el)
+      if (options.direction && options.direction == direction) {
+        emit(vnode, 'collision', {el: el, direction: direction})        
+      } else if (!options.direction) {
+        emit(vnode, 'collision', {el: el, direction: direction})
+      }
       if (options.destroy) {
         this.destroy()
       }

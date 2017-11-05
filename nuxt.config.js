@@ -1,3 +1,5 @@
+var path = require('path')
+
 var url = 'http://processcreative.tv'
 var title = 'ProcessCreative'
 var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is eqquiped to serve individuals, agencies and brands with creative solutions.'
@@ -58,9 +60,9 @@ module.exports = {
   plugins: [
     { src: `~plugins/waypoints`, ssr: false },
     { src: `~plugins/vue-lazyload`, ssr: false },
-    { src: `~plugins/vue-smooth-scroll`, ssr: false },
+    { src: `~plugins/vue-sweet-scroll`, ssr: false },
     { src: `~plugins/vue-scroll-reveal`, ssr: false },
-    { src: `~plugins/vue-swiper` },
+    { src: `~plugins/vue-swiper`, ssr: false },
     { src: `~mixins/utilities` },
     { src: `~plugins/vue-lodash` },
     { src: `~plugins/slices` },
@@ -71,8 +73,16 @@ module.exports = {
   },
   build: {
     // Load plugins in build
-    vendor: ['axios', 'vue-lazyload', 'vue-lodash', 'vue-smooth-scroll', 'scrollreveal'],
+    vendor: ['axios', 'vue-lazyload', 'vue-lodash', 'sweet-scroll', 'scrollreveal'],
     extend (config, ctx) {
+      config.resolve.alias['TweenLite'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenLite.js')
+      config.resolve.alias['TweenMax'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js')
+      config.resolve.alias['TimelineLite'] = path.resolve('node_modules', 'gsap/src/uncompressed/TimelineLite.js')
+      config.resolve.alias['TimelineMax'] = path.resolve('node_modules', 'gsap/src/uncompressed/TimelineMax.js')
+      config.resolve.alias['ScrollMagic'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js')
+      config.resolve.alias['animation.gsap'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js')
+      config.resolve.alias['debug.addIndicators'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js')
+
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

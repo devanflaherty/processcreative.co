@@ -1,27 +1,43 @@
 <template>
-  <section id="page"
-    v-waypoint="{offset: 0}" 
-    @collision="updateBg('#000')"
-    :data-wio-id="document.id">
-    <section class="hero is-success is-fullheight is-paddingless">
-      <div class="hero-body is-paddingless">
-        <heroSlider :gallery="home.hero_slider" />
-      </div>
-    </section>
-    
-    <div id="welcome" class="container" v-scroll-reveal="{duration: 1000}">
-      <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
-      <div class="opening-statement" v-html="$prismic.asHtml(home.opening_statement)"></div>
-      <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
-      <div class="work-headline" v-html="$prismic.asHtml(home.work_headline)"></div>
-      <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
-    </div>
-    <div>
-      <section id="featuredWork" v-waypoint="{offset: '25%'}" @collision="updateBg('#fff')">
-        <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+  <transition name="fade-in">
+    <section v-if="ready" id="page"
+      :data-wio-id="document.id">
+      
+      <heroSlider :gallery="home.hero_slider" :ready="ready" />
+      <section id="welcome" class="section" 
+        v-scroll-reveal.reset="{duration: 1000}"
+        v-waypoint.down="{offset: '-50%'}"
+        @collision="scrollTo('#featuredWork')">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-4">
+              <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
+            </div>
+            <div class="column">
+              <div class="statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
+              <h4>Capabilities</h4>
+              <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
+              <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
+            </div>
+          </div>
+        </div>
       </section>
-    </div>
-  </section>
+
+      <section class="section" id="featuredWork" style="background: white">
+        <div class="container">
+          <div class="work-welcome columns">
+            <div class="column">
+              <div class="work-headline has-text-black" v-html="$prismic.asHtml(home.work_headline)"></div>
+            </div>
+            <div class="column">
+              <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
+            </div>
+          </div>
+          <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+        </div>
+      </section>
+    </section>
+  </transition>
 </template>
 
 <script>
@@ -40,7 +56,7 @@ export default {
   },
   asyncData ({ params, app }) {
     return app.$prismic.initApi().then((ctx) => {
-      return ctx.api.getSingle('home', {'fetchLinks': 'work.title, work.feature_image, work.involvement'}).then((res) => {
+      return ctx.api.getSingle('home', {'fetchLinks': 'work.title, work.feature_image, work.involvement, work.description, work.primary_color'}).then((res) => {
         return {
           document: res,
           home: res.data
@@ -55,10 +71,12 @@ export default {
   },
   data () {
     return {
+      ready: false,
       entry: {}
     }
   },
   mounted () {
+    this.ready = true
     this.$prismic.initApi().then((ctx) => {
       ctx.toolbar()
     })
@@ -69,18 +87,47 @@ export default {
 <style scoped lang="scss">
 @import '~bulma/bulma';
 #welcome {
-  height: calc(100vh - 196px);
+  padding-top: 25vh;
+  padding-bottom: 25vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @include mobile() {
-    height: calc(100vh - 300px);
+  .opening-headline {
+    font-size: 1.5rem!important;
+    color: white;
+  }
+  .statement {
+    font-size: 1.5rem!important;
+    font-weight: 200;
     margin-bottom: 4rem;
   }
+  h4 {
+    color: #999;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .capabilities {
+    margin-bottom: 4rem;
+    white-space: pre-wrap;
+    column-count:2;
+    font-size: 1.5rem!important;
+    color: #666;
+    font-weight: 200;
+  }
 }
-#featured {
-  h2 {
-    margin-bottom: 5.5rem;
+#featuredWork {
+  padding-top: 25vh;
+  padding-bottom: 25vh;
+  .work-welcome {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    .work-headline {
+      font-size: 1.5rem!important;
+    }
+    .work-statement {
+      font-size: 1.5rem!important;
+      font-weight: 200;
+    }
   }
 }
 #clients {

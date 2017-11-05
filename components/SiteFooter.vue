@@ -1,6 +1,6 @@
 <template>
 <transition name="slide-up">
-  <footer class="section" v-waypoint.inview @enter="updateBg('#000')">
+  <footer class="section" v-if="navigationMenu">
 
     <div class="container">
       <div class="columns is-mobile is-multiline">
@@ -64,6 +64,9 @@ footer {
     margin-bottom: 1.25rem;
     font-weight: 600;
   }
+  a {
+    color: white;
+  }
   ul {
     li {
       a {
@@ -79,16 +82,13 @@ footer {
       color: $white;
       font-size: 1.5rem;
     }
-    a {
-      &:hover {
-        color: $blue;
-      }
-    }
   }
 }
 
 #copyright {
   padding-top: 10rem;
+  padding-bottom: 10rem;
+
   p {
     @include mobile() {
       font-size: 1rem;

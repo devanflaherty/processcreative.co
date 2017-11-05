@@ -119,6 +119,16 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/components/settings';
 @import "~bulma/bulma";
+body.hero-ui-Dark {
+  .navbar .navbar-menu .navbar-item a {
+    color: black!important
+  }
+}
+body.hero-ui-Dark {
+  .navbar .navbar-menu .navbar-item a {
+    color: white!important
+  }
+}
 .navbar {
   position: absolute;
   top: 0;
@@ -240,17 +250,17 @@ export default {
     }
     // Transition timing Out
     .mobile-nav-wrap {
-      transition: all 0.33s ease;
+      transition: all 0.5s ease;
     }
     &::before {
       z-index: 8;
       background: white;
-      transition: all 0.33s 0.125s ease;
+      transition: all 0.5s 0.25s ease;
     }
     &::after {
       z-index: 7;
-      background: gray;
-      transition: all 0.33s 0.4s ease;
+      background: black;
+      transition: all 0.5s 0.66s ease;
     }
     &.is-active {
       visibility: visible;
