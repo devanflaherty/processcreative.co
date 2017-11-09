@@ -20,28 +20,6 @@ var ScrollReveal = {
           }
         }
 
-        if (binding.value) {
-          if (binding.value.origin) {
-            options.origin = binding.value.origin
-          }
-
-          if (binding.value.distance) {
-            options.distance = binding.value.distance
-          }
-
-          if (binding.value.duration) {
-            options.duration = binding.value.duration
-          }
-
-          if (binding.value.opacity) {
-            options.opacity = binding.value.opacity
-          }
-
-          if (binding.value.scale) {
-            options.scale = binding.value.scale
-          }
-        }
-
         sr.reveal(el, options)
       }
     })

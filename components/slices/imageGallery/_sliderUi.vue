@@ -51,6 +51,7 @@ export default {
   width: 100%;
   top: 0; left: 0;
   position: absolute;
+  z-index: 20;
   .container {
     height: 100%;
     @include touch() {

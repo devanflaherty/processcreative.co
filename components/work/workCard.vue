@@ -1,7 +1,8 @@
 <template>
   <article class="work-card" :class="{'reveal' : reveal}" 
     v-waypoint.inview 
-    @enter="wipe()">
+    @enter="wipe()"
+    :data-wio-id="post.id">
     <!-- Wipe transition -->
     <div class="wipe" :style="`background-color: ${entry.primary_color}`"></div>
     

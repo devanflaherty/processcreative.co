@@ -1,6 +1,6 @@
 var path = require('path')
 
-var url = 'http://processcreative.tv'
+var url = 'http://processcreative.co'
 var title = 'ProcessCreative'
 var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is eqquiped to serve individuals, agencies and brands with creative solutions.'
 var unfurl = `${url}/unfurl.jpg`
@@ -9,7 +9,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'ProcessCreative.Tv',
+    title: 'ProcessCreative.co',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -69,7 +69,25 @@ module.exports = {
     { src: `~plugins/prismic` }
   ],
   router: {
-    middleware: ['toggleMobileNav']
+    middleware: ['toggleMobileNav'],
+    scrollBehavior: function (to, from, savedPosition) {
+      // savedPosition is only available for popstate navigations.
+      if (savedPosition) {
+        return savedPosition
+      } else {
+        let position = {}
+        // if no children detected
+        if (to.matched.length < 2) {
+          // scroll to the top of the page
+          // position = { x: 0, y: 0 }
+        }
+        // if link has anchor,  scroll to anchor by returning the selector
+        if (to.hash) {
+          position = { selector: to.hash }
+        }
+        return position
+      }
+    }
   },
   build: {
     // Load plugins in build
@@ -82,6 +100,7 @@ module.exports = {
       config.resolve.alias['ScrollMagic'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js')
       config.resolve.alias['animation.gsap'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js')
       config.resolve.alias['debug.addIndicators'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js')
+      config.resolve.alias['ScrollToPlugin'] = path.resolve('node_modules', 'gsap/ScrollToPlugin.js')
 
       if (ctx.isClient) {
         config.module.rules.push({

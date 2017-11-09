@@ -4,11 +4,11 @@ export default {
 
   linkResolver (doc) {
     // Define the url depending on the document type
-    if (doc.type === 'work') {
+    if (doc.type === 'work_posts') {
       return '/work/' + doc.uid
-    } else if (doc.type === 'blog_post') {
+    } else if (doc.type === 'blog_posts') {
       return '/blog/' + doc.uid
-    } else if (doc.type === 'page') {
+    } else if (doc.type === 'pages') {
       return '/' + doc.uid
     }
     // Default to homepage

@@ -1,8 +1,7 @@
 <template>
-<transition name="fade-in">
-  <section v-show="ready" id="heroSlider" class="hero is-fullheight is-paddingless"
-    v-waypoint.down="{offset: '-50%'}"
-    @collision="scrollTo('#welcome')">
+<transition name="photo-wipe" appear>
+  <section id="heroSlider" class="hero is-fullheight is-paddingless">
+    <div class="mask"></div>
     <div class="hero-body is-paddingless">
         
       <div id="slider" class="swiper-container" ref="mySwiper">
@@ -96,28 +95,21 @@ export default {
     playSlider () {
       this.$refs.mySwiper.swiper.autoplay.start()
     },
-    setHeroUiContrast (style, previousStyle) {
-      var body = document.querySelector('body')
-      if (previousStyle) {
-        body.classList.remove(`hero-ui-${previousStyle}`)
-      }
-      body.classList.add(`hero-ui-${style}`)
-    },
     initSwiper () {
-      if (this.ready) {
-        this.$swiper('#slider', this.swiperOption)
-        this.$refs.mySwiper.swiper.on('progress', () => {
-          var swiper = this.$refs.mySwiper.swiper
-          var imgs = document.querySelectorAll('.slide-img')
-          var slides = document.querySelectorAll('.swiper-slide')
-          slides.forEach((slide, i) => {
-            var img = imgs[i]
-            var x = (slide.offsetLeft + swiper.translate) * -1 / 3
-            img.style.transform = 'translateX(' + x + 'px)'
-          })
+      // if (this.ready) {
+      this.$swiper('#slider', this.swiperOption)
+      this.$refs.mySwiper.swiper.on('progress', () => {
+        var swiper = this.$refs.mySwiper.swiper
+        var imgs = document.querySelectorAll('.slide-img')
+        var slides = document.querySelectorAll('.swiper-slide')
+        slides.forEach((slide, i) => {
+          var img = imgs[i]
+          var x = (slide.offsetLeft + swiper.translate) * -1 / 3
+          img.style.transform = 'translateX(' + x + 'px)'
         })
-        this.setHeroUiContrast(this.slideUi)
-      }
+      })
+      this.setHeroUiContrast(this.slideUi)
+      // }
     }
   },
   created () {
@@ -125,6 +117,9 @@ export default {
   },
   mounted () {
     this.initSwiper()
+  },
+  beforeDestroy () {
+    this.$refs.mySwiper.swiper.destroy()
   }
 }
 </script>
@@ -140,6 +135,17 @@ export default {
 #slider {
   position: relative;
   width: 100%;
+  &::after {
+    content:'';
+    z-index: 15;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 25vh;
+    width: 100%;
+    box-shadow: inset 0 -80px 50px -40px rgba(0, 0, 0, 1)
+  }
   .slide-caption {
     z-index: 5;
     display: flex;

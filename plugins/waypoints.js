@@ -92,5 +92,15 @@ const newInview = (el, emit, vnode, options) => {
     offset: options.offset
   })
 }
-/* eslint-enable */
 Vue.use(VueWaypoint)
+
+export default (ctx, inject) => {
+  inject('waypoint', new Vue({
+    methods: {
+      destroyWaypoints () {
+        Waypoint.destroyAll()
+      }
+    }
+  }))
+}
+/* eslint-enable */

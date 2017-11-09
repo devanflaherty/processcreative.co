@@ -1,52 +1,52 @@
 <template>
-  <transition name="fade-in">
-    <section v-if="ready" id="page"
-      :data-wio-id="document.id">
-      
-      <heroSlider :gallery="home.hero_slider" :ready="ready" />
-      <section id="welcome" class="section" 
-        v-scroll-reveal.reset="{duration: 1000}"
-        v-waypoint.down="{offset: '-50%'}"
-        @collision="scrollTo('#featuredWork')">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-4">
-              <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
-            </div>
-            <div class="column">
-              <div class="statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
-              <h4>Capabilities</h4>
-              <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
-              <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
-            </div>
+  <section id="page"
+    :data-wio-id="document.id">
+    
+    <heroSlider :gallery="home.hero_slider" />
+    <section id="welcome" class="section" 
+      >
+      <!-- v-waypoint.down="{offset: '-50%'}"
+      @collision="scrollTo('#featuredWork')"-->
+      <div class="container"
+      v-scroll-reveal.reset="{duration: 1000}">
+        <div class="columns">
+          <div class="column is-4">
+            <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
+          </div>
+          <div class="column">
+            <div class="statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
+            <h4>Capabilities</h4>
+            <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
+            <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
           </div>
         </div>
-      </section>
-
-      <section class="section" id="featuredWork" style="background: white">
-        <div class="container">
-          <div class="work-welcome columns">
-            <div class="column">
-              <div class="work-headline has-text-black" v-html="$prismic.asHtml(home.work_headline)"></div>
-            </div>
-            <div class="column">
-              <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
-            </div>
-          </div>
-          <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
-        </div>
-      </section>
+      </div>
     </section>
-  </transition>
+
+    <section class="section" id="featuredWork" style="background: white">
+      <div class="container">
+        <div class="work-welcome columns">
+          <div class="column">
+            <div class="work-headline has-text-black" v-html="$prismic.asHtml(home.work_headline)"></div>
+          </div>
+          <div class="column">
+            <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
+          </div>
+        </div>
+        <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+      </div>
+    </section>
+  </section>
 </template>
 
 <script>
 import heroSlider from '~/components/home/heroSlider'
+import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 
-if (process.browser) {
-  require('waypoints/lib/noframework.waypoints.js')
-  require('waypoints/lib/shortcuts/inview.js')
-}
+// if (process.browser) {
+//   require('waypoints/lib/noframework.waypoints.js')
+//   require('waypoints/lib/shortcuts/inview.js')
+// }
 // import VideoFeature from '~/components/VideoFeature'
 // import ClientLogos from '~/components/ClientLogos'
 
@@ -56,7 +56,7 @@ export default {
   },
   asyncData ({ params, app }) {
     return app.$prismic.initApi().then((ctx) => {
-      return ctx.api.getSingle('home', {'fetchLinks': 'work.title, work.feature_image, work.involvement, work.description, work.primary_color'}).then((res) => {
+      return ctx.api.getSingle('home', {'fetchLinks': 'work_posts.title, work_posts.feature_image, work_posts.involvement, work_posts.description, work_posts.primary_color'}).then((res) => {
         return {
           document: res,
           home: res.data
@@ -69,6 +69,14 @@ export default {
       title: 'Home'
     }
   },
+  transition: {
+    name: 'home',
+    mode: 'out-in',
+    css: false,
+    beforeEnter,
+    enter,
+    leave
+  },
   data () {
     return {
       ready: false,
@@ -80,12 +88,18 @@ export default {
     this.$prismic.initApi().then((ctx) => {
       ctx.toolbar()
     })
+  },
+  beforeDestroy () {
+    this.$waypoint.destroyWaypoints()
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
+#page {
+  background: $black;
+}
 #welcome {
   padding-top: 25vh;
   padding-bottom: 25vh;

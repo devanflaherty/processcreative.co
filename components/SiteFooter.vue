@@ -1,11 +1,10 @@
 <template>
-<transition name="slide-up">
-  <footer class="section" v-if="navigationMenu">
-
+<footer class="section" v-show="navigationMenu">
+  <div class="footer-wrap">
     <div class="container">
       <div class="columns is-mobile is-multiline">
         
-        <div class="column is-6-touch is-2-desktop">
+        <div class="column is-6-touch is-2-desktop footer-column">
           <h4>Navigation</h4>
           <ul>
             <li v-for="(link, index) in navigationMenu" :key="index">
@@ -14,7 +13,7 @@
           </ul>
         </div>
 
-        <div class="column is-6-touch is-2-desktop">
+        <div class="column is-6-touch is-2-desktop footer-column">
           <h4>Connect</h4>
           <ul>
             <li v-for="(link, index) in connectMenu" :key="index">
@@ -23,7 +22,7 @@
           </ul>
         </div>
 
-        <div class="new-business column is-12-touch is-4-desktop is-offset-4-desktop">
+        <div class="new-business column is-12-touch is-4-desktop is-offset-4-desktop footer-column">
           <h4>New Business</h4>
           <div v-html="$prismic.asHtml(contact.newBusiness)"></div>
         </div>
@@ -33,9 +32,8 @@
     <div id="copyright" class="container">
       <p class="has-text-dark">&copy; 2017 ProcessCreative.<br class="is-hidden-tablet"> All Rights Reserved.</p>
     </div>
-
-  </footer>
-</transition>
+  </div>
+</footer>
 </template>
 
 <script>
@@ -48,18 +46,22 @@ export default {
   },
   computed: {
     ...mapGetters(['navigationMenu', 'connectMenu', 'contact'])
+  },
+  mounted () {
+    this.$reveal('.footer-column', {distance: '-100px', scale: 1, duration: 1000, reset: true}, 250)
   }
 }
 </script>
 
 <style lang="scss">
-@import '~assets/styles/components/settings';
-@import "~bulma/bulma";
+@import '~assets/styles/mixins';
 
 footer {
   margin-top: 10rem;
   max-height: 100vh;
   min-height: 500px;
+  background: $black;
+  overflow: hidden;
   h4 {
     margin-bottom: 1.25rem;
     font-weight: 600;

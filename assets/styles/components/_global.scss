@@ -1,6 +1,6 @@
 html, body {
-  background-color: $black;
-  color: $white;
+  background-color: $white;
+  color: $black;
   letter-spacing: 0.5px;
   margin: 0;
   transition: all 1s ease;
@@ -40,10 +40,6 @@ blockquote {
     font-weight: 200;
     line-height: 1.25;
   }
-}
-
-#page {
-  transition: transform 0.66s ease;
 }
 
 // ORDER
