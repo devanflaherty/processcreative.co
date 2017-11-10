@@ -1,14 +1,12 @@
 <template>
-<transition name="fade-in">
-  <div class="responsiveWrap" v-show="videoReady">
-    <div 
-      ref="videoWrap"
-      class="responsive-video"
-      :style="`padding: ${padding}% 0 0 0`"
-      v-html="embed">
-    </div>
+<div class="responsiveWrap">
+  <div 
+    ref="videoWrap"
+    class="responsive-video"
+    :style="`padding: ${padding}% 0 0 0`"
+    v-html="embed">
   </div>
-</transition>
+</div>
 </template>
 
 <script>

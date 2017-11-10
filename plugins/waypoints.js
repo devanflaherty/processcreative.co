@@ -61,6 +61,7 @@ const newWaypoint = (el, emit, vnode, options) => {
     element: el,
     handler: function (direction) {
       console.log(el)
+      console.log(direction)
       if (options.direction && options.direction == direction) {
         emit(vnode, 'collision', {el: el, direction: direction})        
       } else if (!options.direction) {
@@ -72,12 +73,15 @@ const newWaypoint = (el, emit, vnode, options) => {
     },
     offset: options.offset
   })
+
+  return waypoint
 }
 
 const newInview = (el, emit, vnode, options) => {
   var inview = new Waypoint.Inview({
     element: el,
     enter: function(direction) {
+      console.log('inview')      
       emit(vnode, 'enter' , {el: el, direction: direction})
     },
     entered: function(direction) {
@@ -91,6 +95,8 @@ const newInview = (el, emit, vnode, options) => {
     },
     offset: options.offset
   })
+
+  return inview
 }
 Vue.use(VueWaypoint)
 

@@ -16,7 +16,6 @@ export default {
   props: ['color', 'modalVisible', 'header', 'footer'],
   data () {
     return {
-      loading: true
     }
   },
   methods: {

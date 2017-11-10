@@ -24,19 +24,12 @@ const transitions = {
       return TweenMax.fromTo(el, 1,
         {
           autoAlpha: 1
-          // y: 0
         },
         {
           autoAlpha: 0.3
-          // y: -200
         }
       )
     }
-    // sliderTween () {
-    //   var tl = new TimelineMax()
-    //   var slider = document.querySelector('.swiper-wrapper')
-    //   return tl.add(this.scaleOut(slider))
-    // }
   },
   mounted () {
     /* eslint-disable */
@@ -57,14 +50,6 @@ const transitions = {
       .setTween(this.fadeOut('.slide-img'))
       // .addIndicators({name:'headline'})
       .addTo(controller)
-
-    // var wh = window.innerHeight / 2
-    // var wipes = new ScrollMagic.Scene({
-    //   offset: wh,
-    // })
-    //   .setClassToggle(document.querySelector('#slider'), "wipe")
-    //   // .addIndicators({name:'headline'})
-    //   .addTo(controller)
 
     /* eslint-enable */
   }

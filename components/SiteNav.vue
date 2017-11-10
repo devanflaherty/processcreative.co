@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <div class="navbar-item" >
-        <Logo :color="logoColor" :animate="true"/>
+        <Logo :color="primaryColor" :animate="true"/>
       </div>
       <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
         <span></span>
@@ -15,9 +15,6 @@
           <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
             {{link.link_label}}
           </nuxt-link>
-          <a href="#contact" class="navbar-item" @click.prevent="toggleModal">
-            Contact
-          </a>
         </div>
       </transition>
     </div>
@@ -27,9 +24,6 @@
         <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
           {{link.link_label}}
         </nuxt-link>
-        <a href="#contact" class="navbar-item" @click.prevent="toggleModal">
-          Contact
-        </a>
       </div>
     </div>
 
@@ -58,7 +52,7 @@ export default {
   },
   data () {
     return {
-      logoColor: '#ffffff',
+      logoColor: '#000000',
       modal: false
     }
   },
@@ -82,7 +76,7 @@ export default {
   },
   methods: {
     showMobileNav () {
-      var page = document.querySelector('#page')
+      var page = document.querySelector('.page')
       this.$store.dispatch('toggleMobileNav', !this.mobileNav)
 
       if (this.mobileNav) {
@@ -117,8 +111,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/styles/components/settings';
-@import "~bulma/bulma";
+@import '~assets/styles/mixins';
+
 body.hero-ui-Dark {
   .navbar .navbar-menu .navbar-item a {
     color: black!important
@@ -162,7 +156,7 @@ body.hero-ui-Dark {
       align-items: center;
     }
     .navbar-item {
-      color: $white;
+      color: $black;
       position: relative;
       padding-left: 0;
       padding-right: 0;
@@ -349,7 +343,7 @@ body.hero-ui-Dark {
     border-radius: 6px;
     height: 2px;
     width: 1.5rem;
-    background: $white;
+    background: $black;
     position: absolute;
     display: block;
     content: '';

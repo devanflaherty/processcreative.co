@@ -1,57 +1,38 @@
 <template>
-  <section :data-wio-id="document.id" id="workPage">
-    <WorkHero :entry="entry"/>
+  <section :data-wio-id="document.id" id="workPage" class="page" v-show="!loading">
+    <WorkHero :entry="entry" 
+      v-scroll-reveal="{duration: 2000, scale: 0.9, distance: '0'}"/>
 
-    <section id="workContent">
+    <section class="section">
       <div class="container">
-        <responsiveVideo class="stagger" :embed="entry.highlight_video.html" />
-        
-        <div class="columns stagger">
+        <responsiveVideo class="stagger" :embed="entry.highlight_video.html" 
+          v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '200px'}"/>
+      </div>
+    </section>
+    
+    <section id="workContent" class="opening section">
+      <div class="container">
+        <div class="columns opener stagger">
           <div class="column is-4">
-            <div class="opening-headline" v-html="$prismic.asHtml(entry.opening_headline)"></div>
+            <div class="opening-headline" :class="{'has-text-white': entry.page_contrast == 'Light', 'has-text-black': entry.page_contrast == 'Dark'}" 
+              v-html="$prismic.asHtml(entry.opening_headline)"
+              v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
           </div>
           <div class="column">
-            <div class="statement has-text-white" v-html="$prismic.asHtml(entry.opening_statement)"></div>
-            <h4>Involvement</h4>
-            <div class="capabilities">{{entry.involvement}}</div>
+            <div class="opening-statement" 
+              v-html="$prismic.asHtml(entry.opening_statement)"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top'}"></div>
+            <h4 class="is-size-4 list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}">Involvement</h4>
+            <div class="work-types column-list" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">{{entry.involvement}}</div>
           </div>
         </div>
       </div>
     </section>
 
-    <div style="color:white">
-      <span>Feature Image:</span>
-      <img :src="entry.feature_image.url">
-    </div>
-    <div style="color:white">
-      <span>Highlight Video:</span>
-      <div v-html="entry.highlight_video.html"></div>
-    </div>
-    <div style="color:white">
-      <span>Project Headline:</span>
-      <div v-html="$prismic.asHtml(entry.project_headline)"></div>
-    </div>
-    <div style="color:white">
-      <span>Opening Statement:</span>
-      <div v-html="$prismic.asHtml(entry.opening_statement)"></div>
-    </div>
-    <div style="color:white">
-      <span>Primary Color:{{entry.primary_color}}</span><br>
-      <span>Background Color:{{entry.background_color}}</span>
-    </div>
-    <div style="color:white">
-      <span>Involvement:</span>
-      <div style="white-space: pre-wrap; column-count:2;" v-html="toNewLines(entry.involvement)"></div>
-    </div>
-    <nuxt-link to="/">home</nuxt-link>
-    <section>
-      <component class="stagger" v-for="(slice, index) in entry.slices" :key="index" 
-        :slice="slice" :is="toCamelCase(slice.slice_type)"></component>
+    <!-- Repeatable Slices -->
+    <component class="stagger" v-for="(slice, index) in entry.slices" :key="index" 
+      :slice="slice" :is="toCamelCase(slice.slice_type)"></component>
 
-      <!-- <article v-for="(slice, index) in entry.slices" :key="index">
-        <h2>{{toCamelCase(slice.slice_type)}}</h2>
-      </article>  -->
-    </section>
   </section>
 </template>
 
@@ -62,7 +43,7 @@ export default {
   components: {
     WorkHero
   },
-  asyncData ({ app, params }) {
+  asyncData ({ app, params, store }) {
     return app.$prismic.initApi().then((ctx) => {
       return ctx.api.getByUID('work_posts', params.slug).then((res) => {
         return {
@@ -72,20 +53,21 @@ export default {
       })
     })
   },
-  methods: {
-    toCamelCase (str) {
-      return this._.camelCase(str)
-    },
-    toNewLines (str) {
-      return str.split('\n').join('<br>')
-    }
+  created () {
+    this.$store.dispatch('toggleLoading', true)
   },
   mounted () {
-    this.$prismic.initApi().then((api) => {
-      api.toolbar()
-    })
+    if (this.document) {
+      this.$store.dispatch('toggleLoading', false)
 
-    this.updateBg(this.entry.background_color, '#workPage')
+      this.$prismic.initApi().then((api) => {
+        api.toolbar()
+      })
+
+      this.$store.dispatch('setPrimaryColor', this.entry.primary_color)
+      this.updateBg(this.entry.background_color, '#workPage')
+      this.setPageContrast(this.entry.page_contrast, '#workPage')
+    }
   }
 }
 </script>

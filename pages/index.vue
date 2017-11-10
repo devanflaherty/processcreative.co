@@ -1,12 +1,8 @@
 <template>
-  <section id="page"
-    :data-wio-id="document.id">
+  <section id="home" class="page" :data-wio-id="document.id" v-show="!loading">
     
     <heroSlider :gallery="home.hero_slider" />
-    <section id="welcome" class="section" 
-      >
-      <!-- v-waypoint.down="{offset: '-50%'}"
-      @collision="scrollTo('#featuredWork')"-->
+    <section id="welcome" class="opening section">
       <div class="container"
       v-scroll-reveal.reset="{duration: 1000}">
         <div class="columns">
@@ -14,9 +10,9 @@
             <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
           </div>
           <div class="column">
-            <div class="statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
-            <h4>Capabilities</h4>
-            <div class="capabilities" v-html="$prismic.asHtml(home.capabilities)"></div>
+            <div class="opening-statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
+            <h4 class="is-size-4 list-headline">Capabilities</h4>
+            <div class="column-list" v-html="$prismic.asHtml(home.capabilities)"></div>
             <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
           </div>
         </div>
@@ -43,18 +39,11 @@
 import heroSlider from '~/components/home/heroSlider'
 import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 
-// if (process.browser) {
-//   require('waypoints/lib/noframework.waypoints.js')
-//   require('waypoints/lib/shortcuts/inview.js')
-// }
-// import VideoFeature from '~/components/VideoFeature'
-// import ClientLogos from '~/components/ClientLogos'
-
 export default {
   components: {
     heroSlider
   },
-  asyncData ({ params, app }) {
+  asyncData ({ params, app, store }) {
     return app.$prismic.initApi().then((ctx) => {
       return ctx.api.getSingle('home', {'fetchLinks': 'work_posts.title, work_posts.feature_image, work_posts.involvement, work_posts.description, work_posts.primary_color'}).then((res) => {
         return {
@@ -62,6 +51,8 @@ export default {
           home: res.data
         }
       })
+    }).catch((err) => {
+      console.log(err)
     })
   },
   head () {
@@ -77,56 +68,32 @@ export default {
     enter,
     leave
   },
-  data () {
-    return {
-      ready: false,
-      entry: {}
-    }
+  created () {
+    this.$store.dispatch('toggleLoading', true)
   },
   mounted () {
-    this.ready = true
-    this.$prismic.initApi().then((ctx) => {
-      ctx.toolbar()
-    })
+    if (document) {
+      this.$store.dispatch('toggleLoading', false)
+
+      this.$prismic.initApi().then((ctx) => {
+        ctx.toolbar()
+      })
+    }
   },
   beforeDestroy () {
-    this.$waypoint.destroyWaypoints()
+    // this.$waypoint.destroyWaypoints()
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '~assets/styles/mixins';
-#page {
+#home {
   background: $black;
 }
 #welcome {
-  padding-top: 25vh;
-  padding-bottom: 25vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   .opening-headline {
-    font-size: 1.5rem!important;
     color: white;
-  }
-  .statement {
-    font-size: 1.5rem!important;
-    font-weight: 200;
-    margin-bottom: 4rem;
-  }
-  h4 {
-    color: #999;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .capabilities {
-    margin-bottom: 4rem;
-    white-space: pre-wrap;
-    column-count:2;
-    font-size: 1.5rem!important;
-    color: #666;
-    font-weight: 200;
   }
 }
 #featuredWork {

@@ -1,7 +1,7 @@
 <template>
   <article class="work-card" :class="{'reveal' : reveal}" 
-    v-waypoint.inview 
-    @enter="wipe()"
+    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"
+    @beforeReveal="wipe"
     :data-wio-id="post.id">
     <!-- Wipe transition -->
     <div class="wipe" :style="`background-color: ${entry.primary_color}`"></div>
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 
 .work-card {
   position: relative;
@@ -100,12 +100,9 @@ export default {
       height: 100%;
       margin: 0;
       padding: 6rem;
-      background: rgba(black, 0.7);
       align-items: center;
       justify-content: center;
 
-      opacity: 0;
-      visibility: hidden;
       transition: all 0.5s ease;
       @include mobile() {
         display: flex;
@@ -124,12 +121,16 @@ export default {
         color: white;
         font-weight: 300;
         transition: all 0.5s ease;
-        transform: translate(-300px, 0);
+        transform: translate(-50px, 0);
         span {
+          display: inline-block;
           margin-left: .5rem;
-          opacity: 0;
+          font-weight: 200;
           color: rgba(white, 0.6);
-          transition: all 0.5s 0.33s ease;
+          visibility: hidden;
+          opacity: 0;
+          transform: translate(-100px, 0);
+          transition: all 0.5s 0.125s ease;
         }
       }
       .work-quick-involvement {
@@ -140,13 +141,17 @@ export default {
           font-size: 1.25rem;
           font-weight: 600;
           transition: all 0.5s ease;
+          visibility: hidden;
+          opacity: 0;
           transform: translate(300px, 0);
         }
         .quick-involvement {
           white-space: pre-wrap; 
           column-count: 2;
-          transition: all 0.5s 0.125s ease;
+          visibility: hidden;
+          opacity: 0;
           transform: translate(300px, 0);
+          transition: all 0.5s 0.125s ease;
         }
       }
     }
@@ -163,17 +168,19 @@ export default {
   }
   &:hover {
     .work-quick-info {
-      visibility: visible;
-      opacity: 1;
+      background: rgba(black, 0.7);
       .quick-title {
         transform: translate(0,0);
         span {
-          font-weight: 200;
           opacity: 1;
+          visibility: visible;
+          transform: translate(0, 0)
         }
       }
       .work-quick-involvement {
         h4, .quick-involvement {
+          opacity: 1;
+          visibility: visible;
           transform: translate(0,0);
         }
       }

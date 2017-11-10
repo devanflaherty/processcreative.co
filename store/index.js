@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      primaryColor: '#000',
+      loading: true,
       mobileNav: false,
       breakpoint: 0,
       navigationMenu: null,
@@ -13,6 +15,12 @@ const createStore = () => {
       }
     },
     getters: {
+      primaryColor: state => {
+        return state.primaryColor
+      },
+      loading: state => {
+        return state.loading
+      },
       mobileNav: state => {
         return state.mobileNav
       },
@@ -30,6 +38,12 @@ const createStore = () => {
       }
     },
     mutations: {
+      SET_PRIMARY_COLOR (state, color) {
+        state.primaryColor = color
+      },
+      TOGGLE_LOADING (state, bool) {
+        state.loading = bool
+      },
       TOGGLE_MOBILE_NAV (state, bool) {
         state.mobileNav = bool
       },
@@ -47,6 +61,12 @@ const createStore = () => {
       }
     },
     actions: {
+      setPrimaryColor (context, color) {
+        context.commit('SET_PRIMARY_COLOR', color)
+      },
+      toggleLoading (context, bool) {
+        context.commit('TOGGLE_LOADING', bool)
+      },
       toggleMobileNav (context, bool) {
         context.commit('TOGGLE_MOBILE_NAV', bool)
       },

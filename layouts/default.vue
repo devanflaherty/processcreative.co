@@ -2,9 +2,15 @@
   <main class="main">
     <SiteNav />
     <nuxt />
-    <div id="loader" class="is-flex">
-      <h1>Loading</h1>
-    </div>
+    <transition name="fade-in">
+      <div id="loader" class="is-flex" v-if="loading">
+        <h1>
+          <span>|</span>
+          <span>|</span>
+          <span>|</span>
+        </h1>
+      </div>
+    </transition>
     <SiteFooter />
   </main>
 </template>
@@ -14,6 +20,7 @@ import SiteNav from '~/components/SiteNav'
 import SiteFooter from '~/components/SiteFooter'
 
 import breakpoints from '~/mixins/breakpoints'
+import {mapGetters} from 'vuex'
 
 export default {
   components: {
@@ -21,6 +28,9 @@ export default {
     SiteFooter
   },
   mixins: [breakpoints],
+  computed: {
+    ...mapGetters(['loading'])
+  },
   created () {
     this.$store.dispatch('getMenus')
   }
@@ -49,12 +59,37 @@ export default {
   align-items: center;
   justify-content: center;
   left: 0; top: 0;
-  visibility: hidden;
-  opacity: 0;
   h1 {
     color: black;
     font-weight: 800;
     font-size: 44px;
+    span {
+      display: inline-block;
+      animation: wave infinite 2s;
+    }
+    span:nth-child(1) {
+      animation-delay: 0;
+    }
+    span:nth-child(2) {
+      animation-delay: .25s;
+    }
+    span:nth-child(3) {
+      animation-delay: .5s;
+    }
+  }
+}
+@keyframes wave {
+  0% {
+    opacity: 0;
+    transform: translate(0, -10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(0, 10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -10px);
   }
 }
 </style>

@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 .slide-ui {
   height: 100%;
   width: 100%;

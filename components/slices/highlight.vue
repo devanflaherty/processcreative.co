@@ -1,25 +1,31 @@
 <template>
-  <article class="slice columns" :class="slice.slice_type">
-    <template v-if="highlight.highlight_placement == 'Right'">
-      <div class="column">
-        <div v-html="$prismic.asHtml(highlight.highlight_body)"></div>
-      </div>
+  <article class="slice highlight-slice">
+    <div class="container">
+      <div class="columns">
+        <template v-if="highlight.highlight_placement == 'Right'">
+          <div class="column highlight-body">
+            <div class="highlight-content"  v-html="$prismic.asHtml(highlight.highlight_body)"></div>
+          </div>
+        </template>
 
-      <div class="column">
-        <img :src="highlight.highlight_thumbnail.url">
-        <div v-html="$prismic.asHtml(highlight.highlight_caption)"></div>
+        <div class="column is-6">
+          <div class="highlight-media">
+            <template v-if="highlight.highlight_embed.length > 0">
+              <responsiveVideo :embed="highlight.highlight_embed.html" />
+            </template>
+            <template v-else>
+              <captionedImage :img="highlight.highlight_thumbnail" :caption="highlight.highlight_caption" />
+            </template>
+          </div>
+        </div>
+      
+        <template v-if="highlight.highlight_placement == 'Left'">
+          <div class="column highlight-body">
+            <div class="highlight-content" v-html="$prismic.asHtml(highlight.highlight_body)"></div>
+          </div>
+        </template>
       </div>
-    </template>
-    <template v-else>
-      <div class="column">
-        {{highlight}}
-        <img :src="highlight.highlight_thumbnail.url">
-        <div v-html="$prismic.asHtml(highlight.highlight_caption)"></div>
-      </div>
-      <div class="column">
-        <div v-html="$prismic.asHtml(highlight.highlight_body)"></div>
-      </div>
-    </template>
+    </div>
   </article>
 </template>
 
@@ -33,3 +39,24 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.highlight-slice {
+  margin: 4rem 0;
+  .columns {
+    margin-bottom: 0;
+  }
+}
+.highlight-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .highlight-content {
+    padding: 4rem;
+  }
+}
+.highlight-media {
+  position: relative;
+  overflow: hidden;
+}
+</style>

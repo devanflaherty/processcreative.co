@@ -57,7 +57,6 @@ export default {
 @import '~assets/styles/mixins';
 
 footer {
-  margin-top: 10rem;
   max-height: 100vh;
   min-height: 500px;
   background: $black;

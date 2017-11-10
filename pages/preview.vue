@@ -6,7 +6,6 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import PrismicConfig from '~/plugins/prismic-configuration'
 import Cookies from 'js-cookie'
 var Prismic = require('prismic-javascript')
 
@@ -21,7 +20,7 @@ export default {
   },
   mounted () {
     this.$prismic.initApi().then((ctx) => {
-      ctx.api.previewSession(this.token, PrismicConfig.linkResolver, '/').then((url) => {
+      ctx.api.previewSession(this.token, ctx.linkResolver, '/').then((url) => {
         Cookies.set(Prismic.previewCookie, this.token, { expires: PREVIEW_EXPIRES })
         this.$router.push(url)
       })

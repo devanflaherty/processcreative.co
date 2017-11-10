@@ -3,23 +3,19 @@ import {TimelineMax, Back} from 'gsap'
 export const beforeEnter = function (el, done) {
   var beforeEnter = new TimelineMax()
   beforeEnter.set(el, {
-    autoAlpha: 0,
-    x: -200
+    autoAlpha: 0
   })
 }
 
 export const enter = function (el, done) {
   var enter = new TimelineMax()
   enter.to(el, 1, {
-    autoAlpha: 1,
-    x: 0
+    autoAlpha: 1
   })
 
   if (el.querySelector('#slider')) {
     enter.fromTo(el.querySelector('#slider'), 1, {
-      autoAlpha: 0,
-      css: {
-      }
+      autoAlpha: 0
     }, {
       autoAlpha: 1
     }, 0)
@@ -46,8 +42,7 @@ export const leave = function (el, done) {
     leave.add(stagger)
   }
   leave.to(el, 0.5, {
-    autoAlpha: 0,
-    x: 200
+    autoAlpha: 0
   }, 0.5)
 
   // leave.to(window, 0.1, { scrollTo: 0 })

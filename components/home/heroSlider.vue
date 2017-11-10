@@ -1,7 +1,8 @@
 <template>
-<transition name="photo-wipe" appear>
   <section id="heroSlider" class="hero is-fullheight is-paddingless">
-    <div class="mask"></div>
+    <transition name="photo-wipe">
+      <div class="mask" v-if="loading"></div>
+    </transition>
     <div class="hero-body is-paddingless">
         
       <div id="slider" class="swiper-container" ref="mySwiper">
@@ -17,10 +18,7 @@
               </div>
             </div>
 
-            <div
-                data-swiper-parallax
-                data-swiper-parallax-duration="500"
-                data-swiper-parallax-scale="1.2" class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
+            <div data-swiper-parallax="25%" class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
           </div>
         </div>
 
@@ -37,7 +35,6 @@
       <!-- close swiper -->
     </div>
   </section>
-</transition>
 </template>
 
 <script>
@@ -76,9 +73,15 @@ export default {
     }
   },
   watch: {
+    loading () {
+      if (!this.loading && this.$refs.mySwiper) {
+        this.initSwiper()
+      }
+    },
     activeSlide (index) {
       var contrast = this.gallery[index].contrast
       this.slideUi = contrast
+      this.setLogoColor()
     },
     slideUi (style, previousStyle) {
       this.setHeroUiContrast(style, previousStyle)
@@ -86,47 +89,56 @@ export default {
   },
   methods: {
     slideTo (index) {
-      var i = index + 1
-      this.$refs.mySwiper.swiper.slideTo(i)
+      if (this.$refs.mySwiper.swiper) {
+        var i = index + 1
+        this.$refs.mySwiper.swiper.slideTo(i)
+      }
     },
     pauseSlider () {
-      this.$refs.mySwiper.swiper.autoplay.stop()
+      if (this.$refs.mySwiper.swiper) {
+        this.$refs.mySwiper.swiper.autoplay.stop()
+      }
     },
     playSlider () {
-      this.$refs.mySwiper.swiper.autoplay.start()
+      if (this.$refs.mySwiper.swiper) {
+        this.$refs.mySwiper.swiper.autoplay.start()
+      }
     },
     initSwiper () {
-      // if (this.ready) {
-      this.$swiper('#slider', this.swiperOption)
-      this.$refs.mySwiper.swiper.on('progress', () => {
-        var swiper = this.$refs.mySwiper.swiper
-        var imgs = document.querySelectorAll('.slide-img')
-        var slides = document.querySelectorAll('.swiper-slide')
-        slides.forEach((slide, i) => {
-          var img = imgs[i]
-          var x = (slide.offsetLeft + swiper.translate) * -1 / 3
-          img.style.transform = 'translateX(' + x + 'px)'
-        })
-      })
-      this.setHeroUiContrast(this.slideUi)
-      // }
+      if (document.querySelector('#slider')) {
+        this.$swiper('#slider', this.swiperOption)
+      }
+    },
+    destroySwiper () {
+      if (this.$refs.mySwiper.swiper) {
+        this.$refs.mySwiper.swiper.destroy()
+      }
+    },
+    setLogoColor () {
+      if (this.slideUi === 'Dark') {
+        this.$store.dispatch('setPrimaryColor', '#000000')
+      } else {
+        this.$store.dispatch('setPrimaryColor', '#ffffff')
+      }
     }
   },
   created () {
     this.slideUi = this.gallery[0].contrast
+    this.setLogoColor()
   },
   mounted () {
-    this.initSwiper()
+    this.setHeroUiContrast(this.slideUi)
   },
   beforeDestroy () {
-    this.$refs.mySwiper.swiper.destroy()
+    this.setHeroUiContrast()
+    this.destroySwiper()
   }
 }
 </script>
 
 <style lang="scss">
 @import '~swiper/dist/css/swiper.css';
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 
 #heroSlider {
   position: relative;
@@ -164,7 +176,7 @@ export default {
 }
 
 .swiper-container, .swiper-slide {
-  height: 105vh;
+  height: 100vh;
 }
 .swiper-container {
   display: flex;
@@ -181,7 +193,7 @@ export default {
       }
 
       .slide-img {
-        height: 105vh;
+        height: 100vh;
         width: 100%;
         background-size: cover!important;
         background-position: center;

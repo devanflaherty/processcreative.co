@@ -5,9 +5,19 @@
   .processLogo g.logoFill {
     fill: black!important
   }
+  .navbar .navbar-brand .nav-burg span {
+    &:before, &:after {
+      background: black;
+    }
+  }
 }
 .hero-ui-Light {
-  .navbar .navbar-menu .navbar-item {
+  .navbar #navMenu .navbar-item {
     color: white
+  }
+  .navbar .navbar-brand .nav-burg span {
+    &:before, &:after {
+      background: white;
+    }
   }
 }

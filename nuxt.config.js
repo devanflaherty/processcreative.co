@@ -58,9 +58,7 @@ module.exports = {
     // ['@nuxtjs/google-analytics', { ua: 'UA-108368424-1' }]
   ],
   plugins: [
-    { src: `~plugins/waypoints`, ssr: false },
     { src: `~plugins/vue-lazyload`, ssr: false },
-    { src: `~plugins/vue-sweet-scroll`, ssr: false },
     { src: `~plugins/vue-scroll-reveal`, ssr: false },
     { src: `~plugins/vue-swiper`, ssr: false },
     { src: `~mixins/utilities` },
@@ -110,6 +108,10 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      config.module.rules.push({
+        test: /\.js$/,
+        exclude: [/(node_modules|bower_components)(?![/|\\](swiper))/], 
+      })
     },
     postcss: {
       plugins: {
