@@ -7,8 +7,10 @@
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
       <div class="container">
-        <h1 class="title" v-html="$prismic.asText(entry.title)"></h1>
-        <h2 class="subtitle" v-html="$prismic.asText(entry.description)"></h2>
+        <h2 class="work-title">
+          <strong :class="contrast">{{$prismic.asText(entry.title)}}</strong><br>
+          <span>{{$prismic.asText(entry.description)}}</span>
+        </h2>
       </div>
     </div>
 
@@ -28,7 +30,7 @@ if (process.browser) {
 }
 
 export default {
-  props: ['entry'],
+  props: ['entry', 'contrast'],
   mounted () {
     this.setHeroUiContrast(this.entry.hero_contrast)
 

@@ -1,9 +1,11 @@
-@import "components/settings";
+@import "settings";
 
-@import "~bulma/bulma";
+@import "~bulma";
 
 @import "components/global";
 @import "components/nav";
+@import "components/typography";
+@import "components/hero_helpers";
 @import "components/text_helpers";
 
 @import "animations/all";

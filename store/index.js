@@ -12,7 +12,8 @@ const createStore = () => {
       contact: {
         newBusiness: null,
         general: null
-      }
+      },
+      teamSlugs: null
     },
     getters: {
       primaryColor: state => {
@@ -35,6 +36,9 @@ const createStore = () => {
       },
       contact: state => {
         return state.contact
+      },
+      teamSlugs: state => {
+        return state.teamSlugs
       }
     },
     mutations: {
@@ -58,6 +62,9 @@ const createStore = () => {
       },
       SET_CONTACT (state, obj) {
         state.contact = obj
+      },
+      SET_TEAM_SLUGS (state, array) {
+        state.teamSlugs = array
       }
     },
     actions: {
@@ -86,6 +93,9 @@ const createStore = () => {
             context.commit('SET_CONTACT', contact)
           })
         })
+      },
+      getTeamSlugs (context, slugs) {
+        context.commit('SET_TEAM_SLUGS', slugs)
       }
     }
   })

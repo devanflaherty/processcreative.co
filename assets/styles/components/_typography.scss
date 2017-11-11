@@ -1,0 +1,131 @@
+h1 {
+  font-size: 1.5rem;
+  font-weight: $regularW;
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: $regularW;
+  color: $white;
+  strong {
+    font-weight: $boldW;
+  }
+}
+h3 {
+  font-size: 1.25rem;
+  font-weight: $regularW;
+  color: $grey-medium;
+  strong {
+    font-weight: $boldW;
+  }
+}
+h4 {
+  font-size: 1.25rem;
+  font-weight: $lightW;
+  color: $grey-medium;
+  strong {
+    font-weight: $mediumW;
+  }
+}
+h5 {
+  font-size: 1rem;
+  font-weight: $regularW;
+  color: $grey-dark;
+  strong {
+    font-weight: $mediumW;
+  }
+}
+
+p, i, span, ul, li, input, textarea, a, button {
+  font-size: 1.25rem;
+  font-weight: $lightW;
+  line-height: 1.66;
+  color: $grey;  
+}
+p, ul, ol {
+  margin-bottom: 1.5rem;
+  &:only-child {
+    margin-bottom: 0;
+  }
+}
+li a, p a {
+  position: relative;
+  &:after {
+    content: '';
+    display: block;
+    background: white;
+    height: 100%;
+    width: 0;
+    margin: auto;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -7%;
+    bottom: 0;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.25);
+  }
+  &:hover {
+    color: black;
+    &:after {
+      width: 110%;
+    }
+  }
+}
+a {
+  color: $white;
+  transition: all 0.5s ease;
+}
+
+strong {
+  font-weight: $mediumW;
+  &.black {
+    font-weight: $boldW;
+  }
+}
+
+blockquote {
+  border-left: 4px solid $black;
+  padding-left: 2rem;
+  p {
+    font-weight: $regularW;
+    margin-bottom: 0;
+  }
+}
+
+.rich-text {
+  h2 {
+    margin-bottom: 1.5rem;
+  }
+  h3, h4 {
+    margin-bottom: 1rem;
+  }
+  ol, ul {
+    list-style-position:inside;
+  }
+  > :last-child {
+    margin-bottom: 0!important;
+  }
+}
+
+// Contrast Styles
+.has-text-black {
+  h2 {
+    color: $black;
+  }
+  blockquote {
+    border-color: $black;
+    p {
+      color: $black;
+    }
+  }
+}
+.has-text-white {
+  h2 {
+    color: $white;
+  }
+  blockquote {
+    border-color: $white;
+    p {
+      color: $white;
+    }
+  }
+}

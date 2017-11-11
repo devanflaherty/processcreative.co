@@ -1,5 +1,5 @@
 <template>
-  <div class="slice column-slice section">
+  <article class="slice column-slice section">
     <div class="container">
       <h3 v-if="headline">{{$prismic.asText(headline)}}</h3>
       <div class="columns is-centered">
@@ -9,7 +9,7 @@
           </template>
          
           <template v-else-if="!column.column_image.url && column.content_body.length > 0">
-            <div class="content-body" v-html="$prismic.asHtml(column.content_body)"></div>
+            <div class="content-body rich-text" v-html="$prismic.asHtml(column.content_body)"></div>
           </template>
           
           <template v-else-if="column.column_image.url && column.content_body.length === 0">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>

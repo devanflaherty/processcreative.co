@@ -16,16 +16,26 @@
 </template>
 
 <script>
+
 import SiteNav from '~/components/SiteNav'
 import SiteFooter from '~/components/SiteFooter'
 
 import breakpoints from '~/mixins/breakpoints'
+import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 import {mapGetters} from 'vuex'
 
 export default {
   components: {
     SiteNav,
     SiteFooter
+  },
+  transition: {
+    name: 'page',
+    mode: 'out-in',
+    css: false,
+    beforeEnter,
+    enter,
+    leave
   },
   mixins: [breakpoints],
   computed: {
@@ -43,8 +53,8 @@ export default {
   z-index: 50;
   left: 0;
   top: 0;
-  background: rgba(white, 0.8);
-  padding: .75rem 1rem;
+  background: rgba(white, 0.2);
+  padding: .5rem 1rem;
   transition: all 0.5s ease;
   &:hover {
     background: white;
@@ -53,6 +63,7 @@ export default {
 
 #loader {
   position: fixed;
+  z-index: 100;
   width: 100%;
   height: 100%;
   display: flex;
@@ -62,34 +73,39 @@ export default {
   h1 {
     color: black;
     font-weight: 800;
-    font-size: 44px;
     span {
+      font-size: 44px!important;
+      color: black;
       display: inline-block;
-      animation: wave infinite 2s;
     }
     span:nth-child(1) {
-      animation-delay: 0;
-    }
-    span:nth-child(2) {
-      animation-delay: .25s;
+      animation: wave-left infinite 2s;
     }
     span:nth-child(3) {
-      animation-delay: .5s;
+      animation: wave-right infinite 2s;
     }
   }
 }
-@keyframes wave {
+@keyframes wave-left {
   0% {
-    opacity: 0;
-    transform: translate(0, -10px);
+    transform: translate(0, 0);
   }
   50% {
-    opacity: 1;
-    transform: translate(0, 10px);
+    transform: translate(-50px, 0);
   }
   100% {
-    opacity: 0;
-    transform: translate(0, -10px);
+    transform: translate(0, 0);
+  }
+}
+@keyframes wave-right {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(50px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
   }
 }
 </style>

@@ -1,86 +1,122 @@
 <template>
-  <section class="container">
-    <img src="~assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
-    <h1 class="title">
-      About
-    </h1>
-    <div>
-      <component :blok="story.content" :is="story.content.component"></component>
+  <section id="aboutPage" 
+    class="page section push-top" 
+    :data-wio-id="aboutPage.id"
+    v-show="!loading">
+    <div class="container about-wrap">
+      <div class="about-welcome columns">
+        <div class="column">
+          <div class="opening-headline has-text-white" 
+            v-html="$prismic.asHtml(aboutPage.opening_headline)"
+            v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
+        </div>
+        <div class="column">
+          <div class="opening-statement" 
+            v-html="$prismic.asHtml(aboutPage.opening_statement)"
+            v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top'}"></div>
+        </div>
+      </div>
+      <div class="columns">
+        <teamCard v-for="(post, index) in teamPosts" :key="index" :post="post"/>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-// import axios from '~/plugins/axios'
+import {TimelineMax} from 'gsap'
+
+// import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 
 export default {
-  data () {
+  head () {
     return {
-      story: {
-        content: {
-          body: []
-        }
-      }
+      title: 'About'
     }
   },
-  // async asyncData ({env, params, error}) {
-  //   let { data } = await axios.get(`https://api.storyblok.com/v1/cdn/stories/home?token=bL8HDLSioQh11WCJtX5SBQtt&version=draft`)
-  //   return { story: data.story }
-  // },
-  // head () {
-  //   return {
-  //     title: 'Home'
-  //   }
-  // },
-  methods: {
-    getStory (version) {
-      window.storyblok.get({
-        slug: 'about',
-        version: version
-      }, (data) => {
-        this.story = {
-          content: {
-            body: []
-          }
-        }
-        this.$nextTick(() => {
-          this.story = data.story
+  transition: {
+    name: 'about',
+    mode: 'out-in',
+    css: false,
+    beforeEnter (el) {
+      let before = new TimelineMax()
+      before.set(el, {
+        autoAlpha: 0
+      })
+    },
+    enter (el, done) {
+      let enter = new TimelineMax()
+      enter.to(el, 1, {
+        autoAlpha: 1
+      })
+      enter.addCallback(() => {
+        done()
+      })
+    },
+    leave (el, done) {
+      let child = el.querySelector('.about-wrap')
+      let member = el.querySelector('.active')
+      let leave = new TimelineMax()
+
+      if (member) {
+        leave.to(child, 0.5, {
+          scale: 0.8
+        }, 0)
+        leave.to(child, 0.25, {
+          autoAlpha: 0
+        }, 0.25)
+      } else {
+        leave.to(child, 0.25, {
+          autoAlpha: 0
         })
+      }
+
+      leave.addCallback(() => {
+        window.scrollTo(0, 0)
+      })
+      leave.addCallback(() => {
+        done()
       })
     }
   },
+  async asyncData ({ params, app, store }) {
+    let [teamPosts, aboutPage] = await Promise.all([
+      app.$prismic.initApi().then((ctx) => {
+        return ctx.api.query(
+          app.$prismic.predicates.at('document.type', 'team_posts')
+        )
+      }), app.$prismic.initApi().then((ctx) => {
+        return ctx.api.getByUID('pages', 'about')
+      })
+    ])
+    return {
+      team: teamPosts,
+      teamPosts: teamPosts.results,
+      aboutPage: aboutPage.data
+    }
+  },
+  created () {
+    this.$store.dispatch('toggleLoading', true)
+  },
   mounted () {
-    console.log(window)
-    window.storyblok.init({
-      accessToken: 'bL8HDLSioQh11WCJtX5SBQtt'
-    })
-    window.storyblok.on('change', () => {
-      this.getStory('draft')
-    })
-    window.storyblok.pingEditor(() => {
-      if (window.storyblok.isInEditor()) {
-        this.getStory('draft')
-      } else {
-        this.getStory('published')
-      }
-    })
+    if (this.teamPosts) {
+      this.$store.dispatch('toggleLoading', false)
+      this.setPageStyle(this.aboutPage.primary_color, this.aboutPage.background_color, this.aboutPage.page_contrast)
+
+      this.$prismic.initApi().then((ctx) => {
+        ctx.toolbar()
+      })
+    }
   }
 }
 </script>
 
-<style scoped>
-.title
-{
-  margin: 30px 0;
+<style scoped lang="scss">
+.push-top {
+  padding-top: 11rem;
 }
-.users
-{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.user
-{
-  margin: 10px 0;
+.work-welcome {
+  padding-top: 6rem;
+  padding-bottom: 8rem;
 }
 </style>

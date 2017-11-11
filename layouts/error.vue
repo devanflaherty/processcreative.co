@@ -1,7 +1,9 @@
 <template>
-  <section class="container">
-    <img src="../assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
+<main>
+  <SiteNav />
+  <section class="container push-top">
     <h1 class="title">
+      UH OH
       {{ error.statusCode }}
     </h1>
     <h2 class="info">
@@ -11,14 +13,49 @@
       Homepage
     </nuxt-link>
   </section>
+  <SiteFooter />
+</main>
 </template>
+
 <script>
+import SiteNav from '~/components/SiteNav'
+import SiteFooter from '~/components/SiteFooter'
+
+import breakpoints from '~/mixins/breakpoints'
+import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
+import {mapGetters} from 'vuex'
+
 export default {
-  props: ['error']
+  components: {
+    SiteNav,
+    SiteFooter
+  },
+  props: ['error'],
+  transition: {
+    name: 'page',
+    mode: 'out-in',
+    css: false,
+    beforeEnter,
+    enter,
+    leave
+  },
+  mixins: [breakpoints],
+  computed: {
+    ...mapGetters(['loading'])
+  },
+  created () {
+    this.$store.dispatch('getMenus')
+  },
+  mounted () {
+    this.setPageStyle('#000000', '#ffffff', 'Dark')
+  }
 }
 </script>
 
 <style scoped>
+.push-top {
+  padding: 10rem 0;
+}
 .title
 {
   margin-top: 15px;

@@ -1,5 +1,5 @@
 <template>
-  <section class="slice gallery-stacked section">
+  <article class="slice gallery-stacked section">
     <div class="container">
       <div class="columns is-multiline">
         <article class="column stacked-slide is-6 is-paddingless" v-for="(slide, index) in slides" :key="index">
@@ -12,7 +12,7 @@
         </article>
       </div>
     </div>
-  </section>
+  </article>
 </template>
 
 <script>
@@ -22,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.gallery {
-  padding: .75rem;
-}
 img {
   width: 100%;
   height: auto;

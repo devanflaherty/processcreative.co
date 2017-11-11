@@ -5,7 +5,7 @@
       <div class="columns is-mobile is-multiline">
         
         <div class="column is-6-touch is-2-desktop footer-column">
-          <h4>Navigation</h4>
+          <h5><strong>Navigation</strong></h5>
           <ul>
             <li v-for="(link, index) in navigationMenu" :key="index">
               <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
@@ -14,7 +14,7 @@
         </div>
 
         <div class="column is-6-touch is-2-desktop footer-column">
-          <h4>Connect</h4>
+          <h5><strong>Connect</strong></h5>
           <ul>
             <li v-for="(link, index) in connectMenu" :key="index">
               <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="new-business column is-12-touch is-4-desktop is-offset-4-desktop footer-column">
-          <h4>New Business</h4>
+          <h5><strong>New Business</strong></h5>
           <div v-html="$prismic.asHtml(contact.newBusiness)"></div>
         </div>
       </div>
@@ -61,9 +61,12 @@ footer {
   min-height: 500px;
   background: $black;
   overflow: hidden;
-  h4 {
+  .footer-wrap {
+    padding-bottom: 10rem;
+    padding-top: 10rem;
+  }
+  h5 {
     margin-bottom: 1.25rem;
-    font-weight: 600;
   }
   a {
     color: white;
@@ -88,7 +91,6 @@ footer {
 
 #copyright {
   padding-top: 10rem;
-  padding-bottom: 10rem;
 
   p {
     @include mobile() {

@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 .client-logo {
   display: flex;
   justify-content: center;

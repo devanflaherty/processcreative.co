@@ -1,36 +1,24 @@
 
 // Typography //
-h4 {
-  font-weight: 800;
-  color: #999;
-  &.list-headline {
-    margin-bottom: 2rem;
-  }
+h3.list-headline {
+  margin-bottom: 2rem;
 }
 
 // Opening Helpers //
 .opening.section {
   padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.opening-headline {
-  font-size: 1.5rem;
-}
 .opening-statement {
-  font-size: 1.5rem;
-  font-weight: 200;
   margin-bottom: 4rem;
 }
 .column-list {
   margin-bottom: 4rem;
   white-space: pre-wrap;
-  column-count:2;
-  font-size: 1.5rem!important;
-  color: #666;
-  font-weight: 200;
+  column-count: 2;
 }
 
 // Contrast values //

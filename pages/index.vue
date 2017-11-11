@@ -4,14 +4,16 @@
     <heroSlider :gallery="home.hero_slider" />
     <section id="welcome" class="opening section">
       <div class="container"
-      v-scroll-reveal.reset="{duration: 1000}">
+      v-scroll-reveal="{scale: 1, duration: 1000}">
         <div class="columns">
           <div class="column is-4">
-            <div class="opening-headline" v-html="$prismic.asHtml(home.opening_headline)"></div>
+            <h3 class="opening-headline has-text-white">
+              {{$prismic.asText(home.opening_headline)}}
+            </h3>
           </div>
           <div class="column">
-            <div class="opening-statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"></div>
-            <h4 class="is-size-4 list-headline">Capabilities</h4>
+            <div class="opening-statement" v-html="$prismic.asHtml(home.opening_statement)"></div>
+            <h3 class="list-headline">Capabilities</h3>
             <div class="column-list" v-html="$prismic.asHtml(home.capabilities)"></div>
             <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
           </div>
@@ -23,7 +25,9 @@
       <div class="container">
         <div class="work-welcome columns">
           <div class="column">
-            <div class="work-headline has-text-black" v-html="$prismic.asHtml(home.work_headline)"></div>
+            <h3 class="opening-headline has-text-black">
+              {{$prismic.asText(home.work_headline)}}
+            </h3>
           </div>
           <div class="column">
             <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
@@ -72,8 +76,9 @@ export default {
     this.$store.dispatch('toggleLoading', true)
   },
   mounted () {
-    if (document) {
+    if (this.document) {
       this.$store.dispatch('toggleLoading', false)
+      this.setBg('#ffffff')
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()
@@ -91,26 +96,16 @@ export default {
 #home {
   background: $black;
 }
-#welcome {
-  .opening-headline {
-    color: white;
-  }
-}
+
 #featuredWork {
   padding-top: 25vh;
   padding-bottom: 25vh;
   .work-welcome {
     padding-top: 4rem;
     padding-bottom: 4rem;
-    .work-headline {
-      font-size: 1.5rem!important;
-    }
-    .work-statement {
-      font-size: 1.5rem!important;
-      font-weight: 200;
-    }
   }
 }
+
 #clients {
   padding: 8rem 0 2rem;
   h2 {

@@ -1,5 +1,5 @@
 <template>
-  <article class="slice highlight-slice">
+  <article class="slice highlight-slice section">
     <div class="container">
       <div class="columns">
         <template v-if="highlight.highlight_placement == 'Right'">
@@ -42,10 +42,7 @@ export default {
 
 <style lang="scss">
 .highlight-slice {
-  margin: 4rem 0;
-  .columns {
-    margin-bottom: 0;
-  }
+  
 }
 .highlight-body {
   display: flex;

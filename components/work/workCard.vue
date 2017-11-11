@@ -17,7 +17,7 @@
         </div>
 
         <div class="work-quick-involvement column">
-          <h4>Involvement</h4>
+          <h4><strong class="has-text-white">Involvement</strong></h4>
           <div class="quick-involvement" v-html="toNewLines(entry.involvement)"></div>
         </div>
       </div>
@@ -83,13 +83,8 @@ export default {
   }
   .wipe {
     z-index: 10;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    @include overlay();
     background: gray;
-
     transition: all .66s cubic-bezier(.97,0,.51,1);
   }
   a {
@@ -117,39 +112,32 @@ export default {
         padding: 3rem;
       }
       h2.quick-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         color: white;
-        font-weight: 300;
         transition: all 0.5s ease;
-        transform: translate(-50px, 0);
+        transform: translate(50px, 0);
         span {
+          font-size: 1.5rem;
           display: inline-block;
           margin-left: .5rem;
-          font-weight: 200;
+          font-weight: $lightW;
           color: rgba(white, 0.6);
-          visibility: hidden;
-          opacity: 0;
+          @include autoAlpha(0);
           transform: translate(-100px, 0);
           transition: all 0.5s 0.125s ease;
         }
       }
       .work-quick-involvement {
         color: white!important;
-        font-weight: 300;
-        font-size: 1.25rem;
         h4 {
-          font-size: 1.25rem;
-          font-weight: 600;
+          @include autoAlpha(0);
           transition: all 0.5s ease;
-          visibility: hidden;
-          opacity: 0;
           transform: translate(300px, 0);
         }
         .quick-involvement {
           white-space: pre-wrap; 
           column-count: 2;
-          visibility: hidden;
-          opacity: 0;
+          @include autoAlpha(0);
           transform: translate(300px, 0);
           transition: all 0.5s 0.125s ease;
         }
@@ -172,15 +160,13 @@ export default {
       .quick-title {
         transform: translate(0,0);
         span {
-          opacity: 1;
-          visibility: visible;
+          @include autoAlpha(1);
           transform: translate(0, 0)
         }
       }
       .work-quick-involvement {
         h4, .quick-involvement {
-          opacity: 1;
-          visibility: visible;
+          @include autoAlpha(1);
           transform: translate(0,0);
         }
       }
@@ -197,11 +183,7 @@ export default {
 
   .image-loader {
     display: flex;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
+    @include overlay();
     overflow: hidden;
     .slice-wrap {
       flex: 1 0 auto;

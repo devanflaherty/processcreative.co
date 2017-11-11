@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
+
 export default {
   async asyncData ({ params, app, store }) {
     let [workPosts, workPage] = await Promise.all([
@@ -35,22 +37,29 @@ export default {
       workPage: workPage.data
     }
   },
+  transition: {
+    name: 'page',
+    mode: 'out-in',
+    css: false,
+    beforeEnter,
+    enter,
+    leave
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
-    this.$store.dispatch('setPrimaryColor', '#000000')
   },
   mounted () {
     if (this.workPosts) {
       this.$store.dispatch('toggleLoading', false)
+      this.setPageStyle(this.workPage.primary_color, this.workPage.background_color, this.workPage.page_contrast)
     }
-    console.log(this.workPage)
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .push-top {
-  margin-top: 148px;
+  padding-top: 11rem;
 }
 .work-welcome {
   padding-top: 6rem;

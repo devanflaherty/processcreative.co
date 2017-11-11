@@ -1,6 +1,11 @@
 <template>
-  <section :data-wio-id="document.id" id="workPage" class="page" v-show="!loading">
-    <WorkHero :entry="entry" 
+  <section 
+    :data-wio-id="document.id" 
+    id="workPage" 
+    class="page" 
+    :class="contrast"
+    v-show="!loading">
+    <WorkHero :entry="entry" :contrast="contrast"
       v-scroll-reveal="{duration: 2000, scale: 0.9, distance: '0'}"/>
 
     <section class="section">
@@ -22,8 +27,8 @@
             <div class="opening-statement" 
               v-html="$prismic.asHtml(entry.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top'}"></div>
-            <h4 class="is-size-4 list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}">Involvement</h4>
-            <div class="work-types column-list" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">{{entry.involvement}}</div>
+            <h3 class="list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}">Involvement</h3>
+            <p class="work-types column-list" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">{{entry.involvement}}</p>
           </div>
         </div>
       </div>
@@ -37,11 +42,20 @@
 </template>
 
 <script>
+import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 import WorkHero from '~/components/work/workHero'
 
 export default {
   components: {
     WorkHero
+  },
+  transition: {
+    name: 'page',
+    mode: 'out-in',
+    css: false,
+    beforeEnter,
+    enter,
+    leave
   },
   asyncData ({ app, params, store }) {
     return app.$prismic.initApi().then((ctx) => {
@@ -53,20 +67,25 @@ export default {
       })
     })
   },
+  computed: {
+    contrast () {
+      return {
+        'has-text-black': this.entry.page_contrast === 'Dark',
+        'has-text-white': this.entry.page_contrast === 'Light'
+      }
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
   mounted () {
     if (this.document) {
       this.$store.dispatch('toggleLoading', false)
+      this.setPageStyle(this.entry.primary_color, this.entry.background_color, this.entry.page_contrast)
 
       this.$prismic.initApi().then((api) => {
         api.toolbar()
       })
-
-      this.$store.dispatch('setPrimaryColor', this.entry.primary_color)
-      this.updateBg(this.entry.background_color, '#workPage')
-      this.setPageContrast(this.entry.page_contrast, '#workPage')
     }
   }
 }

@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 .modal-background {
   background-color: rgba(white, 0.95)
 }

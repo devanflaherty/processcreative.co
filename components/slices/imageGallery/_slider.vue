@@ -1,5 +1,5 @@
 <template>
-  <section class="slice slice-slider section is-paddingless"
+  <article class="slice slice-slider section"
     v-scroll-reveal="{scale: 1, distance: 0}"
     @beforeReveal="reveal">
     <transition name="photo-wipe">
@@ -33,7 +33,7 @@
           />
     </div>
     <!-- close swiper -->
-  </section>
+  </article>
 </template>
 
 <script>
@@ -137,7 +137,9 @@ export default {
 @import '~assets/styles/mixins';
 
 .slice-slider {
-  min-height: 400px;
+  padding-left: 0;
+  padding-right: 0; 
+  min-height: 500px;
   height: 33vh;
   position: relative;
   overflow: hidden;
@@ -151,7 +153,6 @@ export default {
     color: black;
     line-height: 1;
     p {
-      font-size: 1.25rem;
       margin-bottom: 0;
     }
     .caption {

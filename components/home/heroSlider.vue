@@ -1,8 +1,8 @@
 <template>
   <section id="heroSlider" class="hero is-fullheight is-paddingless">
-    <transition name="photo-wipe">
+    <!-- <transition name="photo-wipe">
       <div class="mask" v-if="loading"></div>
-    </transition>
+    </transition> -->
     <div class="hero-body is-paddingless">
         
       <div id="slider" class="swiper-container" ref="mySwiper">
@@ -147,6 +147,7 @@ export default {
 #slider {
   position: relative;
   width: 100%;
+  height: 100vh;
   &::after {
     content:'';
     z-index: 15;
@@ -166,7 +167,6 @@ export default {
     color: black;
     line-height: 1;
     p {
-      font-size: 1.25rem;
       margin-bottom: 0;
     }
     .caption {
@@ -199,20 +199,6 @@ export default {
         background-position: center;
       }
     }
-  }
-}
-
-.swiper-arrow {
-  background: none;
-  color: white;
-  font-size: 5rem;
-  height: auto;
-  transform: scale(0.8);
-  transform-orgin: center;
-  transition: all 0.5s ease;
-  &:hover {
-    color: white;
-    transform: scale(1);
   }
 }
 

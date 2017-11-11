@@ -13,8 +13,10 @@
           :href="`#slide${index}`" 
           v-for="(tab, index) in tabs" 
           :key="index">
+            <span class="pagination-slide-title">
+              {{tab.slide_title}}
+            </span>
             <span>
-              {{tab.slide_title}}<br>
               {{tab.slide_caption}}
             </span>
         </a>
@@ -47,10 +49,7 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/styles/mixins';
 .slide-ui {
-  height: 100%;
-  width: 100%;
-  top: 0; left: 0;
-  position: absolute;
+  @include overlay();
   z-index: 20;
   .container {
     height: 100%;
@@ -76,9 +75,14 @@ export default {
     margin: 0 2px;
     padding-bottom: .75rem;
     span {
+      font-size: 1rem;
       display: inline-block;
       color: rgba(white, 0.25);
       transition: all 0.5s ease;
+      display: block;
+      &.pagination-slide-title {
+        font-weight: $mediumW;
+      }
     }
     &:hover span {
       color: rgba(white, 1);

@@ -1,22 +1,26 @@
 <template>
-<section class="slice banner-slice hero is-primary">
-  <img :src="slice.primary.image_banner.url">
-  <div class="hero-body">
+<article class="slice banner-slice hero is-primary">
+  <img :src="banner.image_banner.url">
+  <div class="hero-overlay is-overlay">
     <div class="container">
-      <h1 class="title">
-        Medium title
+      <h1 class="title has-text-white" v-if="banner.title_of_banner.length > 0">
+        {{$prismic.asText(banner.title_of_banner)}}
       </h1>
-      <h2 class="subtitle">
-        Medium subtitle
-      </h2>
+      <div class="rich-text" v-html="$prismic.asHtml(banner.description)" v-if="banner.description.length > 0"></div>
+      <a class="button" :href="$prismic.asLink(banner.button_link)" v-if="banner.button_link.length > 0">{{$prismic.asText(banner.button_label)}}</a>
     </div>
   </div>
-</section>
+</article>
 </template>
 
 <script>
 export default {
-  props: ['slice']
+  props: ['slice'],
+  data () {
+    return {
+      banner: this.slice.primary
+    }
+  }
 }
 </script>
 
@@ -26,5 +30,13 @@ export default {
     width: 100%;
   }
 }
+.banner-slice {
+  position: relative;
+  .hero-overlay {
+    display: flex;
+    align-items: center;
+  }
+}
+
 </style>
 

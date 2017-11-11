@@ -5,7 +5,8 @@
         <Logo :color="primaryColor" :animate="true"/>
       </div>
       <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
-        <span></span>
+        <span :style="`background-color: ${primaryColor}`"></span>
+        <span :style="`background-color: ${primaryColor}`"></span>
       </div>
     </div>
 
@@ -60,6 +61,14 @@ export default {
     ...mapGetters(['mobileNav', 'navigationMenu', 'breakpoint'])
   },
   watch: {
+    mobileNav (bool) {
+      if (bool) {
+        this.disableScroll(true)
+      } else {
+        this.disableScroll(false)
+        this.modal = false
+      }
+    },
     modal (m) {
       if (m === true) {
         this.logoColor = '#000000'
@@ -76,17 +85,7 @@ export default {
   },
   methods: {
     showMobileNav () {
-      var page = document.querySelector('.page')
       this.$store.dispatch('toggleMobileNav', !this.mobileNav)
-
-      if (this.mobileNav) {
-        page.style.transform = 'translate(400px, 0)'
-        this.disableScroll(true)
-      } else {
-        page.style.transform = 'translate(0, 0)'
-        this.disableScroll(false)
-        this.modal = false
-      }
     },
     toggleModal (m) {
       if (m) {
@@ -137,6 +136,7 @@ body.hero-ui-Dark {
     position: relative;
     z-index: 100;
     justify-content: space-between;
+    align-items: center;
 
     .navbar-burger {
       transition: all 0.5s ease;
@@ -150,13 +150,14 @@ body.hero-ui-Dark {
   }
   .navbar-menu {
     z-index: 90;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 0;
+    padding-right: 0;
     .navbar-end {
       align-items: center;
     }
     .navbar-item {
       color: $black;
+      font-size: 1rem;
       position: relative;
       padding-left: 0;
       padding-right: 0;
@@ -308,9 +309,10 @@ body.hero-ui-Dark {
   }
 }
 
-
 .nav-burg {
   color: $white;
+  padding: 4px;
+  height: 8px;
   width: 2rem;
   position: relative;
   z-index: 100;
@@ -318,9 +320,6 @@ body.hero-ui-Dark {
   flex: 0 1 auto;
   cursor: pointer;
   transition: all 0.5s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   @include desktop() {
     display: none;
   }
@@ -328,45 +327,34 @@ body.hero-ui-Dark {
     background: none;
   }
   span {
-    background-color: transparent!important;
     cursor: pointer;
-    border-radius: 2px;
-    height: 0;
-    width: 1.5rem;
     position: absolute;
     display: block;
     content: '';
-    transition: all .66s cubic-bezier(.75,0,.50, 2);
-  }
-  span:after, span:before {
-    cursor: pointer;
+    transition: background-color .5s ease, top .5s .5s cubic-bezier(.75,0,.50, 1.5), transform .5s cubic-bezier(.75,0,.50, 1.5);
+
     border-radius: 6px;
     height: 2px;
     width: 1.5rem;
     background: $black;
-    position: absolute;
-    display: block;
-    content: '';
-    transition: all .66s cubic-bezier(.75,0,.50, 2);
   }
-  span:before {
-    top: -4px;
+  span:nth-child(1) {
+    top: 0;
   }
-  span:after {
-    bottom: -4px;
+  span:nth-child(2) {
+    top: 100%;
   }
   &.is-active span {
-    background-color: transparent;
-  }
-  &.is-active span:before {
-    background: $black;
+    top: 50%;
     transform-origin: center center;
-    transform: translate(0, 3px) rotate(-45deg);
+    background: $black!important;
+    transition: background-color .5s ease, top .5s cubic-bezier(.75,0,.50, 1.5), transform .5s .5s cubic-bezier(.75,0,.50, 1.5);
   }
-  &.is-active span:after {
-    background: $black;
-    transform-origin: center center;
-    transform: translate(0, -3px) rotate(45deg);
+  &.is-active span:nth-child(1) {
+    transform: rotate(-45deg);
+  }
+  &.is-active span:nth-child(2) {
+    transform: rotate(45deg);
   }
 }
 </style>

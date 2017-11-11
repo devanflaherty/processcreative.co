@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma/bulma';
+@import '~assets/styles/mixins';
 article {
   @include mobile() {
     margin-left: -1.5rem;
