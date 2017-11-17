@@ -19,9 +19,9 @@ export default {
       })
     }).catch(err => {
       console.error(err)
-      // if (err) {
-      //   error({statusCode: 404, message: 'The page you are looking for does not exist.'})
-      // }
+      if (err) {
+        error({statusCode: 404, message: 'The page you are looking for does not exist.'})
+      }
     })
   },
   transition: {

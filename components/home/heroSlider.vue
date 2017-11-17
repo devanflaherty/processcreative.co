@@ -1,8 +1,5 @@
 <template>
   <section id="heroSlider" class="hero is-fullheight is-paddingless">
-    <!-- <transition name="photo-wipe">
-      <div class="mask" v-if="loading"></div>
-    </transition> -->
     <div class="hero-body is-paddingless">
         
       <div id="slider" class="swiper-container" ref="mySwiper">
@@ -17,6 +14,7 @@
                   data-swiper-parallax-opacity="0.5" v-html="$prismic.asHtml(slide.slide_description)"></div>
               </div>
             </div>
+            <!-- <heroLoader :hero-image="slide.slide_image" data-swiper-parallax="25%" class="slide-img" /> -->
 
             <div data-swiper-parallax="25%" class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
           </div>
@@ -79,18 +77,18 @@ export default {
       }
     },
     activeSlide (index) {
-      var contrast = this.gallery[index].contrast
+      let contrast = this.gallery[index].contrast
       this.slideUi = contrast
       this.setLogoColor()
     },
-    slideUi (style, previousStyle) {
-      this.setHeroUiContrast(style, previousStyle)
+    slideUi (style) {
+      this.setHeroUiContrast(style)
     }
   },
   methods: {
     slideTo (index) {
       if (this.$refs.mySwiper.swiper) {
-        var i = index + 1
+        let i = index + 1
         this.$refs.mySwiper.swiper.slideTo(i)
       }
     },
@@ -131,6 +129,8 @@ export default {
   },
   beforeDestroy () {
     this.setHeroUiContrast()
+  },
+  destroy () {
     this.destroySwiper()
   }
 }

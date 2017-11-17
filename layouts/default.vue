@@ -2,15 +2,6 @@
   <main class="main">
     <SiteNav />
     <nuxt />
-    <transition name="fade-in">
-      <div id="loader" class="is-flex" v-if="loading">
-        <h1>
-          <span>|</span>
-          <span>|</span>
-          <span>|</span>
-        </h1>
-      </div>
-    </transition>
     <SiteFooter />
   </main>
 </template>

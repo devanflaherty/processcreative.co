@@ -4,7 +4,9 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       primaryColor: '#000',
+      backgroundColor: '#fff',
       loading: true,
+      navVis: false,
       mobileNav: false,
       breakpoint: 0,
       navigationMenu: null,
@@ -19,8 +21,14 @@ const createStore = () => {
       primaryColor: state => {
         return state.primaryColor
       },
+      backgroundColor: state => {
+        return state.backgroundColor
+      },
       loading: state => {
         return state.loading
+      },
+      navVis: state => {
+        return state.navVis
       },
       mobileNav: state => {
         return state.mobileNav
@@ -45,8 +53,14 @@ const createStore = () => {
       SET_PRIMARY_COLOR (state, color) {
         state.primaryColor = color
       },
+      SET_BACKGROUND_COLOR (state, color) {
+        state.backgroundColor = color
+      },
       TOGGLE_LOADING (state, bool) {
         state.loading = bool
+      },
+      TOGGLE_NAV_VIS (state, bool) {
+        state.navVis = bool
       },
       TOGGLE_MOBILE_NAV (state, bool) {
         state.mobileNav = bool
@@ -68,11 +82,22 @@ const createStore = () => {
       }
     },
     actions: {
+      setBackgroundColor (context, color) {
+        context.commit('SET_BACKGROUND_COLOR', color)
+        let el = document.querySelector('body')
+
+        if (color) {
+          el.style.backgroundColor = color
+        }
+      },
       setPrimaryColor (context, color) {
         context.commit('SET_PRIMARY_COLOR', color)
       },
       toggleLoading (context, bool) {
         context.commit('TOGGLE_LOADING', bool)
+      },
+      toggleNavVis (context, bool) {
+        context.commit('TOGGLE_NAV_VIS', bool)
       },
       toggleMobileNav (context, bool) {
         context.commit('TOGGLE_MOBILE_NAV', bool)
@@ -86,7 +111,7 @@ const createStore = () => {
             context.commit('SET_NAVIGATION_MENU', res.data.navigation_menu)
             context.commit('SET_CONNECT_MENU', res.data.connect_menu)
 
-            const contact = {
+            let contact = {
               newBusiness: res.data.new_business,
               general: res.data.general
             }

@@ -5,20 +5,32 @@ import {mapGetters} from 'vuex'
 
 Vue.mixin({
   computed: {
-    ...mapGetters(['primaryColor', 'loading'])
+    ...mapGetters(['primaryColor', 'backgroundColor', 'loading', 'navVis'])
   },
   methods: {
+    imageLoader (imgSrc, el) {
+      var img = new Image()
+      img.src = imgSrc
+
+      img.onload = function () {
+        el.appendChild(img)
+      }
+    },
     setPageStyle (primary, background, contrast, el) {
-      this.setBg(background)
+      // this.setBg(background)
       this.setPageContrast(contrast)
       this.setPrimaryColor(primary)
     },
-    setBg (color) {
-      let el = document.querySelector('body')
-
-      if (color) {
+    setBg (color, el) {
+      if (el) {
+        el = document.querySelector(el)
+      } else {
+        el = document.querySelector('body')
+      }
+      let updateBg = () => {
         el.style.backgroundColor = color
       }
+      window.requestAnimationFrame(updateBg)
     },
     setPrimaryColor (primary) {
       this.$store.dispatch('setPrimaryColor', primary)
@@ -29,27 +41,16 @@ Vue.mixin({
       } else {
         el = document.querySelector('body')
       }
-      el.classList.remove('contrast-Dark', 'contrast-Light')
-      el.classList.add(`contrast-${style}`)
+      el.classList.remove('page-contrast-Dark', 'page-contrast-Light')
+      el.classList.add(`page-contrast-${style}`)
     },
-    setHeroUiContrast (style, previousStyle) {
+    setHeroUiContrast (style) {
       var body = document.querySelector('body')
       if (style) {
-        if (previousStyle && previousStyle !== style) {
-          body.classList.remove(`contrast-${previousStyle}`)
-          body.classList.add(`contrast-${style}`)
-        } else if (!previousStyle) {
-          if (!body.classList.contains(`contrast-${style}`)) {
-            if (style === 'Dark') {
-              body.classList.remove(`contrast-Light`)
-            } else if (style === 'Light') {
-              body.classList.remove(`contrast-Dark`)
-            }
-            body.classList.add(`contrast-${style}`)
-          }
-        }
+        body.classList.remove('hero-contrast-Dark', 'hero-contrast-Light')
+        body.classList.add(`hero-contrast-${style}`)
       } else {
-        body.classList.remove('contrast-Dark', 'contrast-Light')
+        body.classList.remove('hero-contrast-Dark', 'hero-contrast-Light')
       }
     },
     toCamelCase (str) {
@@ -80,6 +81,12 @@ Vue.mixin({
         y: yPos
       }
     }
+  },
+  mounted () {
+    this.$store.dispatch('toggleNavVis', true)
+  },
+  destroy () {
+    this.setHeroUiContrast()
   }
   // scrollTo (el, obj) {
   //   // this.$ss().to(el)

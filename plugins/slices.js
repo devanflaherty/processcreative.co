@@ -14,6 +14,8 @@ import teamCard from '~/components/team/teamCard'
 // Utilities
 import responsiveVideo from '~/components/utilities/responsiveVideo'
 import captionedImage from '~/components/utilities/captionedImage'
+import heroLoader from '~/components/utilities/heroLoader'
+import blurLoader from '~/components/utilities/blurLoader'
 
 Vue.component('highlight', highlight)
 Vue.component('imageGallery', imageGallery)
@@ -27,3 +29,5 @@ Vue.component('teamCard', teamCard)
 
 Vue.component('responsiveVideo', responsiveVideo)
 Vue.component('captionedImage', captionedImage)
+Vue.component('heroLoader', heroLoader)
+Vue.component('blurLoader', blurLoader)

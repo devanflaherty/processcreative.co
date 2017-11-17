@@ -48,6 +48,9 @@ export default {
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
+  beforeMount () {
+    this.$store.dispatch('setBackgroundColor', this.workPage.background_color)
+  },
   mounted () {
     if (this.workPosts) {
       this.$store.dispatch('toggleLoading', false)

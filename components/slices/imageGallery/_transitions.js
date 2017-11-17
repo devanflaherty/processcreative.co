@@ -31,26 +31,27 @@ const transitions = {
       )
     },
     forEach (array, callback, scope) {
-      for (var i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
         callback.call(scope, i, array[i]) // passes back stuff we need
       }
     }
   },
   mounted () {
     /* eslint-disable */
-    var controller = new ScrollMagic.Controller()
+    let controller = new ScrollMagic.Controller()
 
-    var sliders = document.querySelectorAll('.slice-slider')
+    let sliders = document.querySelectorAll('.slice-slider')
 
     this.forEach(sliders, (index, value) => {
-      var slice = sliders[index]
-      var pagination = slice.querySelector('.slider-ui')
-      var slideImage = slice.querySelector('.slide-img')
+      let slice = sliders[index]
+      let pagination = slice.querySelector('.slider-ui')
+      let slideImage = slice.querySelector('.slide-img')
 
-      var ui = new ScrollMagic.Scene({
+      let ui = new ScrollMagic.Scene({
         duration: '200%',
         triggerElement: slice,
-        triggerHook: 0.25
+        triggerHook: 'onLeave',
+        offset: 200
       })
         .setTween(
           TweenMax.fromTo('.swiper-custom-pagination', 1,

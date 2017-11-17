@@ -16,6 +16,12 @@
   dependencies:
     cssnano "^3.10.0"
 
+"@nuxtjs/font-awesome@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/font-awesome/-/font-awesome-1.0.2.tgz#cf1740e04b36e94476ed5cba69aef14a773625a2"
+  dependencies:
+    font-awesome "^4.7.0"
+
 "@nuxtjs/icon@latest":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nuxtjs/icon/-/icon-1.1.0.tgz#3bd08c75fe31c82121c5d5e8c13ef4704a83b5a2"
@@ -2564,6 +2570,10 @@ follow-redirects@^1.2.3:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.4.tgz#355e8f4d16876b43f577b0d5ce2668b9723214ea"
   dependencies:
     debug "^2.4.5"
+
+font-awesome@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 for-each@^0.3.2:
   version "0.3.2"
@@ -6477,6 +6487,16 @@ vue-template-compiler@~2.4.2:
 vue-template-es2015-compiler@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
+
+vue-waypoint@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/vue-waypoint/-/vue-waypoint-2.5.0.tgz#b0b185f1a671dd9b08bb4059b75dc0ea656658c9"
+  dependencies:
+    vue "^2.1.0"
+
+vue@^2.1.0:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.4.tgz#4405e30b856875553e8fadb0ebf50f51ffc443f5"
 
 vue@~2.4.2:
   version "2.4.4"

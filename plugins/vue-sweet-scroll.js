@@ -52,7 +52,7 @@ var mySweetScroll = {
     })
     Vue.directive('sweet-scroll', {
       inserted: function inserted (el, binding) {
-        var options = binding.value || {}
+        let options = binding.value || {}
         if (!options) {
           options = defaultOptions
         }

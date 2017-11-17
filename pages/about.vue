@@ -56,19 +56,23 @@ export default {
     leave (el, done) {
       let child = el.querySelector('.about-wrap')
       let member = el.querySelector('.active')
+      let members = el.querySelectorAll('.card-square:not(.active)')
       let leave = new TimelineMax()
 
       if (member) {
+        leave.to(members, 0.5, {
+          filter: 'blur(10px)'
+        }, 0)
         leave.to(child, 0.5, {
           scale: 0.8
-        }, 0)
-        leave.to(child, 0.25, {
-          autoAlpha: 0
-        }, 0.25)
-      } else {
-        leave.to(child, 0.25, {
-          autoAlpha: 0
         })
+        leave.to(child, 0.66, {
+          autoAlpha: 0
+        }, 1)
+      } else {
+        leave.to(child, 0.5, {
+          autoAlpha: 0
+        }, 0.5)
       }
 
       leave.addCallback(() => {
@@ -98,6 +102,9 @@ export default {
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
+  beforeMount () {
+    this.$store.dispatch('setBackgroundColor', this.aboutPage.background_color)
+  },
   mounted () {
     if (this.teamPosts) {
       this.$store.dispatch('toggleLoading', false)
@@ -115,7 +122,7 @@ export default {
 .push-top {
   padding-top: 11rem;
 }
-.work-welcome {
+.about-welcome {
   padding-top: 6rem;
   padding-bottom: 8rem;
 }

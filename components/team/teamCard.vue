@@ -20,18 +20,21 @@
         </div>
 
         <div class="image-loader" ref="imageLoader">
-          <div class="slice-wrap" v-for="(slice, i) in 3" :key="i">
-            <div class="image-slice" :style="`background-image: url(${entry.member_avatar.url})`"></div>
+          <div class="slice-wrap">
+            <div class="image-slice" :style="`background-image: url(${entry.member_avatar.large.url})`"></div>
           </div>
+          <!-- <div class="slice-wrap" v-for="(slice, i) in 3" :key="i">
+            <div class="image-slice" :style="`background-image: url(${entry.member_avatar.url})`"></div>
+          </div> -->
         </div>
-        <img :src="entry.member_avatar.url" style="visibility: hidden; opacity: 0;">
+        <img :src="entry.member_avatar.large.url" style="visibility: hidden; opacity: 0;">
       </nuxt-link>
     </div>
   </article>
 </template>
 
 <script>
-import {TimelineMax} from 'gsap'
+// import {TimelineMax} from 'gsap'
 export default {
   props: ['post'],
   data () {
@@ -43,7 +46,7 @@ export default {
   },
   watch: {
     reveal () {
-      this.animateSlices()
+      // this.animateSlices()
     }
   },
   methods: {
@@ -55,20 +58,20 @@ export default {
     },
     wipe () {
       this.reveal = true
-    },
-    animateSlices () {
-      let loader = this.$refs.imageLoader
-      let slices = [...loader.childNodes]
-      let imgs = slices.map((slice, i) => {
-        return slice.querySelector('.image-slice')
-      })
-      let tl = new TimelineMax()
-      tl.staggerFromTo(imgs, 0.5, {
-        x: -200
-      }, {
-        x: 0
-      }, 0.25)
     }
+    // animateSlices () {
+    //   let loader = this.$refs.imageLoader
+    //   let slices = [...loader.childNodes]
+    //   let imgs = slices.map((slice, i) => {
+    //     return slice.querySelector('.image-slice')
+    //   })
+    //   let tl = new TimelineMax()
+    //   tl.staggerFromTo(imgs, 0.5, {
+    //     x: -200
+    //   }, {
+    //     x: 0
+    //   }, 0.25)
+    // }
   }
 }
 </script>
@@ -77,14 +80,20 @@ export default {
 @import '~assets/styles/mixins';
 .team-card {
   position: relative;
+  overflow: hidden;
   .card-square {
+    position: relative;
     height: 0;
     width: 100%;
     padding-bottom: 100%;
     overflow: hidden;
+    transition: filter 0.5s ease;
   }
   .wipe {
     z-index: 20;
+    height: 100%;
+    top: 0;
+    left: 0;
     @include overlay();
     background: gray;
     transition: all .66s cubic-bezier(.97,0,.51,1);
@@ -93,6 +102,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    height: 100%;
     width: 100%;
     display: block;
     overflow: hidden;
@@ -133,7 +143,7 @@ export default {
   }
   &.reveal {
     .wipe {
-      left: 100%;
+      top: -100%;
     }
   }
 
@@ -149,19 +159,20 @@ export default {
         position: absolute;
         top: 0;
         height: 100%;
-        width: 300%;
+        width: 100%;
         background-size: cover;
         background-position: center;
-      }
-      &:nth-child(1) .image-slice {
         left: 0;
       }
-      &:nth-child(2) .image-slice {
-        left: -100%;
-      }
-      &:nth-child(3) .image-slice {
-        left: -200%;
-      }
+      // &:nth-child(1) .image-slice {
+      //   left: 0;
+      // }
+      // &:nth-child(2) .image-slice {
+      //   left: -100%;
+      // }
+      // &:nth-child(3) .image-slice {
+      //   left: -200%;
+      // }
     }
   }
 }

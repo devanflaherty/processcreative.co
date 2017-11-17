@@ -6,16 +6,17 @@
     v-show="!loading">
     <div class="team-wrap">
       <section class="hero team-hero is-large">
-        <div class="team-hero-image is-overlay" :style="`background-image: url(${entry.member_hero.url})`"></div>
+        <heroLoader class="team-hero-image" :hero-image="entry.member_hero"/>
+        <!-- <div class="team-hero-image is-overlay" :style="`background-image: url(${entry.member_hero.url})`"></div> -->
 
         <!-- Hero content: will be in the middle -->
-        <div class="hero-body">
-  
-        </div>
+        <div class="hero-body"></div>
       </section>
+
       <a class="button" v-if="prevMember" :href="`/team/${prevMember.uid}`">Meet {{$prismic.asText(prevMember.name)}}</a>
       <a class="button" v-if="nextMember" :href="`/team/${nextMember.uid}`">Meet {{$prismic.asText(nextMember.name)}}</a>
-      <section class="section member-details is-light">
+      
+      <section class="section member-details">
         <div class="container">
           <div class="columns">
             <div class="column is-4">
@@ -31,13 +32,16 @@
         </div>
       </section>
     </div>
+    
+    <!-- Repeatable Slices -->
+    <component v-for="(slice, index) in entry.body" :key="index" 
+      :slice="slice" :is="toCamelCase(slice.slice_type)" />
   </section>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import {TweenMax, TimelineMax} from 'gsap'
-// import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
+import {TimelineMax, TweenMax} from 'gsap'
 
 if (process.browser) {
   var ScrollMagic = require('ScrollMagic')
@@ -75,6 +79,9 @@ export default {
     leave (el, done) {
       // let child = el.querySelector('.team-wrap')
       let leave = new TimelineMax()
+      leave.to(el, 0.66, {
+        autoAlpha: 0
+      })
 
       leave.addCallback(() => {
         window.scrollTo(0, 0)
@@ -109,7 +116,7 @@ export default {
   computed: {
     ...mapGetters(['teamSlugs']),
     prevMember () {
-      var member = this.teamPosts[this.currentIndex - 1]
+      let member = this.teamPosts[this.currentIndex - 1]
       if (member) {
         return {
           uid: member.uid,
@@ -136,6 +143,9 @@ export default {
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
+  beforeMount () {
+    this.$store.dispatch('setBackgroundColor', this.entry.background_color)
+  },
   mounted () {
     if (this.teamPosts) {
       let index = this.teamPosts.findIndex(el => {
@@ -156,7 +166,7 @@ export default {
 
     /* eslint-disable */
     let controller = new ScrollMagic.Controller()
-
+    
     let slider = new ScrollMagic.Scene({
       duration: '100%',
       triggerHook: 'onEnter'
@@ -175,6 +185,8 @@ export default {
 }
 </script>
 
+
+
 <style lang="scss" scoped>
 .is-light {
   background: white;
@@ -183,10 +195,15 @@ export default {
   background-color: black;
   position: relative;
   overflow: hidden;
+  min-height: 400px;
 }
 .team-hero-image {
   background-size: cover;
   background-position: center;
+  &::before {
+    position: fixed;
+    content: '';
+  }
 }
 
 .member-details {

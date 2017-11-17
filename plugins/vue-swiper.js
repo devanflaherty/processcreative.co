@@ -6,7 +6,6 @@ if (process.browser) {
   var mySwiper = {
     install: function install (Vue) {
       Vue.prototype.$swiper = function (el, options, int) {
-        console.log('swiper')
         initSwiper(el, options)
       }
 

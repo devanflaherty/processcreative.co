@@ -1,5 +1,7 @@
 <template>
-  <article class="work-card" :class="{'reveal' : reveal}" 
+  <article 
+    class="work-card" :class="{'reveal' : reveal}"
+    :style="`background-color:`"
     v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"
     @beforeReveal="wipe"
     :data-wio-id="post.id">
@@ -49,22 +51,24 @@ export default {
   },
   methods: {
     toNewLines (str) {
-      return str.split('\n').join('<br>')
+      if (str) {
+        return str.split('\n').join('<br>')
+      }
     },
     wipe () {
       this.reveal = true
     },
     animateSlices () {
-      var loader = this.$refs.imageLoader
-      var slices = [...loader.childNodes]
-      var imgs = slices.map((slice, i) => {
+      let loader = this.$refs.imageLoader
+      let slices = [...loader.childNodes]
+      let imgs = slices.map((slice, i) => {
         return slice.querySelector('.image-slice')
       })
-      var tl = new TimelineMax()
+      let tl = new TimelineMax()
       tl.staggerFromTo(imgs, 0.5, {
-        x: -200
+        y: 200
       }, {
-        x: 0
+        y: 0
       }, 0.25)
     }
   }
@@ -78,16 +82,26 @@ export default {
   position: relative;
   margin-bottom: 1rem;
   overflow: hidden;
+  height: 0;
+  padding-top: 41.75%;
   @include mobile() {
     height: 75vh;
   }
   .wipe {
-    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 20;
     @include overlay();
     background: gray;
     transition: all .66s cubic-bezier(.97,0,.51,1);
   }
   a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
     display: block;
     overflow: hidden;
     .work-quick-info {
@@ -177,7 +191,7 @@ export default {
   }
   &.reveal {
     .wipe {
-      left: 100%;
+      top: -100%;
     }
   }
 

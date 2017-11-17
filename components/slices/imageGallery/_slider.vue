@@ -3,7 +3,7 @@
     v-scroll-reveal="{scale: 1, distance: 0}"
     @beforeReveal="reveal">
     <transition name="photo-wipe">
-      <div class="mask" v-if="hidden"></div>
+      <div class="mask" :style="maskColor" v-if="hidden"></div>
     </transition>
     <div class="swiper-container" ref="mySwiper">
       <div class="swiper-wrapper">
@@ -71,6 +71,15 @@ export default {
       }
     }
   },
+  computed: {
+    maskColor () {
+      if (this.backgroundColor) {
+        return `background-color: ${this.backgroundColor}`
+      } else {
+        return `background-color: #ffffff`
+      }
+    }
+  },
   watch: {
     loading () {
       if (!this.loading && this.$refs.mySwiper) {
@@ -78,7 +87,7 @@ export default {
       }
     },
     activeSlide (index) {
-      var contrast = this.slides[index].contrast
+      let contrast = this.slides[index].contrast
       this.slideUi = contrast
     },
     slideUi (style, previousStyle) {
@@ -90,7 +99,7 @@ export default {
       this.hidden = false
     },
     slideTo (index) {
-      var i = index + 1
+      let i = index + 1
       this.$refs.mySwiper.swiper.slideTo(i)
     },
     pauseSlider () {
@@ -100,7 +109,7 @@ export default {
       this.$refs.mySwiper.swiper.autoplay.start()
     },
     setSliderUiContrast (style, previousStyle) {
-      var slider = this.$refs.mySwiper
+      let slider = this.$refs.mySwiper
       if (previousStyle && previousStyle !== style) {
         slider.classList.remove(`hero-ui-${previousStyle}`)
         slider.classList.add(`hero-ui-${style}`)
@@ -116,15 +125,12 @@ export default {
       }
     },
     initSwiper () {
-      var swiper = this.$refs.mySwiper
+      let swiper = this.$refs.mySwiper
       this.$swiper(swiper, this.swiperOption)
     }
   },
   created () {
     this.slideUi = this.slides[0].contrast
-  },
-  mounted () {
-    this.setHeroUiContrast(this.slideUi)
   },
   beforeDestroy () {
     this.$refs.mySwiper.swiper.destroy()
@@ -140,7 +146,7 @@ export default {
   padding-left: 0;
   padding-right: 0; 
   min-height: 500px;
-  height: 33vh;
+  height: 85vh;
   position: relative;
   overflow: hidden;
   width: 100%;

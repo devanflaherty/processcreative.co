@@ -9,8 +9,8 @@ var ScrollReveal = {
     Vue.directive('scroll-reveal', {
       inserted: function inserted (el, binding, vnode) {
         // Allows us to emit to the directive component
-        var emit = (vnode, name, data) => {
-          var handlers = (vnode.data && vnode.data.on) ||
+        let emit = (vnode, name, data) => {
+          let handlers = (vnode.data && vnode.data.on) ||
             (vnode.componentOptions && vnode.componentOptions.listeners)
 
           if (handlers && handlers[name]) {
@@ -18,7 +18,7 @@ var ScrollReveal = {
           }
         }
 
-        var options = binding.value || {}
+        let options = binding.value || {}
 
         if (binding.modifiers) {
           if (binding.modifiers.reset) {

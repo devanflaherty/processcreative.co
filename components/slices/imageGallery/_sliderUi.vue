@@ -14,10 +14,10 @@
           v-for="(tab, index) in tabs" 
           :key="index">
             <span class="pagination-slide-title">
-              {{tab.slide_title}}
+              {{tab.slide_title}}&nbsp;
             </span>
             <span>
-              {{tab.slide_caption}}
+              {{tab.slide_caption}}&nbsp;
             </span>
         </a>
       </div>

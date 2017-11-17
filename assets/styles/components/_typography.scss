@@ -47,8 +47,22 @@ p, ul, ol {
     margin-bottom: 0;
   }
 }
-li a, p a {
+li a:not(.button, .arrow), p a:not(.button, .arrow) {
   position: relative;
+  z-index: 1;
+  &:before {
+    content: '';
+    display: block;
+    background: white;
+    height: 2px;
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.25);
+  }
   &:after {
     content: '';
     display: block;
@@ -66,13 +80,33 @@ li a, p a {
   &:hover {
     color: black;
     &:after {
-      width: 110%;
+      width: 115%;
     }
   }
 }
 a {
   color: $white;
   transition: all 0.5s ease;
+  &.arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &:after {
+      font-family: 'fontawesome';
+      content: '\f178';
+      display: block;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      transition: all 0.5s ease;
+    }
+    &:hover {
+      transform: translate(20px, 0);
+      &:after {
+        transition: all 0.5s 0.25s ease;
+        transform: translate(25px, 0);
+      }
+    }
+  }
 }
 
 strong {

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@nuxtjs/apollo": "^2.1.1",
+    "@nuxtjs/font-awesome": "^1.0.2",
     "@nuxtjs/pwa": "^0.2.1",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
@@ -41,6 +42,7 @@
     "vue-lodash": "^1.0.4",
     "vue-scroll-reveal": "^1.0.2",
     "vue-smooth-scroll": "^1.0.13",
+    "vue-waypoint": "^2.5.0",
     "waypoints": "^4.0.1"
   },
   "devDependencies": {

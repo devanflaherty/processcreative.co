@@ -20,7 +20,7 @@ export default {
     id () {
       const url = this.url
       const urlLength = url.length
-      var res = ''
+      let res = ''
       if (urlLength > 9) {
         const stripL = urlLength - 9
         res = url.substring(stripL, urlLength)

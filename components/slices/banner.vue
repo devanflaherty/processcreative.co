@@ -1,6 +1,6 @@
 <template>
 <article class="slice banner-slice hero is-primary">
-  <img :src="banner.image_banner.url">
+  <blurLoader :image="banner.image_banner" />
   <div class="hero-overlay is-overlay">
     <div class="container">
       <h1 class="title has-text-white" v-if="banner.title_of_banner.length > 0">

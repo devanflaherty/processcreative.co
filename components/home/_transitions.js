@@ -12,7 +12,8 @@ const transitions = {
       return TweenMax.fromTo(el, 1,
         {
           y: 0,
-          autoAlpha: 1
+          autoAlpha: 1,
+          force3D: true
         },
         {
           y: distance,
@@ -33,17 +34,17 @@ const transitions = {
   },
   mounted () {
     /* eslint-disable */
-    var controller = new ScrollMagic.Controller()
+    let controller = new ScrollMagic.Controller()
 
-    var ui = new ScrollMagic.Scene({
+    let ui = new ScrollMagic.Scene({
       duration: '200%',
       triggerHook: 'onEnter'
     })
-      .setTween(this.fadeY(this.$refs.pagination, -250))
+      .setTween(this.fadeY('.swiper-custom-pagination', -250))
       // .addIndicators({name:'headline'})
       .addTo(controller)
     
-    var slider = new ScrollMagic.Scene({
+    let slider = new ScrollMagic.Scene({
       duration: '100%',
       triggerHook: 'onEnter'
     })

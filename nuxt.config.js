@@ -49,16 +49,18 @@ module.exports = {
   css: [
     { src: '~assets/styles/main.scss', lang: 'scss' }
   ],
-  loading: { color: '#ffffff' },
+  loading: { color: '#484848', height: '6px' },
   /*
   ** Add modules
   */
   modules: [
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/font-awesome'
     // ['@nuxtjs/google-analytics', { ua: 'UA-108368424-1' }]
   ],
   plugins: [
     { src: `~plugins/vue-lazyload`, ssr: false },
+    { src: `~plugins/waypoints`, ssr: false },
     { src: `~plugins/vue-scroll-reveal`, ssr: false },
     { src: `~plugins/vue-swiper`, ssr: false },
     { src: `~mixins/utilities` },

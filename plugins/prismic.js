@@ -33,7 +33,7 @@ export default (ctx, inject) => {
       },
       asDate (date, format) {
         if (date) {
-          var d = this.prismicDOM.Date(date)
+          let d = this.prismicDOM.Date(date)
           if (format) {
             return moment(d).format(format)
           } else {

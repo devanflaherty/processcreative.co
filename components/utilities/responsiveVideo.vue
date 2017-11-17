@@ -21,13 +21,13 @@ export default {
   },
   computed: {
     padding () {
-      var pad = (this.videoHeight / this.videoWidth) * 100
+      let pad = (this.videoHeight / this.videoWidth) * 100
       return pad
     }
   },
   mounted () {
-    var wrap = this.$refs.videoWrap
-    var iframe = wrap.querySelector('iframe')
+    let wrap = this.$refs.videoWrap
+    let iframe = wrap.querySelector('iframe')
 
     this.videoHeight = iframe.clientHeight
     this.videoWidth = iframe.clientWidth

@@ -22,8 +22,23 @@ h3.list-headline {
 }
 
 // Contrast values //
-.contrast-Dark {
+.page-contrast-Dark {
   .opening-headline > * {
-    color: $black
+    color: $black;
+  }
+  .rich-text a:not(.button, .arrow) {
+    color: $black;
+    &:before {
+      background: $black;
+    }
+    &:after {
+      background: $black;
+    }
+    &:hover {
+      color: $white;
+    }
+  }
+  .arrow {
+    color: $black;
   }
 }

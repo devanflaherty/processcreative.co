@@ -1,34 +1,39 @@
 <template>
   <nav class="navbar is-transparent">
-    <div class="navbar-brand">
-      <div class="navbar-item" >
-        <Logo :color="primaryColor" :animate="true"/>
-      </div>
-      <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
-        <span :style="`background-color: ${primaryColor}`"></span>
-        <span :style="`background-color: ${primaryColor}`"></span>
-      </div>
-    </div>
-
-    <div id="navMenu" class="navbar-menu" v-if="breakpoint >= 3">
-      <transition name="fade-in" appear>
-        <div class="navbar-end" v-if="mobileNav || breakpoint > 2">
-          <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
-            {{link.link_label}}
-          </nuxt-link>
+    <style>
+      .navbar-item:after {
+        background: {{primaryColor}}!important;
+      }
+      .nav-burg span {
+        background: {{primaryColor}}!important;
+      }
+    </style>
+    <transition name="nav-in" appear>
+      <div class="navbar-brand" v-if="navVis">
+        <div class="navbar-item" >
+          <Logo :color="primaryColor" :animate="navVis"/>
         </div>
-      </transition>
-    </div>
-
-    <div id="mobileNav" :class="{'is-active': mobileNav}">
-      <div class="mobile-nav-wrap">
-        <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
-          {{link.link_label}}
-        </nuxt-link>
+        <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
+          <span :style="`background-color: ${primaryColor}`"></span>
+          <span :style="`background-color: ${primaryColor}`"></span>
+        </div>
       </div>
-    </div>
+    </transition>
+    <transition name="nav-in" appear>
+      <div id="navMenu" class="navbar-menu" v-if="breakpoint >= 3 && navVis">
+        <transition name="fade-in" appear>
+          <div class="navbar-end" v-if="mobileNav || breakpoint > 2">
+            <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
+              {{link.link_label}}
+            </nuxt-link>
+          </div>
+        </transition>
+      </div>
+    </transition>
 
-    <Modal @changeModalVis="toggleModal" :modalVisible="modal">
+    <MobileNav :menu="navigationMenu" :mobileNav="mobileNav"/>
+
+    <!-- <Modal @changeModalVis="toggleModal" :modalVisible="modal">
       <div slot="body">
         <p class="is-size-4 is-size-6-mobile">Thank you for your patience as we are currently updating our site with new work and new agency capabilities.</p>
         <br>
@@ -36,20 +41,23 @@
         <br>
         <p class="is-size-4 is-size-6-mobile">If you aren’t able to find what you are looking for below please reach out to us at newbusiness@processcreative.co with any questions that you might have.</p>
       </div>
-    </Modal>
+    </Modal> -->
   </nav>
+</transition>
 </template>
 
 <script>
 import Logo from '~/components/Logo'
 import Modal from '~/components/Modal'
+import MobileNav from '~/components/MobileNav'
 
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Logo,
-    Modal
+    Modal,
+    MobileNav
   },
   data () {
     return {
@@ -185,130 +193,6 @@ body.hero-ui-Dark {
   }
 }
 
-#mobileNav {
-  z-index: 10;
-  display: none;
-  visibility: hidden;
-  @include touch(){
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    .mobile-nav-wrap {
-      z-index: 10;
-      position: absolute;
-      top: 200px; 
-      left: -100%;
-      margin: auto;
-      width: 100%;
-      height: 100%;
-      padding-left: 4rem;
-      padding-right: 4rem;
-      @include mobile() {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-      .navbar-item {
-        color: $black;
-        background: none!important;
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          margin: 0 auto;
-          display: block;
-          height: 0px;
-          background: transparent;
-          width: 2px;
-          transition: all 0.5s ease;
-        }
-        &:hover {
-          &:after {
-            height: 100%;
-            background: $black;
-          }
-        }
-      }
-    }
-    &::before, &::after {
-      content:'';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-    }
-    // Transition timing Out
-    .mobile-nav-wrap {
-      transition: all 0.5s ease;
-    }
-    &::before {
-      z-index: 8;
-      background: white;
-      transition: all 0.5s 0.25s ease;
-    }
-    &::after {
-      z-index: 7;
-      background: black;
-      transition: all 0.5s 0.66s ease;
-    }
-    &.is-active {
-      visibility: visible;
-      
-      .mobile-nav-wrap, &::before, &::after {
-        left: 0;
-      }
-      // Transitions In
-      &::after {
-        transition: all 0.33s ease;
-      }
-      &::before {
-        transition: all 0.33s 0.25s ease;
-      }
-      .mobile-nav-wrap {
-        transition: all 0.33s 0.33s ease;
-      }
-    }
-    // &:not(.is-active) {
-    //   animation: reset 1s ease;
-    // }
-  }
-}
-
-@keyframes set {
-  0% {
-    border-radius: 1000px;
-    width: 0;
-    height: 0;
-    display: none;
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    height: 100%;
-    width: 100%;
-    border-radius: 0;
-    display: block;
-  }
-}
-
-@keyframes reset {
-  0% {
-    display: block;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    display: none;
-  }
-}
-
 .nav-burg {
   color: $white;
   padding: 4px;
@@ -356,5 +240,13 @@ body.hero-ui-Dark {
   &.is-active span:nth-child(2) {
     transform: rotate(45deg);
   }
+}
+
+.nav-in-enter-active, .nav-in-leave-active {
+  transition: all 0.5s cubic-bezier(.48, 0, .12, 1);
+}
+.nav-in-enter, .nav-in-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -100%, 0);
 }
 </style>

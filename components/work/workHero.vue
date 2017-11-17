@@ -1,8 +1,6 @@
 <template>
   <section class="hero work-hero is-fullheight">
-    <div class="work-hero-image is-overlay" :style="`background-image: url(${entry.hero_image.url})`">
-      <div class="hero-fade" :style="`box-shadow: inset 0 -80px 50px -40px ${entry.background_color}`"></div>
-    </div>
+    <heroLoader :hero-image="entry.hero_image" />
 
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
@@ -21,7 +19,7 @@
 </template>
 
 <script>
-import {TweenMax} from 'gsap'
+import { TweenMax } from 'gsap'
 
 if (process.browser) {
   var ScrollMagic = require('ScrollMagic')
@@ -30,21 +28,32 @@ if (process.browser) {
 }
 
 export default {
-  props: ['entry', 'contrast'],
+  props: ['entry'],
+  computed: {
+    contrast () {
+      return {
+        'has-text-black': this.entry.hero_contrast === 'Dark',
+        'has-text-white': this.entry.hero_contrast === 'Light'
+      }
+    }
+  },
   mounted () {
     this.setHeroUiContrast(this.entry.hero_contrast)
 
     /* eslint-disable */
-    var controller = new ScrollMagic.Controller()
+    let controller = new ScrollMagic.Controller()
 
-    var slider = new ScrollMagic.Scene({
-      duration: '100%',
+    let slider = new ScrollMagic.Scene({
+      duration: '150%',
       triggerHook: 'onEnter'
     })
-      .setTween(TweenMax.to('.work-hero-image', 1, {
-        autoAlpha: 0,
-        y: '200px'
-      }))
+      .setTween(
+        TweenMax.to('.work-hero-image', 1, {
+          autoAlpha: 0,
+          y: "200px",
+          force3D: true
+        })
+      )
       // .addIndicators({name:'headline'})
       .addTo(controller)
     /* eslint-enable */
@@ -55,6 +64,7 @@ export default {
 <style lang="scss" scoped>
 .hero {
   background-color: none;
+  margin-bottom: 300px;
 }
 .work-hero-image {
   background-size: cover;
@@ -67,7 +77,7 @@ export default {
     left: 0;
     height: 25vh;
     width: 100%;
-    box-shadow: inset 0 -80px 50px -40px rgba(0, 0, 0, 1)
+    box-shadow: inset 0 -80px 50px -40px rgba(0, 0, 0, 1);
   }
 }
 </style>

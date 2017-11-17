@@ -2,50 +2,64 @@
   <section id="home" class="page" :data-wio-id="document.id" v-show="!loading">
     
     <heroSlider :gallery="home.hero_slider" />
-    <section id="welcome" class="opening section">
-      <div class="container"
-      v-scroll-reveal="{scale: 1, duration: 1000}">
+    <section id="welcome" class="padding-large opening section">
+      <div class="container">
         <div class="columns">
           <div class="column is-4">
-            <h3 class="opening-headline has-text-white">
+            <h3 class="opening-headline has-text-white"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
               {{$prismic.asText(home.opening_headline)}}
             </h3>
           </div>
           <div class="column">
-            <div class="opening-statement" v-html="$prismic.asHtml(home.opening_statement)"></div>
-            <h3 class="list-headline">Capabilities</h3>
-            <div class="column-list" v-html="$prismic.asHtml(home.capabilities)"></div>
-            <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"></div>
+            <div class="opening-statement has-text-white" v-html="$prismic.asHtml(home.opening_statement)"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}"></div>
+            <h3 class="list-headline"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">
+              Capabilities
+            </h3>
+            <div class="column-list" v-html="$prismic.asHtml(home.capabilities)"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 300}"></div>
+            <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 400}"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="featuredWork" style="background: white">
+    <section class="section" id="featuredWork">
       <div class="container">
         <div class="work-welcome columns">
           <div class="column">
-            <h3 class="opening-headline has-text-black">
+            <h3 class="opening-headline has-text-black" 
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
               {{$prismic.asText(home.work_headline)}}
             </h3>
           </div>
           <div class="column">
-            <div class="work-statement" v-html="$prismic.asHtml(home.work_statement)"></div>
+            <div class="work-statement" 
+              v-html="$prismic.asHtml(home.work_statement)"
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}"></div>
           </div>
         </div>
         <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
       </div>
     </section>
+
+    <clientLogos :logos="home.clients" />
   </section>
 </template>
 
 <script>
 import heroSlider from '~/components/home/heroSlider'
-import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
+import clientLogos from '~/components/home/clientLogos'
+import {beforeEnter, enter} from '~/mixins/page-transitions'
+import {TimelineMax} from 'gsap'
 
 export default {
   components: {
-    heroSlider
+    heroSlider,
+    clientLogos
   },
   asyncData ({ params, app, store }) {
     return app.$prismic.initApi().then((ctx) => {
@@ -70,15 +84,32 @@ export default {
     css: false,
     beforeEnter,
     enter,
-    leave
+    leave: (el, done) => {
+      let leave = new TimelineMax()
+
+      leave.to(el, 0.5, {
+        autoAlpha: 0
+      }, 0.25)
+
+      // leave.to(window, 0.1, { scrollTo: 0 })
+      leave.addCallback(() => {
+        window.scrollTo(0, 0)
+      })
+      leave.addCallback(() => {
+        done()
+      })
+    }
   },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
+  beforeMount () {
+    this.$store.dispatch('setBackgroundColor', '#000')
+  },
   mounted () {
     if (this.document) {
       this.$store.dispatch('toggleLoading', false)
-      this.setBg('#ffffff')
+      // this.setBg('#ffffff')
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()
@@ -86,20 +117,23 @@ export default {
     }
   },
   beforeDestroy () {
-    // this.$waypoint.destroyWaypoints()
+    this.setBg(null, '.main')
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '~assets/styles/mixins';
-#home {
-  background: $black;
+#welcome {
+  height: 200vh;
+  min-height: 100%;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
-
 #featuredWork {
-  padding-top: 25vh;
-  padding-bottom: 25vh;
+  background: $white;
+  padding-top: 300px;
+  padding-bottom: 300px;
   .work-welcome {
     padding-top: 4rem;
     padding-bottom: 4rem;
