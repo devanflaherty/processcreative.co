@@ -64,7 +64,9 @@ export default {
         },
         on: {
           slideChange: (swiper) => {
-            this.activeSlide = this.$refs.mySwiper.swiper.realIndex
+            if (this.$refs.mySwiper) {
+              this.activeSlide = this.$refs.mySwiper.swiper.realIndex
+            }
           }
         }
       }
@@ -129,9 +131,6 @@ export default {
   },
   beforeDestroy () {
     this.setHeroUiContrast()
-  },
-  destroy () {
-    this.destroySwiper()
   }
 }
 </script>

@@ -124,6 +124,7 @@ export default {
     }
   },
   beforeDestroy () {
+    this.$waypoint.destroyWaypoints()
     this.setBg(null, '.main')
   }
 }

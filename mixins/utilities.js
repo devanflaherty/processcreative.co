@@ -26,7 +26,6 @@ Vue.mixin({
       } else {
         el = document.querySelector('.bgSpan')
       }
-      console.log(el)
       let updateBg = () => {
         el.style.backgroundColor = color
       }
