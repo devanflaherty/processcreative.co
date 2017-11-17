@@ -1,5 +1,8 @@
 <template>
   <main class="main">
+    <div id="backgroundTransition" class="background-transition">
+      <span class="bgSpan"></span>
+    </div>
     <SiteNav />
     <nuxt />
     <SiteFooter />
@@ -49,6 +52,24 @@ export default {
   transition: all 0.5s ease;
   &:hover {
     background: white;
+  }
+}
+
+.background-transition {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translateZ(0);
+  width: 100%;
+  z-index: 0;
+  span {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    transition: background-color .5s ease-in-out;
   }
 }
 

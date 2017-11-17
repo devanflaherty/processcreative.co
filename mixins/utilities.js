@@ -17,7 +17,6 @@ Vue.mixin({
       }
     },
     setPageStyle (primary, background, contrast, el) {
-      // this.setBg(background)
       this.setPageContrast(contrast)
       this.setPrimaryColor(primary)
     },
@@ -25,8 +24,9 @@ Vue.mixin({
       if (el) {
         el = document.querySelector(el)
       } else {
-        el = document.querySelector('body')
+        el = document.querySelector('.bgSpan')
       }
+      console.log(el)
       let updateBg = () => {
         el.style.backgroundColor = color
       }

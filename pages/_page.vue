@@ -1,6 +1,6 @@
 <template>
   <section class="container" id="page">
-    
+    {{entry}}
   </section>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: 'page',
   asyncData ({ app, params, error }) {
     return app.$prismic.initApi().then((ctx) => {
-      return ctx.api.getByUID('page', params.slug).then((res) => {
+      return ctx.api.getByUID('pages', params.page).then((res) => {
         return {
           document: res,
           entry: res.data
@@ -34,7 +34,7 @@ export default {
   },
   head () {
     return {
-      title: `Page`
+      title: this.$prismic.asText(this.entry.title)
     }
   }
 }

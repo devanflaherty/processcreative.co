@@ -84,11 +84,12 @@ const createStore = () => {
     actions: {
       setBackgroundColor (context, color) {
         context.commit('SET_BACKGROUND_COLOR', color)
-        let el = document.querySelector('body')
+        let el = document.querySelector('.bgSpan')
 
-        if (color) {
+        let updateBg = () => {
           el.style.backgroundColor = color
         }
+        window.requestAnimationFrame(updateBg)
       },
       setPrimaryColor (context, color) {
         context.commit('SET_PRIMARY_COLOR', color)

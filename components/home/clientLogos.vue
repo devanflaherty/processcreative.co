@@ -1,6 +1,8 @@
 <template>
 <section id="clientLogos" class="section">
   <div class="container">
+    <a name="toBlack" v-waypoint.down.inview="{offset: 0}"
+              @entered="setBg('#000')"></a>
     <div class="columns is-mobile is-multiline is-centered">
       <div ref="logo" class="client-logo column is-4-tablet is-5-mobile"
         v-for="(item, index) in logos" :key="index" >
