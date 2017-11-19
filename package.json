@@ -4,6 +4,9 @@
   "description": "Nuxt.js project",
   "author": "Devan Flaherty <devanflaherty@me.com>",
   "private": true,
+  "now": {
+    "alias": "processcreativeco"
+  },
   "scripts": {
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
