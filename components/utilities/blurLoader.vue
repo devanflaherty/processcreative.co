@@ -55,21 +55,23 @@ export default {
     }
   },
   mounted () {
-    Promise.all([
-      this.loadImage(this.image.placeholder.url)
-    ]).then((image) => {
-      this.addPlaceholder(this.image.placeholder.url)
-    }).catch((error) => {
-      console.error(error)
-    })
+    if (this.image) {
+      Promise.all([
+        this.loadImage(this.image.placeholder.url)
+      ]).then((image) => {
+        this.addPlaceholder(this.image.placeholder.url)
+      }).catch((error) => {
+        console.error(error)
+      })
 
-    Promise.all([
-      this.loadImage(this.image.large.url)
-    ]).then((image) => {
-      this.addMain(this.image.large.url)
-    }).catch((error) => {
-      console.error(error)
-    })
+      Promise.all([
+        this.loadImage(this.image.large.url)
+      ]).then((image) => {
+        this.addMain(this.image.large.url)
+      }).catch((error) => {
+        console.error(error)
+      })
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-<article class="slice banner-slice hero is-primary">
-  <blurLoader :image="banner.image_banner" />
+<article class="slice banner-slice hero" v-if="banner.image_banner.url">
+  <blurLoader :image="banner.image_banner" v-if="banner.image_banner.url"/>
   <div class="hero-overlay is-overlay">
     <div class="container">
       <h1 class="title has-text-white" v-if="banner.title_of_banner.length > 0">
@@ -26,6 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 .banner-slice {
+  min-height: 25vh;
   img {
     width: 100%;
   }

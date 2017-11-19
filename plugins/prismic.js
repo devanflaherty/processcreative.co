@@ -18,7 +18,7 @@ export default (ctx, inject) => {
     methods: {
       asHtml (richText) {
         if (richText) {
-          return this.prismicDOM.RichText.asHtml(richText, PrismicConfig.linkResolver)
+          return this.prismicDOM.RichText.asHtml(richText, PrismicConfig.linkResolver, PrismicConfig.htmlSerializer)
         }
       },
       asText (richText) {

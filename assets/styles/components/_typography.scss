@@ -140,6 +140,12 @@ blockquote {
   }
 }
 
+.column-list {
+  margin-bottom: 4rem;
+  white-space: pre-wrap;
+  column-count: 2;
+}
+
 // Contrast Styles
 .has-text-black {
   h2 {

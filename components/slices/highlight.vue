@@ -10,7 +10,7 @@
 
         <div class="column is-6">
           <div class="highlight-media">
-            <template v-if="highlight.highlight_embed.length > 0">
+            <template v-if="highlight.highlight_embed.html">
               <responsiveVideo :embed="highlight.highlight_embed.html" />
             </template>
             <template v-else>
@@ -41,9 +41,6 @@ export default {
 </script>
 
 <style lang="scss">
-.highlight-slice {
-  
-}
 .highlight-body {
   display: flex;
   align-items: center;

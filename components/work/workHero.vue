@@ -7,7 +7,7 @@
       <div class="container">
         <h2 class="work-title">
           <strong :class="contrast">{{$prismic.asText(entry.title)}}</strong><br>
-          <span>{{$prismic.asText(entry.description)}}</span>
+          <span :class="contrast" style="opacity: 0.8">{{$prismic.asText(entry.description)}}</span>
         </h2>
       </div>
     </div>

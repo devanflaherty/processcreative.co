@@ -40,8 +40,12 @@ Vue.mixin({
       } else {
         el = document.querySelector('body')
       }
-      el.classList.remove('page-contrast-Dark', 'page-contrast-Light')
-      el.classList.add(`page-contrast-${style}`)
+      if (style) {
+        el.classList.remove('page-contrast-Dark', 'page-contrast-Light')
+        el.classList.add(`page-contrast-${style}`)
+      } else {
+        el.classList.remove('page-contrast-Dark', 'page-contrast-Light')
+      }
     },
     setHeroUiContrast (style) {
       var body = document.querySelector('body')

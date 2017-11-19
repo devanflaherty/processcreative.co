@@ -1,5 +1,5 @@
 <template>
-  <article class="slice text-slice section">
+  <article class="slice quote-slice section">
     <div class="container">
       <blockquote :style="`border-color: ${primaryColor}`">
         <div class="quote" v-html="$prismic.asHtml(slice.primary.quote)"></div>

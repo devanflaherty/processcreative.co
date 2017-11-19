@@ -9,15 +9,15 @@
       v-scroll-reveal="{duration: 2000, scale: 0.9, distance: '0'}"/>
 
     <section class="section" v-if="entry.highlight_video.html">
-      <div class="container">
-        <responsiveVideo class="stagger" :embed="entry.highlight_video.html" 
+      <div class="container stagger">
+        <responsiveVideo :embed="entry.highlight_video.html" 
           v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '200px'}"/>
       </div>
     </section>
     
     <section id="workContent" class="opening section">
       <div class="container">
-        <div class="columns opener stagger">
+        <div class="columns opener">
           <div class="column is-4">
             <div class="opening-headline" :class="{'has-text-white': entry.page_contrast == 'Light', 'has-text-black': entry.page_contrast == 'Dark'}" 
               v-html="$prismic.asHtml(entry.opening_headline)"
@@ -35,7 +35,7 @@
     </section>
 
     <!-- Repeatable Slices -->
-    <component class="stagger" v-for="(slice, index) in entry.slices" :key="index" 
+    <component v-for="(slice, index) in entry.slices" :key="index" 
       :slice="slice"  :is="toCamelCase(slice.slice_type)"></component>
 
   </section>

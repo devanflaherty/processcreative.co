@@ -30,7 +30,7 @@
     </div>
 
     <div id="copyright" class="container">
-      <p class="has-text-dark">&copy; 2017 ProcessCreative.<br class="is-hidden-tablet"> All Rights Reserved.</p>
+      <p>&copy; 2017 ProcessCreative.<br class="is-hidden-tablet"> All Rights Reserved.</p>
     </div>
   </div>
 </footer>
@@ -59,7 +59,7 @@ export default {
 footer {
   max-height: 100vh;
   min-height: 500px;
-  background: $black;
+  // background: $black;
   overflow: hidden;
   .footer-wrap {
     padding-bottom: 10rem;
@@ -68,12 +68,10 @@ footer {
   h5 {
     margin-bottom: 1.25rem;
   }
-  a {
-    color: white;
-  }
   ul {
     li {
       a {
+        color: $white;
         font-size: 1.5rem;
       }
     }
@@ -93,6 +91,7 @@ footer {
   padding-top: 10rem;
 
   p {
+    color: $grey-dark;
     @include mobile() {
       font-size: 1rem;
     }

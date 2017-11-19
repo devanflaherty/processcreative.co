@@ -1,7 +1,8 @@
 <template>
   <article class="slice column-slice section">
     <div class="container">
-      <h3 v-if="headline">{{$prismic.asText(headline)}}</h3>
+      <h3 class="is-size-4" v-if="headline">{{$prismic.asText(headline)}}</h3>
+      
       <div class="columns is-centered">
         <div class="column" :class="[offset(column.offset), layout(column.layout)]" v-for="(column, index) in slice.items" :key="index">
           <template v-if="column.column_image.url && column.content_body.length > 0">
@@ -43,3 +44,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+h3 {
+  margin-bottom: 2rem;
+}
+</style>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+import videoEmbed from '~/components/slices/videoEmbed'
 import highlight from '~/components/slices/highlight'
 import imageGallery from '~/components/slices/imageGallery'
 import columnedContent from '~/components/slices/columnedContent'
@@ -17,6 +18,7 @@ import captionedImage from '~/components/utilities/captionedImage'
 import heroLoader from '~/components/utilities/heroLoader'
 import blurLoader from '~/components/utilities/blurLoader'
 
+Vue.component('videoEmbed', videoEmbed)
 Vue.component('highlight', highlight)
 Vue.component('imageGallery', imageGallery)
 Vue.component('columnedContent', columnedContent)

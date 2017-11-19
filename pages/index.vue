@@ -112,6 +112,7 @@ export default {
     this.$store.dispatch('toggleLoading', true)
   },
   beforeMount () {
+    this.setPageContrast()
     this.$store.dispatch('setBackgroundColor', '#000')
   },
   mounted () {
