@@ -49,7 +49,12 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/styles/mixins';
 .slide-ui {
-  @include overlay();
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
   z-index: 20;
   .container {
     height: 100%;
@@ -120,14 +125,6 @@ export default {
 
 // Color themes
 .slide-ui-Dark {
-  .caption {
-    h2, h3, h4, h5 {
-      color: black;
-    }
-    p, a, span {
-      color: black;
-    }
-  }
   .pagination-bullet {
     span {
       color: rgba(black, 0.5);
@@ -145,14 +142,6 @@ export default {
 }
 
 .slide-ui-Light {
-  .caption {
-    h2, h3, h4, h5 {
-      color: white;
-    }
-    p, a, span {
-      color: white;
-    }
-  }
   .pagination-bullet {
     span {
       color: rgba(white, 0.5);

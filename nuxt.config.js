@@ -1,6 +1,6 @@
 var path = require('path')
 
-var url = 'http://processcreative.co'
+var url = 'https://processcreative.co'
 var title = 'ProcessCreative'
 var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is eqquiped to serve individuals, agencies and brands with creative solutions.'
 var unfurl = `${url}/unfurl.jpg`
@@ -38,7 +38,7 @@ module.exports = {
     ],
     script: [
       {
-        src: '//fast.wistia.com/assets/external/E-v1.js',
+        src: 'https://fast.wistia.com/assets/external/E-v1.js',
         async: true
       }
     ]

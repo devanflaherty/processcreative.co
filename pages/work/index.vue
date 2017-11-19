@@ -10,7 +10,7 @@
         <div class="column">
           <div class="opening-statement" 
             v-html="$prismic.asHtml(workPage.opening_statement)"
-            v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top'}"></div>
+            v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
         </div>
       </div>
       <workCard v-for="(post, index) in workPosts" :key="index" :post="post"/>

@@ -14,16 +14,16 @@
           <div class="column">
             <div class="opening-statement has-text-white" 
               v-html="$prismic.asHtml(home.opening_statement)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}"></div>
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}"></div>
 
             <h3 class="list-headline"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}">
               Capabilities
             </h3>
             <div class="column-list" v-html="$prismic.asHtml(home.capabilities)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 300}"></div>
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 300}"></div>
             <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 400}"></div>
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 400}"></div>
             <a name="toWhite" v-waypoint.up.inview="{offset: 0}"
               @enter="setBg('#000')"></a>
           </div>
@@ -43,7 +43,7 @@
           <div class="column">
             <div class="work-statement" 
               v-html="$prismic.asHtml(home.work_statement)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}"></div>
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
             <a name="toWhite" v-waypoint.down.inview="{offset: 0}"
               @enter="setBg('#fff')"></a>
           </div>

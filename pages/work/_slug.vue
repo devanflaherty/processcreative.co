@@ -26,9 +26,9 @@
           <div class="column">
             <div class="opening-statement rich-text" 
               v-html="$prismic.asHtml(entry.opening_statement)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top'}"></div>
-            <h3 class="list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 100}">Involvement</h3>
-            <p class="work-types column-list" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'top', delay: 200}">{{entry.involvement}}</p>
+              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
+            <h3 class="list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}">Involvement</h3>
+            <p class="work-types column-list" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}">{{entry.involvement}}</p>
           </div>
         </div>
       </div>

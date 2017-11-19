@@ -8,10 +8,17 @@
             
             <div class="slide-caption is-overlay">
               <div class="container">
-                <div class="caption" 
-                  data-swiper-parallax="-300" 
-                  data-swiper-parallax-duration="500"
-                  data-swiper-parallax-opacity="0.5" v-html="$prismic.asHtml(slide.slide_description)"></div>
+                <div class="caption-wrap" :class="{'link-hover': slide.slide_link.url}">
+                  <div class="caption" v-if="slide.slide_description">
+                    <div class="rich-text"
+                      data-swiper-parallax="-300" 
+                      data-swiper-parallax-duration="500"
+                      data-swiper-parallax-opacity="0.5"
+                      v-html="$prismic.asHtml(slide.slide_description)"></div>
+                  </div>
+
+                  <a v-if="slide.slide_link.url" class="slide-link arrow" :href="$prismic.asLink(slide.slide_link)">{{slide.link_label}}</a>
+                </div>
               </div>
             </div>
             <!-- <heroLoader :hero-image="slide.slide_image" data-swiper-parallax="25%" class="slide-img" /> -->
@@ -170,14 +177,40 @@ export default {
     }
     .caption {
       transition: all 0.5s ease;
+      position: relative;
+      z-index: 1;
+      transform-style: preserve-3d; 
+      outline:1px solid transparent;
+      text-shadow: 0 0 1px transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+    .link-hover {
+      transition: all 0.5s ease;
+      &:hover {
+        .caption {
+          opacity: 0;
+          transform: translate3d(0, -20px, 0) rotateX(90deg);
+          perspective: 100px;
+        }
+        .slide-link {
+          transform: translate3d(0, -20px, 0) rotateX(0deg);
+          perspective: 100px;
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+    .slide-link {
+      transition: all 0.5s ease;
+      transform: translate3d(0, 0, 0) rotateX(-90deg);
+      opacity: 0;
+      visibility: hidden;
     }
   }
 }
 
 .swiper-container, .swiper-slide {
   height: 100vh;
-}
-.swiper-container {
   display: flex;
   .swiper-wrapper {
     // position: fixed;
@@ -190,7 +223,6 @@ export default {
           margin: 0;
         }
       }
-
       .slide-img {
         height: 100vh;
         width: 100%;
@@ -201,125 +233,64 @@ export default {
   }
 }
 
-.slide-ui {
-  height: 100%;
-  width: 100%;
-  top: 0; left: 0;
-  position: absolute;
-  .container {
-    height: 100%;
-    @include touch() {
-      margin: 0 3rem;
-    }
-  }
-}
-.swiper-custom-pagination {
-  z-index: 15;
-  position: absolute;
-  width: 100%;
-  bottom: 100px;
-  background: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .pagination-bullet {
-    opacity: 1;
-    flex: 1 0 auto;
-    display: inline-block;
-    position: relative;
-    margin: 0 2px;
-    padding-bottom: .75rem;
-    span {
-      display: inline-block;
-      color: rgba(white, 0.25);
-      transition: all 0.5s ease;
-    }
-    &:hover span {
-      color: rgba(white, 1);
-      transform: translate(0, -20px);
-    }
-    &::after, &::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      display: block;
-      height: 1px;
-    }
-    &::after {
-      width: 0;
-      background: rgba(white, 1);
-      transition: width .25s ease;
-    }
-    &::before {
-      width: 100%;
-      background: rgba(white, 0.25);
-    }
-    &.active {
-      span {
-        color: white;
-      }
-      &::after {
-        width: 100%;
-        transition: width 6s ease;
-      }
-    }
-  }
-}
-
-
 // Color themes
 .slide-ui-Dark {
   .caption {
     h2, h3, h4, h5 {
-      color: black;
+      color: $black;
     }
     p, a, span {
-      color: black;
+      color: $black;
     }
   }
-  .pagination-bullet {
-    span {
-      color: rgba(black, 0.5);
-    }
-    &:hover span, &.active span {
-      color: rgba(black, 1);
-    }
-    &::after {
-      background: rgba(black, 1);
-    }
-    &::before {
-      background: rgba(black, 0.25);
-    }
+  .slide-link {
+    color: $black;
   }
+  // .pagination-bullet {
+  //   span {
+  //     color: rgba(black, 0.5);
+  //   }
+  //   &:hover span, &.active span {
+  //     color: rgba(black, 1);
+  //   }
+  //   &::after {
+  //     background: rgba(black, 1);
+  //   }
+  //   &::before {
+  //     background: rgba(black, 0.25);
+  //   }
+  // }
 }
 
 .slide-ui-Light {
   .caption {
     h2, h3, h4, h5 {
-      color: white;
+      color: $white;
     }
     p, a, span {
-      color: white;
+      color: $white;
     }
   }
-  .pagination-bullet {
-    span {
-      color: rgba(white, 0.5);
-    }
-    &:hover span, &.active span {
-      color: rgba(white, 1);
-    }
-    &::after {
-      background: rgba(white, 1);
-    }
-    &::before {
-      background: rgba(white, 0.25);
-    }
-    &.active {
-      color: white;
-    }
+  .slide-link {
+    color: $white;
   }
+  // .pagination-bullet {
+  //   span {
+  //     color: rgba(white, 0.5);
+  //   }
+  //   &:hover span, &.active span {
+  //     color: rgba(white, 1);
+  //   }
+  //   &::after {
+  //     background: rgba(white, 1);
+  //   }
+  //   &::before {
+  //     background: rgba(white, 0.25);
+  //   }
+  //   &.active {
+  //     color: white;
+  //   }
+  // }
 }
 
 @keyframes progress {

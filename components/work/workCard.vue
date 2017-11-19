@@ -2,7 +2,7 @@
   <article 
     class="work-card" :class="{'reveal' : reveal}"
     :style="`background-color:`"
-    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"
+    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', viewOffset: { bottom: 100 }}"
     @beforeReveal="wipe"
     :data-wio-id="post.id">
     <!-- Wipe transition -->
@@ -25,7 +25,7 @@
       </div>
 
       <div class="image-loader" ref="imageLoader">
-        <div class="slice-wrap" v-for="(slice, i) in 3" :key="i">
+        <div class="slice-wrap" v-for="(slice, i) in 2" :key="i">
           <div class="image-slice" :style="`background-image: url(${entry.feature_image.url})`"></div>
         </div>
       </div>
@@ -65,11 +65,15 @@ export default {
         return slice.querySelector('.image-slice')
       })
       let tl = new TimelineMax()
-      tl.staggerFromTo(imgs, 0.5, {
-        y: 200
-      }, {
-        y: 0
-      }, 0.25)
+      let staggerSlices = () => {
+        tl.staggerFromTo(imgs, 0.5, {
+          y: 200
+        }, {
+          y: 0
+        }, 0.25)
+      }
+
+      window.requestAnimationFrame(staggerSlices)
     }
   }
 }
@@ -94,7 +98,7 @@ export default {
     z-index: 20;
     @include overlay();
     background: gray;
-    transition: all .66s cubic-bezier(.97,0,.51,1);
+    transition: all 1s cubic-bezier(.97,0,.51,1);
   }
   a {
     position: absolute;
@@ -207,7 +211,7 @@ export default {
         position: absolute;
         top: 0;
         height: 100%;
-        width: 300%;
+        width: 200%;
         background-size: cover;
         background-position: center;
       }
