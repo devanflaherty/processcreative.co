@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~assets/styles/mixins';
 .captioned-image {
   position: relative;
   overflow: hidden;
@@ -29,12 +30,18 @@ export default {
     visibility: hidden;
     opacity: 0;
     transition: all 0.5s ease;
+    @include mobile() {
+      padding: 3rem;
+    }
     * > {
       flex: 1 0 auto;
     }
     .caption-content {
       p {
         color: white;
+        @include mobile() {
+          font-size: .8rem;
+        }
       }
     }
   }

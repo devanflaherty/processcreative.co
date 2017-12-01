@@ -41,12 +41,16 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~assets/styles/mixins';
 .highlight-body {
   display: flex;
   align-items: center;
   justify-content: center;
   .highlight-content {
     padding: 4rem;
+    @include mobile() {
+      padding: 0rem;
+    }
   }
 }
 .highlight-media {

@@ -4,7 +4,7 @@
     :data-wio-id="aboutPage.id"
     v-show="!loading">
     <div class="container about-wrap">
-      <div class="about-welcome columns">
+      <div class="about-welcome page-welcome columns">
         <div class="column">
           <div class="opening-headline has-text-white" 
             v-html="$prismic.asHtml(aboutPage.opening_headline)"
@@ -119,11 +119,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.push-top {
-  padding-top: 11rem;
-}
-.about-welcome {
-  padding-top: 6rem;
-  padding-bottom: 8rem;
-}
 </style>

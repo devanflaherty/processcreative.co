@@ -1,7 +1,7 @@
 <template>
   <section id="featuredWork" class="page section push-top" v-show="!loading">
     <div class="container">
-      <div class="work-welcome columns">
+      <div class="work-welcome page-welcome columns">
         <div class="column">
           <div class="opening-headline has-text-black" 
             v-html="$prismic.asHtml(workPage.opening_headline)"
@@ -61,11 +61,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.push-top {
-  padding-top: 11rem;
-}
-.work-welcome {
-  padding-top: 6rem;
-  padding-bottom: 8rem;
-}
 </style>

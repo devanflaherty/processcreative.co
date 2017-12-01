@@ -91,7 +91,9 @@ export default {
     }
     &:hover span {
       color: rgba(white, 1);
-      transform: translate(0, -20px);
+      @include tablet() {
+        transform: translate(0, -20px);
+      }
     }
     &::after, &::before {
       content: '';
@@ -118,6 +120,17 @@ export default {
         width: 100%;
         transition: width 6s ease;
       }
+    }
+    &:not(.active) {
+      @include mobile() {
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
+    @include mobile() {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
     }
   }
 }

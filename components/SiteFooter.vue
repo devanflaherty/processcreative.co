@@ -57,13 +57,12 @@ export default {
 @import '~assets/styles/mixins';
 
 footer {
-  max-height: 100vh;
   min-height: 500px;
   // background: $black;
   overflow: hidden;
   .footer-wrap {
-    padding-bottom: 10rem;
-    padding-top: 10rem;
+    padding-bottom: 6rem;
+    padding-top: 6rem;
   }
   h5 {
     margin-bottom: 1.25rem;

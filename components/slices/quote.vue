@@ -25,6 +25,7 @@ blockquote {
     font-size: 2.5rem;
     font-weight: $mediumW;
     letter-spacing: -.5px;
+    line-height: 1;
   }
   .author p {
     color: $grey-light;

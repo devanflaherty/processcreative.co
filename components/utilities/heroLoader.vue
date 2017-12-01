@@ -10,7 +10,6 @@
       :style="`background-image: url(${hero})`">
     </div>
   </transition>
-  {{$route.name}}
 
   <transition name='fade-in' v-if="$route.name == 'work-slug'">
     <div v-if="loaded || thumbLoaded" class="hero-fade" :style="`box-shadow: inset 0 -80px 50px -40px ${backgroundColor}`"></div>

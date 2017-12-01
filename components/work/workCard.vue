@@ -2,7 +2,7 @@
   <article 
     class="work-card" :class="{'reveal' : reveal}"
     :style="`background-color:`"
-    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', viewOffset: { bottom: 100 }}"
+    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', viewOffset: { bottom: 50 }}"
     @beforeReveal="wipe"
     :data-wio-id="post.id">
     <!-- Wipe transition -->
@@ -120,7 +120,7 @@ export default {
       @include mobile() {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         .column {
           flex: 0 1 auto;
@@ -133,7 +133,9 @@ export default {
         font-size: 1.5rem;
         color: white;
         transition: all 0.5s ease;
-        transform: translate(50px, 0);
+        @include tablet() {
+          transform: translate(50px, 0);
+        }
         span {
           font-size: 1.5rem;
           display: inline-block;
@@ -143,6 +145,10 @@ export default {
           @include autoAlpha(0);
           transform: translate(-100px, 0);
           transition: all 0.5s 0.125s ease;
+          @include mobile() {
+            display: block;
+            margin-left: 0;
+          } 
         }
       }
       .work-quick-involvement {

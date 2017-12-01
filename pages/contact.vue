@@ -4,7 +4,7 @@
     :data-wio-id="contactPage.id"
     v-show="!loading">
     <div class="container contact-wrap">
-      <div class="contact-welcome columns" v-if="contactPage.opening_headline.length">
+      <div class="contact-welcome page-welcome columns" v-if="contactPage.opening_headline.length">
         <div class="column">
           <div class="opening-headline has-text-white" 
             v-html="$prismic.asHtml(contactPage.opening_headline)"
@@ -89,13 +89,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.push-top {
-  padding-top: 11rem;
-}
-.contact-welcome {
-  padding-top: 6rem;
-  padding-bottom: 8rem;
-}
 h5 {
   font-size: 1.25rem;
   margin-bottom: 2rem;
