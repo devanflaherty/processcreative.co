@@ -37,7 +37,7 @@
   .opening-headline > * {
     color: $black;
   }
-  .rich-text a:not(.button, .arrow), footer a {
+  .rich-text a:not(.button), .rich-text a:not(.arrow), footer a {
     color: $black;
     &:before {
       background: $black;
