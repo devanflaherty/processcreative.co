@@ -47,7 +47,51 @@ p, ul, ol {
     margin-bottom: 0;
   }
 }
-li a:not(.button, .arrow), p a:not(.button, .arrow) {
+a {
+  color: $white;
+  transition: all 0.5s ease;
+  &.arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &:after {
+      font-family: 'fontawesome';
+      content: '\f178';
+      display: block;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      transition: all 0.5s ease;
+    }
+    &:hover {
+      transform: translate(20px, 0);
+      &:after {
+        transition: all 0.5s 0.25s ease;
+        transform: translate(25px, 0);
+      }
+    }
+    &.arrow-left {
+      &:after {
+        display: none;
+        content: '';
+      }
+      &:before {
+        font-family: 'fontawesome';
+        display: block;
+        padding-right: 1rem;
+        transition: all 0.5s ease;
+        content: '\f177'!important;
+      }
+      &:hover {
+        transform: translate(-20px, 0);
+        &:before {
+          transition: all 0.5s 0.25s ease;
+          transform: translate(-25px, 0);
+        }
+      }
+    }
+  }
+}
+li a:not(.button), li a:not(.arrow), p a:not(.button), p a:not(.arrow), a.hilite {
   position: relative;
   z-index: 1;
   &:before {
@@ -81,30 +125,6 @@ li a:not(.button, .arrow), p a:not(.button, .arrow) {
     color: black;
     &:after {
       width: 115%;
-    }
-  }
-}
-a {
-  color: $white;
-  transition: all 0.5s ease;
-  &.arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    &:after {
-      font-family: 'fontawesome';
-      content: '\f178';
-      display: block;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      transition: all 0.5s ease;
-    }
-    &:hover {
-      transform: translate(20px, 0);
-      &:after {
-        transition: all 0.5s 0.25s ease;
-        transform: translate(25px, 0);
-      }
     }
   }
 }

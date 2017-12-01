@@ -4,20 +4,26 @@
     id="memberPage" 
     class="page" 
     v-show="!loading">
-    <div class="team-wrap">
-      <section class="hero team-hero is-large">
+    <div class="team-wrap step-parent">
+      <section class="hero team-hero is-large step">
         <heroLoader class="team-hero-image" :hero-image="entry.member_hero"/>
         <!-- <div class="team-hero-image is-overlay" :style="`background-image: url(${entry.member_hero.url})`"></div> -->
 
         <!-- Hero content: will be in the middle -->
         <div class="hero-body"></div>
       </section>
-
-      <a class="button" v-if="prevMember" :href="`/team/${prevMember.uid}`">Meet {{$prismic.asText(prevMember.name)}}</a>
-      <a class="button" v-if="nextMember" :href="`/team/${nextMember.uid}`">Meet {{$prismic.asText(nextMember.name)}}</a>
       
       <section class="section member-details">
         <div class="container">
+          <div class="team-pagination columns">
+            <div class="column" v-if="prevMember">
+              <a class="member-button arrow arrow-left prev" :href="`/team/${prevMember.uid}`">Meet {{$prismic.asText(prevMember.name)}}</a>
+            </div>
+            <div class="column" v-if="nextMember">
+              <a class="member-button arrow next" :href="`/team/${nextMember.uid}`">Meet {{$prismic.asText(nextMember.name)}}</a>
+            </div>
+          </div>
+
           <div class="columns">
             <div class="column is-4">
               <h3 class="position">
@@ -27,6 +33,12 @@
             </div>
             <div class="column">
               <div class="rich-text" v-html="$prismic.asHtml(entry.member_description)"></div>
+            </div>
+          </div>
+
+          <div class="member-social columns">
+            <div class="column is-narrow" v-for="(link, index ) in entry.social_links" :key="index">
+             <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
             </div>
           </div>
         </div>
@@ -41,9 +53,10 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import {TimelineMax, TweenMax} from 'gsap'
+import {TimelineMax} from 'gsap'
 
 if (process.browser) {
+  // var scrollama = require('scrollama')
   var ScrollMagic = require('ScrollMagic')
   require('animation.gsap')
   // require('debug.addIndicators')
@@ -177,6 +190,38 @@ export default {
       }))
       // .addIndicators({name:'headline'})
       .addTo(controller)
+
+		// // using d3 for convenience
+		// var container = document.querySelector('#memberPage')
+
+		// // initialize the scrollama
+		// var scroller = scrollama()
+
+		// function handleStepProgress(response) {
+    //   var el = response.element
+    //   el.style.transform = `translate3d(0, ${response.progress}, 0)`
+    //   console.log(response)
+		// }
+
+		// function init() {
+		// 	// 1. setup the scroller with the bare-bones settings
+		// 	// this will also initialize trigger observations
+		// 	// 3. bind scrollama event handlers (this can be chained like below)
+		// 	scroller.setup({
+		// 		step: '.step-parent .step',
+    //     progress: true,
+    //     offset: 0,
+		// 		debug: true,
+		// 	})
+		// 		.onStepProgress(handleStepProgress)
+
+		// 	// setup resize event
+		// 	window.addEventListener('resize', scroller.resize)
+		// }
+
+		// // kick things off
+		// init()
+	
     /* eslint-enable */
   },
   beforeDestroy () {
@@ -207,7 +252,55 @@ export default {
 }
 
 .member-details {
-  padding-top: 8rem;
+  padding-top: 4rem;
   padding-bottom: 8rem;
+}
+
+.team-pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5rem;
+  .member-button {
+    flex: 0 1 auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: .75rem;
+  }
+  .column {
+    &:last-child {
+      .member-button {
+        float: right;
+      }
+    }
+  }
+}
+.member-social {
+  padding-top: 2rem;
+  justify-content: flex-end;
+  a {
+    position: relative;
+    z-index: 1;
+    &:after {
+      content: '';
+      display: block;
+      background: white;
+      height: 100%;
+      width: 0;
+      margin: auto;
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: -7%;
+      bottom: 0;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.25);
+    }
+    &:hover {
+      color: black;
+      &:after {
+        width: 115%!important;
+      }
+    }
+  }
 }
 </style>

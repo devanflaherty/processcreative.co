@@ -135,12 +135,12 @@ export default {
 @import '~assets/styles/mixins';
 #welcome {
   min-height: 100%;
-  padding-top: 300px;
-  padding-bottom: 300px;
+  padding-top: 200px;
+  padding-bottom: 200px;
 }
 #featuredWork {
-  padding-top: 300px;
-  padding-bottom: 300px;
+  padding-top: 200px;
+  padding-bottom: 200px;
   position: relative;
   .work-welcome {
     padding-top: 4rem;
@@ -149,7 +149,7 @@ export default {
 }
 
 #clients {
-  padding: 8rem 0 2rem;
+  padding: 6rem 0 2rem;
   h2 {
     margin-bottom: 3.5rem;
   }
