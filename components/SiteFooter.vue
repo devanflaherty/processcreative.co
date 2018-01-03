@@ -30,7 +30,7 @@
     </div>
 
     <div id="copyright" class="container">
-      <p>&copy; 2017 ProcessCreative.<br class="is-hidden-tablet"> All Rights Reserved.</p>
+      <p>&copy; 2018 Samson.<br class="is-hidden-tablet"> All Rights Reserved.</p>
     </div>
   </div>
 </footer>

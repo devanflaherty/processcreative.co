@@ -1,15 +1,15 @@
 var path = require('path')
 
-var url = 'https://processcreative.co'
-var title = 'ProcessCreative'
-var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is eqquiped to serve individuals, agencies and brands with creative solutions.'
+var url = 'https://wearesamson.com'
+var title = 'Samson'
+var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is equipped to serve individuals, agencies and brands with creative solutions.'
 var unfurl = `${url}/unfurl.jpg`
 module.exports = {
   /*
   ** Headers of the page
   */
   head: {
-    title: 'ProcessCreative.co',
+    title: 'Samson',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

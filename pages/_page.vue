@@ -1,6 +1,6 @@
 <template>
   <section class="container" id="page">
-    {{entry}}
+    
   </section>
 </template>
 

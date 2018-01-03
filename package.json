@@ -1,11 +1,11 @@
 {
-  "name": "processcreative.com",
+  "name": "wearesamson.com",
   "version": "1.0.0",
   "description": "Nuxt.js project",
   "author": "Devan Flaherty <devanflaherty@me.com>",
   "private": true,
   "now": {
-    "alias": "processcreativeco"
+    "alias": "wearesamson"
   },
   "scripts": {
     "dev": "backpack dev",
