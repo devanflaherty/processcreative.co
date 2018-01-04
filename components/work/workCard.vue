@@ -25,7 +25,7 @@
       </div>
 
       <div class="image-loader" ref="imageLoader">
-        <div class="slice-wrap" v-for="(slice, i) in 2" :key="i">
+        <div class="slice-wrap" v-for="(slice, i) in 1" :key="i">
           <div class="image-slice" :style="`background-image: url(${entry.feature_image.url})`"></div>
         </div>
       </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {TimelineMax} from 'gsap'
+// import {TimelineMax} from 'gsap' // Need for slice stagger
 export default {
   props: ['post'],
   data () {
@@ -44,11 +44,11 @@ export default {
       entry: this.post.data
     }
   },
-  watch: {
-    reveal () {
-      this.animateSlices()
-    }
-  },
+  // watch: {
+  //   reveal () {
+  //     this.animateSlices()
+  //   }
+  // },
   methods: {
     toNewLines (str) {
       if (str) {
@@ -57,24 +57,24 @@ export default {
     },
     wipe () {
       this.reveal = true
-    },
-    animateSlices () {
-      let loader = this.$refs.imageLoader
-      let slices = [...loader.childNodes]
-      let imgs = slices.map((slice, i) => {
-        return slice.querySelector('.image-slice')
-      })
-      let tl = new TimelineMax()
-      let staggerSlices = () => {
-        tl.staggerFromTo(imgs, 0.5, {
-          y: 200
-        }, {
-          y: 0
-        }, 0.25)
-      }
-
-      window.requestAnimationFrame(staggerSlices)
     }
+    // animateSlices () {
+    //   let loader = this.$refs.imageLoader
+    //   let slices = [...loader.childNodes]
+    //   let imgs = slices.map((slice, i) => {
+    //     return slice.querySelector('.image-slice')
+    //   })
+    //   let tl = new TimelineMax()
+    //   let staggerSlices = () => {
+    //     tl.staggerFromTo(imgs, 0.5, {
+    //       y: 200
+    //     }, {
+    //       y: 0
+    //     }, 0.25)
+    //   }
+
+    // window.requestAnimationFrame(staggerSlices)
+    // }
   }
 }
 </script>
@@ -139,9 +139,9 @@ export default {
         span {
           font-size: 1.5rem;
           display: inline-block;
-          margin-left: .5rem;
+          // margin-left: .5rem;
           font-weight: $lightW;
-          color: rgba(white, 0.6);
+          color: rgba(white, 0.8);
           @include autoAlpha(0);
           transform: translate(-100px, 0);
           transition: all 0.5s 0.125s ease;
@@ -152,7 +152,7 @@ export default {
         }
       }
       .work-quick-involvement {
-        color: white!important;
+        color: $grey-light!important;
         h4 {
           @include autoAlpha(0);
           transition: all 0.5s ease;
@@ -217,7 +217,7 @@ export default {
         position: absolute;
         top: 0;
         height: 100%;
-        width: 200%;
+        width: 100%; // multiply by 100 for number of slices
         background-size: cover;
         background-position: center;
       }

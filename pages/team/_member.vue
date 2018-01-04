@@ -36,7 +36,7 @@
             </div>
           </div>
 
-          <div class="member-social columns">
+          <div class="member-social columns" v-if="entry.social_links[0].link_label">
             <div class="column is-narrow" v-for="(link, index ) in entry.social_links" :key="index">
              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
             </div>
@@ -138,8 +138,9 @@ export default {
       }
     },
     nextMember () {
-      let member = this.teamPosts[this.currentIndex + 1]
-      if (member) {
+      let current = this.currentIndex + 1
+      if (this.teamPosts.length > current) {
+        let member = this.teamPosts[this.currentIndex + 1]
         return {
           uid: member.uid,
           name: member.data.member_name

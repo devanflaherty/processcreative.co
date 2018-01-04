@@ -6,12 +6,14 @@
     <div class="container about-wrap">
       <div class="about-welcome page-welcome columns">
         <div class="column">
-          <div class="opening-headline has-text-white" 
+          <div class="opening-headline"
+            :class="contrast" 
             v-html="$prismic.asHtml(aboutPage.opening_headline)"
             v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
         </div>
         <div class="column">
-          <div class="opening-statement" 
+          <div class="opening-statement rich-text"
+            :class="contrast" 
             v-html="$prismic.asHtml(aboutPage.opening_statement)"
             v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
         </div>
@@ -97,6 +99,14 @@ export default {
       team: teamPosts,
       teamPosts: teamPosts.results,
       aboutPage: aboutPage.data
+    }
+  },
+  computed: {
+    contrast () {
+      return {
+        'has-text-black': this.aboutPage.page_contrast === 'Dark',
+        'has-text-white': this.aboutPage.page_contrast === 'Light'
+      }
     }
   },
   created () {

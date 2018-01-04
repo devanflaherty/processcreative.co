@@ -90,7 +90,8 @@ footer {
   padding-top: 10rem;
 
   p {
-    color: $grey-dark;
+    color: $grey!important;
+    font-size: 1rem;
     @include mobile() {
       font-size: 1rem;
     }

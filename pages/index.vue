@@ -41,7 +41,7 @@
             </h3>
           </div>
           <div class="column">
-            <div class="work-statement" 
+            <div class="work-statement has-text-black rich-text" 
               v-html="$prismic.asHtml(home.work_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
             <a name="toWhite" v-waypoint.down.inview="{offset: 0}"

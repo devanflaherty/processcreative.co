@@ -3,12 +3,14 @@
     <div class="container">
       <div class="work-welcome page-welcome columns">
         <div class="column">
-          <div class="opening-headline has-text-black" 
+          <div class="opening-headline"
+            :class="contrast" 
             v-html="$prismic.asHtml(workPage.opening_headline)"
             v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
         </div>
         <div class="column">
-          <div class="opening-statement" 
+          <div class="opening-statement rich-text" 
+            :class="contrast"
             v-html="$prismic.asHtml(workPage.opening_statement)"
             v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
         </div>
@@ -45,6 +47,14 @@ export default {
     enter,
     leave
   },
+  computed: {
+    contrast () {
+      return {
+        'has-text-black': this.workPage.page_contrast === 'Dark',
+        'has-text-white': this.workPage.page_contrast === 'Light'
+      }
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
@@ -53,6 +63,7 @@ export default {
   },
   mounted () {
     if (this.workPosts) {
+      this.setHeroUiContrast()
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(this.workPage.primary_color, this.workPage.background_color, this.workPage.page_contrast)
     }

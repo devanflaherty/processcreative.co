@@ -28,7 +28,7 @@ blockquote {
     line-height: 1;
   }
   .author p {
-    color: $grey-light;
+    color: $white;
     font-weight: $lightW;
     &:before {
       content: '- ';

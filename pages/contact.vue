@@ -31,7 +31,11 @@
       <div class="columns">
         <div class="column">
           <h5>Connect</h5>
-          <div class="rich-text" v-html="$prismic.asHtml(contact.general)"></div>
+          <ul>
+            <li v-for="(link, index ) in connectMenu" :key="index">
+              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -90,7 +94,7 @@ export default {
 
 <style scoped lang="scss">
 h5 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
 }
 </style>

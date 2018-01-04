@@ -19,12 +19,13 @@
       <div class="container">
         <div class="columns opener">
           <div class="column is-4">
-            <div class="opening-headline" :class="{'has-text-white': entry.page_contrast == 'Light', 'has-text-black': entry.page_contrast == 'Dark'}" 
+            <div class="opening-headline" :class="contrast" 
               v-html="$prismic.asHtml(entry.opening_headline)"
               v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
           </div>
           <div class="column">
-            <div class="opening-statement rich-text" 
+            <div class="opening-statement rich-text"
+              :class="contrast"
               v-html="$prismic.asHtml(entry.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
             <h3 class="list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}">Involvement</h3>
@@ -83,6 +84,7 @@ export default {
   },
   mounted () {
     if (this.document) {
+      console.log(this.document)
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(
         this.entry.primary_color,
