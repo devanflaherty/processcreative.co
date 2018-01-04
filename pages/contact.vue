@@ -6,7 +6,7 @@
     <div class="container contact-wrap">
       <div class="contact-welcome page-welcome columns" v-if="contactPage.opening_headline.length">
         <div class="column">
-          <div class="opening-headline has-text-white" 
+          <div class="opening-headline" 
             v-html="$prismic.asHtml(contactPage.opening_headline)"
             v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
         </div>
