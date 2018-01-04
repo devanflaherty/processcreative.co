@@ -98,7 +98,6 @@ export default {
       this.setHeroUiContrast(style)
     },
     mobileNav (visible) {
-      alert(visible)
       if (visible) {
         this.pauseSlider()
       } else {
