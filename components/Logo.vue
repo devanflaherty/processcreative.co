@@ -1,29 +1,41 @@
 <template>
-<div @mouseleave="hover('leave')" @mouseover="hover('enter')" class="processLogo" :class="status">
 
-<svg viewBox="0 0 309 425" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-      <path ref="stroke" id="stroke" d="M115.850512,387.631559 C78.1956608,373.915508 43.3478988,345.907505 42.9959,289.2047 M218.4205,42.3136 C206.3085,39.2846 192.2635,37.5226 175.9355,37.5226 C175.9355,37.5226 61.7965,32.5406 61.7965,123.6906 C61.7965,172.0496 98.2105,191.1896 135.0855,202.0406 C147.0875,205.5726 159.1395,208.2306 170.0005,210.7256 C181.0235,213.2586 192.7315,215.3876 204.4895,217.7386 C254.5535,227.7486 305.5155,241.8056 308.3235,308.4176 C311.7335,389.3106 208.8135,400.0836 208.8135,400.0836 C208.8135,400.0836 160.3695,403.8486 115.8505,387.6316 L115.850512,387.631559 M293.4935,134.6504 C293.4935,134.6504 296.5615,61.8554 218.4205,42.3134"></path>
-      <path d="M218.4205,42.3136 C206.3085,39.2846 192.2635,37.5226 175.9355,37.5226 C175.9355,37.5226 61.7965,32.5406 61.7965,123.6906 C61.7965,172.0496 98.2105,191.1896 135.0855,202.0406 C147.0875,205.5726 159.1395,208.2306 170.0005,210.7256 C181.0235,213.2586 192.7315,215.3876 204.4895,217.7386 C254.5535,227.7486 305.5155,241.8056 308.3235,308.4176 C311.7335,389.3106 208.8135,400.0836 208.8135,400.0836 C208.8135,400.0836 160.3695,403.8486 115.8505,387.6316 C109.3479,400.0967 102.9149,412.4247 96.6339,424.4647 C80.7749,418.9617 66.4139,411.5517 53.5899,402.1937 C36.9969,390.1007 23.8249,374.6787 14.0739,355.9437 C4.3119,337.2107 -0.3701,314.9637 0.0229,289.2047 L42.9959,289.2047 C43.3478988,345.907506 78.1956617,373.915508 115.850514,387.631559 C121.130513,377.511574 126.456507,367.303587 131.7885,357.0836 C136.3505,359.0736 141.2045,360.7536 146.3825,362.0916 C157.6965,365.0196 169.4055,366.4816 181.5085,366.4816 C189.7045,366.4816 198.4865,365.8056 207.8515,364.4336 C217.2195,363.0706 226.0015,360.4356 234.1985,356.5296 C242.3935,352.6326 249.2175,347.2636 254.6875,340.4306 C260.1485,333.6056 262.8835,324.9166 262.8835,314.3786 C262.8835,303.0636 259.2705,293.8886 252.0535,286.8626 C244.8265,279.8376 235.3675,273.9826 223.6585,269.3006 C211.9875,264.6306 198.7575,260.5446 183.9845,257.0396 C183.9395,257.0286 183.8955,257.0176 183.8495,257.0066 C169.0125,253.4926 153.9925,249.5956 138.7705,245.2966 C131.0425,243.3676 123.4115,241.2196 115.8775,238.8566 C108.1865,236.4466 100.5955,233.8136 93.1075,230.9546 C78.2695,225.3006 65.0055,217.9826 53.2965,209.0006 C41.5895,200.0256 32.1215,188.8026 24.9035,175.3376 C17.6775,161.8726 14.0735,145.5806 14.0735,126.4536 C14.0735,104.9936 18.6555,86.3516 27.8305,70.5446 C36.9975,54.7376 48.9985,41.5656 63.8355,31.0266 C78.6625,20.4896 95.4485,12.6876 114.1815,7.6096 C132.9155,2.5416 151.6515,-0.0004 170.3855,-0.0004 C192.2385,-0.0004 213.2115,2.4406 233.3185,7.3166 C234.3165,7.5596 235.2835,7.8436 236.2695,8.1016 C230.882526,18.4285506 224.855558,29.9784896 218.420592,42.3134231 C212.9615,52.7764 207.2075,63.8044 201.2715,75.1824 C209.3495,77.1924 216.6175,80.2264 223.0745,84.3014 C230.4835,88.9864 236.4375,95.4254 240.9305,103.6214 C245.2115,111.4494 247.7865,121.2644 248.6955,133.0084 C248.7385,133.5594 248.7975,134.0904 248.8325,134.6504 L293.4935,134.6504 C293.4935,134.6504 296.561496,61.8554903 218.420645,42.3134364 L218.4205,42.3136 Z" id="key"></path>
+<div @mouseleave="hover('leave')" @mouseover="hover('enter')" class="samsonLogo" :class="status">
+<svg viewBox="0 0 380 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- shape clip -->
+    <path id="s-shape" d="M0,42.814 L5.212,36.618 C9.929,40.701 14.646,43.024 20.774,43.024 C26.125,43.024 29.506,40.559 29.506,36.829 L29.506,36.686 C29.506,33.166 27.533,31.266 18.379,29.151 C7.888,26.618 1.971,23.519 1.971,14.435 L1.971,14.294 C1.971,5.844 9.014,0 18.801,0 C25.983,0 31.687,2.182 36.688,6.197 L32.04,12.745 C27.604,9.435 23.168,7.675 18.661,7.675 C13.591,7.675 10.634,10.28 10.634,13.52 L10.634,13.661 C10.634,17.463 12.886,19.152 22.323,21.406 C32.745,23.942 38.167,27.672 38.167,35.841 L38.167,35.981 C38.167,45.208 30.913,50.701 20.561,50.701 C13.028,50.701 5.915,48.094 0,42.814"></path>
+    <path id="s-stroke" d="M38.3911952,12.546594 C20.7570474,3.02944477 10.3621029,3.46908759 7.20636164,13.8655224 C5.56999618,20.0652313 7.9664221,23.9679927 14.3956394,25.5738067 C24.9686765,28.061887 30.6456575,30.0279846 31.4265824,31.4720994 C32.5979697,33.6382718 33.9504302,34.0842484 33.9504302,39.5164452 C33.9504302,44.948642 30.0757048,47.4244272 26.0402128,48.71653 C22.0047207,50.0086328 10.8591228,49.2139225 0.729081691,39.5164452"></path>
 
-      <clipPath id="clip">
-        <use xlink:href="#key"/>
-      </clipPath>
-    </defs>
-  <router-link to="/" class="logo-link" :class="{'ready': ready}, status">
-    <g id="samson-mark">
-      <use fill="none" :stroke="primaryColor" xlink:href="#stroke" id="character" ref="character" stroke-width="160" clip-path="url(#clip)"/>
-      <use fill="none" :stroke="primaryColor" xlink:href="#stroke" id="characterHover" ref="characterHover" stroke-width="160" clip-path="url(#clip)"/>
+    <clipPath id="clip">
+      <use xlink:href="#s-shape"/>
+    </clipPath>
+  </defs>
+  <router-link to="/" class="logo-link" :class="status">
+    <rect id="Rectangle" fill="transparent" x="0" y="0" width="380" height="51"></rect>
+    <g id="samsonMark" :class="{'is-mobile': mobileNav}"> <!-- translate(17.000000, 17.000000) -->
+      <g id="s-group" class="char">
+        <use fill="none" :stroke="primaryColor" xlink:href="#s-stroke" id="s" stroke-width="40" clip-path="url(#clip)"/>
+        <!-- <use fill="none" :stroke="backgroundColor" xlink:href="#s-stroke" id="sHover" stroke-width="40" clip-path="url(#clip)"/> -->
+      </g>
+      <g id="type">
+        <path :fill="primaryColor" class="char" id="a-shape" d="M92.0272,30.5607 L83.5062,10.8447 L75.0552,30.5607 L92.0272,30.5607 Z M79.6322,0.4917 L87.6602,0.4917 L109.3492,50.1367 L100.1942,50.1367 L95.1942,38.2377 L71.8872,38.2377 L66.8152,50.1367 L57.9442,50.1367 L79.6322,0.4917 Z"></path>
+        <polygon :fill="primaryColor" class="char" id="m-shape" points="133.1385 0.8444 142.3625 0.8444 157.3615 24.1524 172.3605 0.8444 181.5865 0.8444 181.5865 50.1364 172.9235 50.1364 172.9235 14.7874 157.3615 38.0264 157.0795 38.0264 141.6595 14.9274 141.6595 50.1364 133.1385 50.1364"></polygon>
+        <path :fill="primaryColor" class="char" id="s2-shape" d="M205.7972,42.9552 L211.0082,36.7592 C215.7262,40.8422 220.4432,43.1652 226.5702,43.1652 C231.9222,43.1652 235.3022,40.7002 235.3022,36.9702 L235.3022,36.8272 C235.3022,33.3072 233.3292,31.4072 224.1762,29.2922 C213.6842,26.7592 207.7672,23.6602 207.7672,14.5762 L207.7672,14.4352 C207.7672,5.9852 214.8102,0.1412 224.5972,0.1412 C231.7792,0.1412 237.4842,2.3232 242.4852,6.3382 L237.8362,12.8862 C233.4002,9.5762 228.9642,7.8162 224.4582,7.8162 C219.3882,7.8162 216.4312,10.4212 216.4312,13.6612 L216.4312,13.8022 C216.4312,17.6042 218.6832,19.2932 228.1202,21.5472 C238.5412,24.0832 243.9632,27.8132 243.9632,35.9822 L243.9632,36.1222 C243.9632,45.3492 236.7102,50.8422 226.3582,50.8422 C218.8252,50.8422 211.7112,48.2352 205.7972,42.9552"></path>
+        <path :fill="primaryColor" class="char" id="o-shape" d="M306.3455,25.6305 L306.3455,25.4905 C306.3455,15.9145 299.3735,7.9575 289.5865,7.9575 C279.7975,7.9575 272.9675,15.7735 272.9675,25.3515 L272.9675,25.4905 C272.9675,35.0675 279.9385,43.0255 289.7255,43.0255 C299.5155,43.0255 306.3455,35.2075 306.3455,25.6305 M263.8825,25.6305 L263.8825,25.4905 C263.8825,11.6185 274.5875,0.0005 289.7255,0.0005 C304.8665,0.0005 315.4295,11.4775 315.4295,25.3515 L315.4295,25.4905 C315.4295,39.3635 304.7245,50.9815 289.5865,50.9815 C274.4455,50.9815 263.8825,39.5055 263.8825,25.6305"></path>
+        <polygon :fill="primaryColor" class="char" id="n-shape" points="336.825 0.8444 344.852 0.8444 371.259 34.9274 371.259 0.8444 379.78 0.8444 379.78 50.1364 372.527 50.1364 345.346 15.0684 345.346 50.1364 336.825 50.1364"></polygon>
+      </g>
+      <!-- <use fill="none" :stroke="primaryColor" xlink:href="#stroke" id="characterHover" ref="characterHover" stroke-width="160" clip-path="url(#clip)"/> -->
     </g>
   </router-link>
 </svg>
-
 
 </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+// import {TimelineMax} from 'gsap'
 import {TimelineMax, TweenMax, Expo} from 'gsap'
 
 export default {
@@ -33,28 +45,36 @@ export default {
   },
   data () {
     return {
-      ready: false,
       status: null
     }
   },
   watch: {
     status (s) {
-      let sH = document.getElementById('characterHover')
-      let stroke = document.getElementById('stroke')
-      var pathLength = stroke.getTotalLength()
+      let tl = new TimelineMax()
+      // let sH = document.getElementById('sHover')
+      // let pathLength = document.getElementById('s-stroke').getTotalLength()
 
       if (s === 'enter') {
-        TweenMax
-          .to(sH, 0.5, {
-            stroke: this.backgroundColor,
-            strokeDashoffset: 0,
-            ease: Expo.easeIn
-          })
+        // TweenMax
+        //   .to(sH, 0.5, {
+        //     strokeDashoffset: 0,
+        //     ease: Expo.easeIn
+        //   })
+        tl
+          .staggerTo('.char', 0.5, {
+            y: 22
+          }, 0.25)
       } else {
-        TweenMax.killTweensOf(s)
+        // TweenMax.killTweensOf(s)
+        TweenMax.killTweensOf('.char')
+        // TweenMax
+        //   .to(sH, 0.66, {
+        //     strokeDashoffset: pathLength,
+        //     ease: Expo.easeOut
+        //   })
         TweenMax
-          .to(sH, 0.66, {
-            strokeDashoffset: pathLength,
+          .to('.char', 0.66, {
+            y: 0,
             ease: Expo.easeOut
           })
       }
@@ -66,31 +86,38 @@ export default {
     },
     animateIn () {
       let logoAnimation = new TimelineMax()
-      let s = document.getElementById('character')
-      let sH = document.getElementById('characterHover')
-      let stroke = document.getElementById('stroke')
-      var pathLength = stroke.getTotalLength()
+      let s = document.getElementById('s')
+      let types = document.querySelectorAll('#type > *')
+
+      let pathLength = (p) => {
+        var pathLength = document.getElementById(p).getTotalLength()
+        return pathLength
+      }
+      // let sHover = document.getElementById('sHover')
 
       logoAnimation
         .set(s, {
-          stroke: this.primaryColor,
-          strokeWidth: 160,
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength
+          strokeWidth: 15,
+          strokeDasharray: pathLength('s-stroke'),
+          strokeDashoffset: pathLength('s-stroke')
         })
-        .set(sH, {
-          stroke: this.primaryColor,
-          strokeWidth: 160,
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength
+        // .set(sHover, {
+        //   stroke: this.backgroundColor,
+        //   strokeWidth: 15,
+        //   strokeDasharray: pathLength('s-stroke'),
+        //   strokeDashoffset: pathLength('s-stroke')
+        // })
+        .set(types, {
+          autoAlpha: 0,
+          y: 22
         })
-        .to(s, 2, {
-          strokeDashoffset: 0,
-          onComplete: this.onReady
-        }, 1)
-    },
-    onReady () {
-      this.ready = true
+        .to(s, 1, {
+          strokeDashoffset: 0
+        }, 0.25)
+        .staggerTo(types, 0.5, {
+          autoAlpha: 1,
+          y: 0
+        }, 0.25)
     }
   },
   mounted () {
@@ -103,11 +130,11 @@ export default {
 
 
 <style lang="scss" scoped>
-.processLogo {
+.samsonLogo {
   height: 0;
   width: 100%;
-  min-width: 40px;
-  padding-top: 82.70%;
+  min-width: 160px;
+  padding-top: 14%;
   position: relative;
   z-index: 100;
   display: inline-block;
@@ -118,24 +145,21 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    transition: fill 0.5s ease;
-    g.logoFill.is-mobile {
-      fill: black!important;
+    path, polyline, polygon {
+      transition: fill 0.5s ease, stroke 0.5s ease;
     }
-    g.logoFill {
-      fill: white;
-      transition: fill 0.5s ease;
+    g#samsonMark.is-mobile {
+      use {
+        stroke: black!important;
+      }
+      path, polyline, polygon {
+        fill: black!important;
+      }
     }
   }
   svg a {
     display: block;
     text-decoration: none;
-    .slash {
-      animation: process 2s ease infinite;
-    }
-  }
-  &.ready:not(:hover) svg .slash {
-    animation: process 2s ease;
   }
 }
 

@@ -37,6 +37,14 @@
   .opening-headline > * {
     color: $black;
   }
+  h1, h2, h3, h4, h5 {
+    color: $black;
+  }
+  p, div, li {
+    color: $grey-dark;
+  }
+
+  // LINKS
   .rich-text a:not(.button), .rich-text a:not(.arrow), footer a {
     color: $black;
     &:before {
@@ -52,15 +60,24 @@
   .arrow {
     color: $black;
   }
+
+  // Component Specific
+  blockquote {
+    .author {
+      color: $grey-dark;
+    }
+  }
+
+  // Footer
   footer {
     h5 strong {
       color: $black;
     }
     .new-business p {
-      color: $black;
+      color: $grey-dark;
     }
     #copyright p {
-      color: $black;
+      color: $grey-dark;
     }
   }
 }

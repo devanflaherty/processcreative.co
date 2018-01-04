@@ -20,7 +20,7 @@
 
         <div class="work-quick-involvement column">
           <h4><strong class="has-text-white">Involvement</strong></h4>
-          <div class="quick-involvement" v-html="toNewLines(entry.involvement)"></div>
+          <div class="quick-involvement rich-text" v-html="toNewLines(entry.involvement)"></div>
         </div>
       </div>
 
@@ -152,13 +152,13 @@ export default {
         }
       }
       .work-quick-involvement {
-        color: $grey-light!important;
         h4 {
           @include autoAlpha(0);
           transition: all 0.5s ease;
           transform: translate(300px, 0);
         }
         .quick-involvement {
+          color: $grey-light!important;
           white-space: pre-wrap; 
           column-count: 2;
           @include autoAlpha(0);

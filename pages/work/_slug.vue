@@ -5,8 +5,7 @@
     class="page" 
     :class="contrast"
     v-show="!loading">
-    <WorkHero :entry="entry"
-      v-scroll-reveal="{duration: 2000, scale: 0.9, distance: '0'}"/>
+    <WorkHero :entry="entry" />
 
     <section class="section" v-if="entry.highlight_video.html">
       <div class="container stagger">
@@ -19,13 +18,12 @@
       <div class="container">
         <div class="columns opener">
           <div class="column is-4">
-            <div class="opening-headline" :class="contrast" 
+            <div class="opening-headline"
               v-html="$prismic.asHtml(entry.opening_headline)"
               v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
           </div>
           <div class="column">
             <div class="opening-statement rich-text"
-              :class="contrast"
               v-html="$prismic.asHtml(entry.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
             <h3 class="list-headline" v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}">Involvement</h3>

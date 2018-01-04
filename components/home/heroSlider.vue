@@ -44,6 +44,7 @@
 
 <script>
 // import {TimelineMax, TweenMax, Power4} from 'gsap'
+import {mapGetters} from 'vuex'
 import SliderUi from '~/components/slices/imageGallery/_sliderUi'
 import heroTransitions from './_transitions'
 
@@ -79,6 +80,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['mobileNav'])
+  },
   watch: {
     loading () {
       if (!this.loading && this.$refs.mySwiper) {
@@ -92,6 +96,14 @@ export default {
     },
     slideUi (style) {
       this.setHeroUiContrast(style)
+    },
+    mobileNav (visible) {
+      alert(visible)
+      if (visible) {
+        this.pauseSlider()
+      } else {
+        this.playSlider()
+      }
     }
   },
   methods: {

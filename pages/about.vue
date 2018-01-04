@@ -7,13 +7,11 @@
       <div class="about-welcome page-welcome columns">
         <div class="column">
           <div class="opening-headline"
-            :class="contrast" 
             v-html="$prismic.asHtml(aboutPage.opening_headline)"
             v-scroll-reveal="{scale: 1, distance: '100px', origin: 'left'}"></div>
         </div>
         <div class="column">
           <div class="opening-statement rich-text"
-            :class="contrast" 
             v-html="$prismic.asHtml(aboutPage.opening_statement)"
             v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
         </div>

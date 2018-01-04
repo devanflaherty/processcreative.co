@@ -4,7 +4,7 @@
       <div class="columns">
         <template v-if="highlight.highlight_placement == 'Right'">
           <div class="column highlight-body">
-            <div class="highlight-content"  v-html="$prismic.asHtml(highlight.highlight_body)"></div>
+            <div class="highlight-content rich-text" v-html="$prismic.asHtml(highlight.highlight_body)"></div>
           </div>
         </template>
 
@@ -21,7 +21,7 @@
       
         <template v-if="highlight.highlight_placement == 'Left'">
           <div class="column highlight-body">
-            <div class="highlight-content" v-html="$prismic.asHtml(highlight.highlight_body)"></div>
+            <div class="highlight-content rich-text" v-html="$prismic.asHtml(highlight.highlight_body)"></div>
           </div>
         </template>
       </div>
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  props: ['slice'],
+  props: ['slice', 'contrast'],
   data () {
     return {
       highlight: this.slice.primary

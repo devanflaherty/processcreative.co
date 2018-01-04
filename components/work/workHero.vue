@@ -5,7 +5,7 @@
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
       <div class="container">
-        <h2 class="work-title">
+        <h2 class="work-title" v-scroll-reveal="{duration: 2000, scale: 0.9, distance: '20px', delay: 900}">
           <strong :class="contrast">{{$prismic.asText(entry.title)}}</strong><br>
           <span :class="contrast" style="opacity: 0.8">{{$prismic.asText(entry.description)}}</span>
         </h2>
