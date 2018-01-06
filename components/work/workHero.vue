@@ -13,8 +13,7 @@
     </div>
 
     <!-- Hero footer: will stick at the bottom -->
-    <div class="hero-foot">
-    </div>
+    <div class="hero-foot"></div>
   </section>
 </template>
 

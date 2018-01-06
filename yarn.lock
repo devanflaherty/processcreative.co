@@ -3215,10 +3215,6 @@ interpret@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
 
-intersection-observer@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.4.3.tgz#22ff07442269d8be694551a782e0b081ecd4adfd"
-
 invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
@@ -5773,12 +5769,6 @@ schema-utils@^0.3.0:
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
   dependencies:
     ajv "^5.0.0"
-
-scrollama@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/scrollama/-/scrollama-0.6.1.tgz#3e031ce3618d4432e9258d28640b2931424b14db"
-  dependencies:
-    intersection-observer "^0.4.3"
 
 scrollmagic@^2.0.5:
   version "2.0.5"

@@ -84,9 +84,9 @@ export default {
       // let lastScrollTop = 0
       let scrollTop = window.scrollY
 
-      if (scrollTop >= 200) {
+      if (scrollTop >= 60) {
         this.scrolled = true
-      } else if (scrollTop < 200) {
+      } else if (scrollTop < 60) {
         this.scrolled = false
       }
       // lastScrollTop = scrollTop

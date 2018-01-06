@@ -44,13 +44,13 @@
         <div class="container">
           <div class="work-welcome columns">
             <div class="column">
-              <h3 class="opening-headline has-text-black" 
+              <h3 class="opening-headline has-text-white" 
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
                 {{$prismic.asText(home.work_headline)}}
               </h3>
             </div>
             <div class="column">
-              <div class="work-statement has-text-black rich-text" 
+              <div class="work-statement has-text-white rich-text" 
                 v-html="$prismic.asHtml(home.work_statement)"
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
               <!-- <a name="toWhite" v-waypoint.down="{offset: 0}" @collision="setBg('#fff', '#000')"></a> -->
