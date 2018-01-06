@@ -7,6 +7,9 @@
       <div class="container">
         <div class="columns">
           <div class="column is-4">
+
+            <!-- <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a> -->
+
             <h3 class="opening-headline has-text-white"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
               {{$prismic.asText(home.opening_headline)}}
@@ -17,7 +20,7 @@
               v-html="$prismic.asHtml(home.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}"></div>
 
-            <a name="toBlack" v-waypoint.up="{offset: 0}" @collision="setBg('#000', '#fff')"></a>
+            <!-- <a name="toBlack" v-waypoint.up="{offset: 0}" @collision="setBg('#000', '#fff')"></a> -->
 
             <h3 class="list-headline"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}">
@@ -32,11 +35,11 @@
       </div>
     </section>
 
-    <a name="toBlack" v-waypoint.up="{offset: '25%'}" @collision="setBg('#000', '#fff')"></a>
-    <a name="toWhite" v-waypoint.down="{offset: '50%'}" @collision="setBg('#fff', '#000')"></a>
+    <!-- <a name="toBlack" v-waypoint.up="{offset: '25%'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" v-waypoint.down="{offset: '50%'}" @collision="setBg('#fff', '#000')"></a> -->
 
     <section id="featuredWork">
-      <a name="toWhite" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+      <!-- <a name="toWhite" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a> -->
       <div class="section" v-if="home.work_headline && home.work_statement">
         <div class="container">
           <div class="work-welcome columns">
@@ -50,7 +53,7 @@
               <div class="work-statement has-text-black rich-text" 
                 v-html="$prismic.asHtml(home.work_statement)"
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
-              <a name="toWhite" v-waypoint.down="{offset: 0}" @collision="setBg('#fff', '#000')"></a>
+              <!-- <a name="toWhite" v-waypoint.down="{offset: 0}" @collision="setBg('#fff', '#000')"></a> -->
             </div>
           </div>
         </div>
@@ -59,8 +62,8 @@
       <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
     </section>
     
-    <a name="toWhite" v-waypoint.up="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
-    <a name="toBlack" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
+    <!-- <a name="toWhite" v-waypoint.up="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+    <a name="toBlack" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a> -->
 
     <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
@@ -88,6 +91,11 @@ export default {
     }).catch((err) => {
       console.log(err)
     })
+  },
+  data () {
+    return {
+      ticking: false
+    }
   },
   head () {
     return {
@@ -124,16 +132,35 @@ export default {
       }
     }
   },
+  methods: {
+    raf () {
+      if (!this.ticking) {
+        window.requestAnimationFrame(this.updateBgScrollAction)
+        this.ticking = true
+      }
+    },
+    updateBgScrollAction () {
+      let wh = window.innerHeight
+      let trigger = wh / 2
+      let scrollTop = window.scrollY
+      if (scrollTop >= trigger) {
+        this.setBg('#000', '#fff')
+      }
+      this.ticking = false
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
   beforeMount () {
     this.setPageContrast()
-    this.$store.dispatch('setBackgroundColor', '#000')
   },
   mounted () {
+    // let way = document.querySelector('#waypoint')
     if (this.document) {
-      this.$waypoint.enableWaypoints()
+      this.$store.dispatch('setBackgroundColor', '#000')
+      window.addEventListener('scroll', this.raf)
+      this.raf()
       this.$store.dispatch('toggleLoading', false)
 
       this.$prismic.initApi().then((ctx) => {
@@ -142,8 +169,9 @@ export default {
     }
   },
   beforeDestroy () {
-    this.$waypoint.disableAllWaypoints()
-    this.$waypoint.destroyWaypoints()
+    window.removeEventListener('scroll', this.raf)
+    // this.$waypoint.disableAllWaypoints()
+    // this.$waypoint.destroyWaypoints()
     this.setBg(null)
   }
 }

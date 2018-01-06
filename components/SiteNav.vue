@@ -50,7 +50,8 @@ export default {
   },
   data () {
     return {
-      scrolled: false
+      scrolled: false,
+      ticking: false
     }
   },
   computed: {
@@ -73,34 +74,23 @@ export default {
     }
   },
   methods: {
-    scrollStatus () {
-      let lastScrollTop = 0
-      let ticking = false
-
-      let scrollAction = () => {
-        let scrollTop = window.scrollY
-        if (scrollTop !== lastScrollTop) {
-          // do something that triggers a repaint
-          if (scrollTop < 200) {
-            if (scrollTop >= 100) {
-              this.scrolled = true
-            } else if (scrollTop < 100) {
-              this.scrolled = false
-            }
-          }
-          lastScrollTop = scrollTop
-        }
-        ticking = false
+    raf () {
+      if (!this.ticking) {
+        window.requestAnimationFrame(this.scrollAction)
+        this.ticking = true
       }
+    },
+    scrollAction () {
+      // let lastScrollTop = 0
+      let scrollTop = window.scrollY
 
-      window.addEventListener('scroll', function (e) {
-        if (!ticking) {
-          window.requestAnimationFrame(scrollAction)
-          ticking = true
-        }
-      })
-
-      scrollAction()
+      if (scrollTop >= 200) {
+        this.scrolled = true
+      } else if (scrollTop < 200) {
+        this.scrolled = false
+      }
+      // lastScrollTop = scrollTop
+      this.ticking = false
     },
     showMobileNav () {
       this.$store.dispatch('toggleMobileNav', !this.mobileNav)
@@ -125,7 +115,8 @@ export default {
     }
   },
   mounted () {
-    this.scrollStatus()
+    window.addEventListener('scroll', this.raf)
+    this.raf()
   }
 }
 </script>

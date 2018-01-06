@@ -49,8 +49,9 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/styles/mixins';
 #clientLogos {
+  padding-top: 260px;
   .clientLogos__columns {
-    padding-top: 260px;
+    padding-top: 100px;
   }
 }
 .client-logo {

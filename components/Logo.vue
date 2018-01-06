@@ -68,34 +68,41 @@ export default {
     },
     scrolledLogo (val) {
       if (this.animated) {
-        let letters = document.querySelectorAll('.char')
-        let amson = Array.from(letters).filter((e, i) => {
-          if (i > 0) {
-            return e
-          }
-        })
-
-        if (val) {
-          TweenMax
-            .to(amson, 0.66, {
-              y: 100,
-              autoAlpha: 0,
-              ease: Expo.easeOut
-            })
-        } else {
-          TweenMax
-            .to(amson, 0.66, {
-              y: 0,
-              autoAlpha: 1,
-              ease: Expo.easeOut
-            })
-        }
+        this.scrollAnimation(val)
+      }
+    },
+    animated (val) {
+      if (this.scrolledLogo) {
+        this.scrollAnimation(val)
       }
     }
   },
   methods: {
     hover (status) {
       this.status = status
+    },
+    scrollAnimation (bool) {
+      let letters = document.querySelectorAll('.char')
+      let amson = Array.from(letters).filter((e, i) => {
+        if (i > 0) {
+          return e
+        }
+      })
+      if (bool) {
+        TweenMax
+          .to(amson, 0.66, {
+            y: 100,
+            autoAlpha: 0,
+            ease: Expo.easeOut
+          })
+      } else {
+        TweenMax
+          .to(amson, 0.66, {
+            y: 0,
+            autoAlpha: 1,
+            ease: Expo.easeOut
+          })
+      }
     },
     animateIn () {
       let logoAnimation = new TimelineMax()
