@@ -170,7 +170,7 @@ export default {
 
     if (this.document) {
       this.$store.dispatch('toggleLoading', false)
-      this.setPageStyle(this.entry.primary_color, '#000000', 'Light')
+      this.setPageStyle(this.entry.primary_color, 'Light')
       this.setHeroUiContrast('Light')
 
       this.$prismic.initApi().then((api) => {

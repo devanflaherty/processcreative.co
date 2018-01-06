@@ -47,7 +47,7 @@ export default {
     this.$store.dispatch('getMenus')
   },
   mounted () {
-    this.setPageStyle('#000000', '#ffffff', 'Dark')
+    this.setPageStyle('#000000', 'Dark')
   }
 }
 </script>

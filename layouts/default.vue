@@ -56,7 +56,7 @@ export default {
 }
 
 .background-transition {
-  height: 100%;
+  height: 100vh;
   left: 0;
   position: fixed;
   top: 0;

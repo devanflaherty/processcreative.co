@@ -82,7 +82,7 @@ export default {
   mounted () {
     if (this.contactPage) {
       this.$store.dispatch('toggleLoading', false)
-      this.setPageStyle(this.contactPage.primary_color, this.contactPage.background_color, this.contactPage.page_contrast)
+      this.setPageStyle(this.contactPage.primary_color, this.contactPage.page_contrast)
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()

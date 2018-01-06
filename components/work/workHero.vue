@@ -38,8 +38,6 @@ export default {
     }
   },
   mounted () {
-    this.setHeroUiContrast(this.entry.hero_contrast)
-
     /* eslint-disable */
     let controller = new ScrollMagic.Controller()
 
@@ -64,7 +62,6 @@ export default {
 <style lang="scss" scoped>
 .hero {
   background-color: none;
-  margin-bottom: 300px;
 }
 .work-hero-image {
   background-size: cover;

@@ -5,11 +5,19 @@
     class="page" 
     :class="contrast"
     v-show="!loading">
-    <WorkHero :entry="entry" />
+    
+    <WorkHero :class="{'add-margin': margin === 'marginHero'}" :entry="entry" />
 
-    <section class="section" v-if="entry.highlight_video.html">
-      <div class="container stagger">
-        <responsiveVideo :embed="entry.highlight_video.html" 
+    <section class="section" v-if="entry.highlight_video.html || entry.approach.length > 0">
+      <div class="container">
+        <div class="work-approach rich-text"
+          v-if="entry.approach.length > 0"
+          v-html="$prismic.asHtml(entry.approach)"
+          v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
+        <responsiveVideo
+          class="work-highlight-video"
+          v-if="entry.highlight_video.html"
+          :embed="entry.highlight_video.html" 
           v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '200px'}"/>
       </div>
     </section>
@@ -72,6 +80,9 @@ export default {
         'has-text-black': this.entry.page_contrast === 'Dark',
         'has-text-white': this.entry.page_contrast === 'Light'
       }
+    },
+    margin () {
+      if (!this.entry.highlight_video.html && !this.entry.aproach) return 'marginHero'
     }
   },
   created () {
@@ -86,7 +97,6 @@ export default {
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(
         this.entry.primary_color,
-        this.entry.background_color,
         this.entry.page_contrast
       )
 
@@ -99,5 +109,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.add-margin {
+  margin-bottom: 200px;
+}
+.work-highlight-video {
+  margin-top: 200px;
+}
 </style>

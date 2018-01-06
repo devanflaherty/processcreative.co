@@ -116,7 +116,7 @@ export default {
   mounted () {
     if (this.teamPosts) {
       this.$store.dispatch('toggleLoading', false)
-      this.setPageStyle(this.aboutPage.primary_color, this.aboutPage.background_color, this.aboutPage.page_contrast)
+      this.setPageStyle(this.aboutPage.primary_color, this.aboutPage.page_contrast)
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()

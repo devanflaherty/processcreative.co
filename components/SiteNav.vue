@@ -11,7 +11,7 @@
     <transition name="nav-in" appear>
       <div class="navbar-brand" v-if="navVis">
         <div class="navbar-item" >
-          <Logo :color="primaryColor" :animate="navVis"/>
+          <Logo :animate="navVis" :scrolledLogo="scrolled"/>
         </div>
         <div class="nav-burg" :class="{'is-active': mobileNav}" @click="showMobileNav">
           <span :style="`background-color: ${primaryColor}`"></span>
@@ -23,7 +23,8 @@
       <div id="navMenu" class="navbar-menu" v-if="breakpoint >= 3 && navVis">
         <transition name="fade-in" appear>
           <div class="navbar-end" v-if="mobileNav || breakpoint > 2">
-            <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index">
+            <nuxt-link class="navbar-item" :to="$prismic.asLink(link.link_url)" v-for="(link, index) in navigationMenu" :key="index"
+              :style="`color: ${primaryColor}!important`">
               {{link.link_label}}
             </nuxt-link>
           </div>
@@ -32,23 +33,12 @@
     </transition>
 
     <MobileNav :menu="navigationMenu" :mobileNav="mobileNav"/>
-
-    <!-- <Modal @changeModalVis="toggleModal" :modalVisible="modal">
-      <div slot="body">
-        <p class="is-size-4 is-size-6-mobile">Thank you for your patience as we are currently updating our site with new work and new agency capabilities.</p>
-        <br>
-        <p class="is-size-4 is-size-6-mobile"><strong>Our new site is set to launch November 1st, 2017.</strong></p>
-        <br>
-        <p class="is-size-4 is-size-6-mobile">If you aren’t able to find what you are looking for below please reach out to us at newbusiness@processcreative.co with any questions that you might have.</p>
-      </div>
-    </Modal> -->
   </nav>
 </transition>
 </template>
 
 <script>
 import Logo from '~/components/Logo'
-import Modal from '~/components/Modal'
 import MobileNav from '~/components/MobileNav'
 
 import { mapGetters } from 'vuex'
@@ -56,13 +46,11 @@ import { mapGetters } from 'vuex'
 export default {
   components: {
     Logo,
-    Modal,
     MobileNav
   },
   data () {
     return {
-      logoColor: '#000000',
-      modal: false
+      scrolled: false
     }
   },
   computed: {
@@ -77,13 +65,6 @@ export default {
         this.modal = false
       }
     },
-    modal (m) {
-      if (m === true) {
-        this.logoColor = '#000000'
-      } else {
-        this.logoColor = '#ffffff'
-      }
-    },
     breakpoint (newV, oldV) {
       if (newV > oldV && oldV < 3) {
         this.$store.dispatch('toggleMobileNav', false)
@@ -92,6 +73,35 @@ export default {
     }
   },
   methods: {
+    scrollStatus () {
+      let lastScrollTop = 0
+      let ticking = false
+
+      let scrollAction = () => {
+        let scrollTop = window.scrollY
+        if (scrollTop !== lastScrollTop) {
+          // do something that triggers a repaint
+          if (scrollTop < 200) {
+            if (scrollTop >= 100) {
+              this.scrolled = true
+            } else if (scrollTop < 100) {
+              this.scrolled = false
+            }
+          }
+          lastScrollTop = scrollTop
+        }
+        ticking = false
+      }
+
+      window.addEventListener('scroll', function (e) {
+        if (!ticking) {
+          window.requestAnimationFrame(scrollAction)
+          ticking = true
+        }
+      })
+
+      scrollAction()
+    },
     showMobileNav () {
       this.$store.dispatch('toggleMobileNav', !this.mobileNav)
     },
@@ -113,6 +123,9 @@ export default {
         document.getElementsByTagName('body')[0].style.overflow = null
       }
     }
+  },
+  mounted () {
+    this.scrollStatus()
   }
 }
 </script>
@@ -120,23 +133,14 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/styles/mixins';
 
-body.hero-ui-Dark {
-  .navbar .navbar-menu .navbar-item a {
-    color: black!important
-  }
-}
-body.hero-ui-Dark {
-  .navbar .navbar-menu .navbar-item a {
-    color: white!important
-  }
-}
 .navbar {
-  position: absolute;
+  position: fixed;
+  z-index: 50;
   top: 0;
   left: 0;
   width: 100%;
   background: transparent;
-  padding: 3rem 4rem;
+  padding: 3rem 2rem;
   @include mobile() {
     padding: 1rem;
   }

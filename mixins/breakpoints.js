@@ -31,10 +31,21 @@ const breakpoints = {
   },
   mounted () {
     var w = window.innerWidth
+    var throttled = false
     this.setBreakpoint(w)
+
     window.onresize = () => {
       w = window.innerWidth
-      this.setBreakpoint(w)
+      if (!throttled) {
+        // actual callback action
+        this.setBreakpoint(w)
+        // we're throttled!
+        throttled = true
+        // set a timeout to un-throttle
+        setTimeout(() => {
+          throttled = false
+        }, 150)
+      }
     }
   }
 }

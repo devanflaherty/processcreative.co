@@ -170,6 +170,9 @@ blockquote {
   margin-bottom: 4rem;
   white-space: pre-wrap;
   column-count: 2;
+  @include mobile() {
+    column-count: 1;
+  }
 }
 
 // Contrast Styles

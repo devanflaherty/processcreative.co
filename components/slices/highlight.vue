@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  props: ['slice', 'contrast'],
+  props: ['slice'],
   data () {
     return {
       highlight: this.slice.primary

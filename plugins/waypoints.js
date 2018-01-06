@@ -49,6 +49,7 @@ var VueWaypoint = {
       if (waypointType === 'waypoint') {
         new Waypoint({
           element: el,
+          enabled: false,
           handler: function (direction) {
             if (options.direction && options.direction == direction) {
               emit(vnode, 'collision', {el: el, direction: direction})        
@@ -64,6 +65,7 @@ var VueWaypoint = {
       } else {
         new Waypoint.Inview({
           element: el,
+          enabled: false,
           enter: function(direction) {
             if (options.direction && options.direction == direction) {
               emit(vnode, 'enter' , {el: el, direction: direction})
@@ -106,6 +108,14 @@ Vue.use(VueWaypoint)
 export default (ctx, inject) => {
   inject('waypoint', new Vue({
     methods: {
+      enableWaypoints () {
+        setTimeout(() => {
+          Waypoint.enableAll()
+        }, 250)
+      },
+      disableAllWaypoints () {
+        Waypoint.disableAll()
+      },
       destroyWaypoints () {
         Waypoint.destroyAll()
       }

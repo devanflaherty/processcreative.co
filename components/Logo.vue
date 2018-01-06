@@ -35,48 +35,61 @@
 
 <script>
 import {mapGetters} from 'vuex'
-// import {TimelineMax} from 'gsap'
 import {TimelineMax, TweenMax, Expo} from 'gsap'
 
 export default {
-  props: ['color', 'size', 'animate'],
-  computed: {
-    ...mapGetters(['mobileNav', 'breakpoint'])
-  },
+  props: ['color', 'size', 'animate', 'scrolledLogo'],
   data () {
     return {
-      status: null
+      status: null,
+      animated: false
     }
+  },
+  computed: {
+    ...mapGetters(['mobileNav', 'breakpoint'])
   },
   watch: {
     status (s) {
       let tl = new TimelineMax()
-      // let sH = document.getElementById('sHover')
-      // let pathLength = document.getElementById('s-stroke').getTotalLength()
 
       if (s === 'enter') {
-        // TweenMax
-        //   .to(sH, 0.5, {
-        //     strokeDashoffset: 0,
-        //     ease: Expo.easeIn
-        //   })
         tl
           .staggerTo('.char', 0.5, {
             y: 22
           }, 0.25)
       } else {
-        // TweenMax.killTweensOf(s)
         TweenMax.killTweensOf('.char')
-        // TweenMax
-        //   .to(sH, 0.66, {
-        //     strokeDashoffset: pathLength,
-        //     ease: Expo.easeOut
-        //   })
         TweenMax
           .to('.char', 0.66, {
             y: 0,
             ease: Expo.easeOut
           })
+      }
+    },
+    scrolledLogo (val) {
+      if (this.animated) {
+        let letters = document.querySelectorAll('.char')
+        let amson = Array.from(letters).filter((e, i) => {
+          if (i > 0) {
+            return e
+          }
+        })
+
+        if (val) {
+          TweenMax
+            .to(amson, 0.66, {
+              y: 100,
+              autoAlpha: 0,
+              ease: Expo.easeOut
+            })
+        } else {
+          TweenMax
+            .to(amson, 0.66, {
+              y: 0,
+              autoAlpha: 1,
+              ease: Expo.easeOut
+            })
+        }
       }
     }
   },
@@ -93,7 +106,6 @@ export default {
         var pathLength = document.getElementById(p).getTotalLength()
         return pathLength
       }
-      // let sHover = document.getElementById('sHover')
 
       logoAnimation
         .set(s, {
@@ -101,12 +113,6 @@ export default {
           strokeDasharray: pathLength('s-stroke'),
           strokeDashoffset: pathLength('s-stroke')
         })
-        // .set(sHover, {
-        //   stroke: this.backgroundColor,
-        //   strokeWidth: 15,
-        //   strokeDasharray: pathLength('s-stroke'),
-        //   strokeDashoffset: pathLength('s-stroke')
-        // })
         .set(types, {
           autoAlpha: 0,
           y: 22
@@ -118,10 +124,13 @@ export default {
           autoAlpha: 1,
           y: 0
         }, 0.25)
+        .addCallback(() => {
+          this.animated = true
+        })
     }
   },
   mounted () {
-    if (this.animate) {
+    if (this.navVis) {
       this.animateIn()
     }
   }
@@ -133,8 +142,8 @@ export default {
 .samsonLogo {
   height: 0;
   width: 100%;
-  min-width: 160px;
-  padding-top: 14%;
+  min-width: 120px;
+  padding-top: 15%;
   position: relative;
   z-index: 100;
   display: inline-block;
@@ -148,12 +157,14 @@ export default {
     path, polyline, polygon {
       transition: fill 0.5s ease, stroke 0.5s ease;
     }
-    g#samsonMark.is-mobile {
-      use {
-        stroke: black!important;
-      }
-      path, polyline, polygon {
-        fill: black!important;
+    g#samsonMark {
+      &.is-mobile, &.lockedColor {
+        use {
+          stroke: black!important;
+        }
+        path, polyline, polygon {
+          fill: black!important;
+        }
       }
     }
   }

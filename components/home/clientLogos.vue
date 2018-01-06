@@ -1,9 +1,22 @@
 <template>
 <section id="clientLogos" class="section">
   <div class="container">
-    <a name="toBlack" v-waypoint.down.inview="{offset: 0}"
-              @entered="setBg('#000')"></a>
-    <div class="columns is-mobile is-multiline is-centered">
+
+    <div class="client-welcome columns" v-if="clientsInfo.headline && clientsInfo.statement">
+      <div class="column">
+        <h3 class="opening-headline has-text-white" 
+          v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
+          {{$prismic.asText(clientsInfo.headline)}}
+        </h3>
+      </div>
+      <div class="column">
+        <div class="client-statement has-text-white rich-text" 
+          v-html="$prismic.asHtml(clientsInfo.statement)"
+          v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
+      </div>
+    </div>
+
+    <div class="clientLogos__columns columns is-mobile is-multiline is-centered">
       <div ref="logo" class="client-logo column is-4-tablet is-5-mobile"
         v-for="(item, index) in logos" :key="index" >
         <div class="logo-pad">
@@ -17,7 +30,7 @@
 
 <script>
 export default {
-  props: ['logos'],
+  props: ['logos', 'clientsInfo'],
   methods: {
     getHeight (item) {
       if (item.height) {
@@ -36,7 +49,9 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/styles/mixins';
 #clientLogos {
-  padding-top: 260px;
+  .clientLogos__columns {
+    padding-top: 260px;
+  }
 }
 .client-logo {
   display: flex;

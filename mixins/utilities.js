@@ -16,18 +16,15 @@ Vue.mixin({
         el.appendChild(img)
       }
     },
-    setPageStyle (primary, background, contrast, el) {
+    setPageStyle (primary, contrast) {
       this.setPageContrast(contrast)
       this.setPrimaryColor(primary)
     },
-    setBg (color, el) {
-      if (el) {
-        el = document.querySelector(el)
-      } else {
-        el = document.querySelector('.bgSpan')
-      }
+    setBg (color, primary) {
+      let el = document.querySelector('.bgSpan')
       let updateBg = () => {
         el.style.backgroundColor = color
+        this.setPrimaryColor(primary)
       }
       window.requestAnimationFrame(updateBg)
     },

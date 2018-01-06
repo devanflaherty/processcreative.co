@@ -1,7 +1,8 @@
 <template>
   <section id="home" class="page" :data-wio-id="document.id" v-show="!loading">
     
-    <heroSlider :gallery="home.hero_slider" />
+    <heroSlider :gallery="home.hero_slider" v-if="home.hero_slider" />
+    
     <section id="welcome" class="padding-large opening section">
       <div class="container">
         <div class="columns">
@@ -16,6 +17,8 @@
               v-html="$prismic.asHtml(home.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}"></div>
 
+            <a name="toBlack" v-waypoint.up="{offset: 0}" @collision="setBg('#000', '#fff')"></a>
+
             <h3 class="list-headline"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}">
               Capabilities
@@ -24,37 +27,42 @@
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 300}"></div>
             <div class="statement" v-html="$prismic.asHtml(home.closing_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 400}"></div>
-            <a name="toWhite" v-waypoint.up.inview="{offset: 0}"
-              @enter="setBg('#000')"></a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="featuredWork">
-      <div class="container">
-        <div class="work-welcome columns">
-          <div class="column">
-            <h3 class="opening-headline has-text-black" 
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
-              {{$prismic.asText(home.work_headline)}}
-            </h3>
-          </div>
-          <div class="column">
-            <div class="work-statement has-text-black rich-text" 
-              v-html="$prismic.asHtml(home.work_statement)"
-              v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
-            <a name="toWhite" v-waypoint.down.inview="{offset: 0}"
-              @enter="setBg('#fff')"></a>
+    <a name="toBlack" v-waypoint.up="{offset: '25%'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" v-waypoint.down="{offset: '50%'}" @collision="setBg('#fff', '#000')"></a>
+
+    <section id="featuredWork">
+      <a name="toWhite" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+      <div class="section" v-if="home.work_headline && home.work_statement">
+        <div class="container">
+          <div class="work-welcome columns">
+            <div class="column">
+              <h3 class="opening-headline has-text-black" 
+                v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
+                {{$prismic.asText(home.work_headline)}}
+              </h3>
+            </div>
+            <div class="column">
+              <div class="work-statement has-text-black rich-text" 
+                v-html="$prismic.asHtml(home.work_statement)"
+                v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
+              <a name="toWhite" v-waypoint.down="{offset: 0}" @collision="setBg('#fff', '#000')"></a>
+            </div>
           </div>
         </div>
-        <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
-        <a name="toWhite" v-waypoint.up.inview="{offset: 0}"
-              @enter="setBg('#fff')"></a>
       </div>
-    </section>
 
-    <clientLogos :logos="home.clients" />
+      <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+    </section>
+    
+    <a name="toWhite" v-waypoint.up="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+    <a name="toBlack" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
+
+    <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
 </template>
 
@@ -108,6 +116,14 @@ export default {
       })
     }
   },
+  computed: {
+    clientsInfo () {
+      return {
+        'headline': this.home.client_headline,
+        'statement': this.home.client_statement
+      }
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
@@ -117,6 +133,7 @@ export default {
   },
   mounted () {
     if (this.document) {
+      this.$waypoint.enableWaypoints()
       this.$store.dispatch('toggleLoading', false)
 
       this.$prismic.initApi().then((ctx) => {
@@ -125,8 +142,9 @@ export default {
     }
   },
   beforeDestroy () {
+    this.$waypoint.disableAllWaypoints()
     this.$waypoint.destroyWaypoints()
-    this.setBg(null, '.main')
+    this.setBg(null)
   }
 }
 </script>
@@ -140,7 +158,6 @@ export default {
 }
 #featuredWork {
   padding-top: 200px;
-  padding-bottom: 200px;
   position: relative;
   .work-welcome {
     padding-top: 4rem;

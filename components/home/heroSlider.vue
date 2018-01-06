@@ -1,5 +1,5 @@
 <template>
-  <section id="heroSlider" class="hero is-fullheight is-paddingless">
+  <section id="heroSlider" class="hero is-paddingless">
     <div class="hero-body is-paddingless">
         
       <div id="slider" class="swiper-container" ref="mySwiper">
@@ -56,6 +56,7 @@ export default {
   mixins: [heroTransitions],
   data () {
     return {
+      ticking: false,
       activeSlide: 0,
       slideUi: 'Light',
       swiperOption: {
@@ -85,9 +86,7 @@ export default {
   },
   watch: {
     loading () {
-      if (!this.loading && this.$refs.mySwiper) {
-        this.initSwiper()
-      }
+      this.initSwiper()
     },
     activeSlide (index) {
       let contrast = this.gallery[index].contrast
@@ -106,31 +105,44 @@ export default {
     }
   },
   methods: {
-    slideTo (index) {
+    isReady: async function () {
+      if (!this.loading && this.$refs.mySwiper) {
+        return true
+      }
+    },
+    isInit: async function () {
       if (this.$refs.mySwiper.swiper) {
+        return true
+      }
+    },
+    slideTo (index) {
+      this.isInit().then(() => {
         let i = index + 1
         this.$refs.mySwiper.swiper.slideTo(i)
-      }
+      })
     },
     pauseSlider () {
-      if (this.$refs.mySwiper.swiper) {
+      this.isInit().then(() => {
         this.$refs.mySwiper.swiper.autoplay.stop()
-      }
+      })
     },
     playSlider () {
-      if (this.$refs.mySwiper.swiper) {
+      this.isInit().then(() => {
         this.$refs.mySwiper.swiper.autoplay.start()
-      }
+      })
     },
     initSwiper () {
-      if (document.querySelector('#slider')) {
+      this.isReady().then(() => {
         this.$swiper('#slider', this.swiperOption)
-      }
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     destroySwiper () {
-      if (this.$refs.mySwiper.swiper) {
-        this.$refs.mySwiper.swiper.destroy()
-      }
+      this.isInit().then(() => {
+        console.log(this.$refs.mySwiper)
+        // this.$refs.mySwiper.swiper.destroy()
+      })
     },
     setLogoColor () {
       if (this.slideUi === 'Dark') {
@@ -138,6 +150,22 @@ export default {
       } else {
         this.$store.dispatch('setPrimaryColor', '#ffffff')
       }
+    },
+    raf () {
+      if (!this.ticking) {
+        window.requestAnimationFrame(this.scrollAction)
+        this.ticking = true
+      }
+    },
+    scrollAction () {
+      let scrollTop = window.scrollY
+      if (scrollTop >= 200) {
+        this.pauseSlider()
+      } else if (scrollTop < 200) {
+        this.playSlider()
+        this.setLogoColor()
+      }
+      this.ticking = false
     }
   },
   created () {
@@ -145,9 +173,13 @@ export default {
     this.setLogoColor()
   },
   mounted () {
-    this.setHeroUiContrast(this.slideUi)
+    this.isInit().then(() => {
+      window.addEventListener('scroll', this.raf)
+      this.setHeroUiContrast(this.slideUi)
+    })
   },
   beforeDestroy () {
+    window.removeEventListener('scroll', this.raf)
     this.setHeroUiContrast()
   }
 }
@@ -165,6 +197,9 @@ export default {
   position: relative;
   width: 100%;
   height: 100vh;
+  @include mobile() {
+    height: 95vh;
+  }
   &::after {
     content:'';
     z-index: 15;
@@ -183,31 +218,42 @@ export default {
     padding: 2rem 3rem;
     color: black;
     line-height: 1;
-    p {
-      margin-bottom: 0;
-    }
-    .caption {
-      transition: all 0.5s ease;
-      position: relative;
-      z-index: 1;
-      transform-style: preserve-3d; 
-      outline:1px solid transparent;
-      text-shadow: 0 0 1px transparent;
-      -webkit-font-smoothing: antialiased;
-    }
-    .link-hover {
-      transition: all 0.5s ease;
-      &:hover {
-        .caption {
-          opacity: 0;
-          transform: translate3d(0, -20px, 0) rotateX(90deg);
-          perspective: 100px;
+    .caption-wrap {
+      width: 50%;
+      @include mobile() {
+        width: 100%;
+      }
+      &.link-hover {
+        transition: all 0.5s ease;
+        &:hover {
+          .caption {
+            opacity: 0;
+            transform: translate3d(0, -20px, 0) rotateX(90deg);
+            perspective: 100px;
+          }
+          .slide-link {
+            transform: translate3d(0, -20px, 0) rotateX(0deg);
+            perspective: 100px;
+            opacity: 1;
+            visibility: visible;
+          }
         }
-        .slide-link {
-          transform: translate3d(0, -20px, 0) rotateX(0deg);
-          perspective: 100px;
-          opacity: 1;
-          visibility: visible;
+      }
+      .caption {
+        transition: all 0.5s ease;
+        position: relative;
+        z-index: 1;
+        transform-style: preserve-3d; 
+        outline:1px solid transparent;
+        text-shadow: 0 0 1px transparent;
+        -webkit-font-smoothing: antialiased;
+        p {
+          margin-bottom: 0;
+          font-size: 3rem;
+          line-height: 1;
+          @include mobile() {
+            font-size: 2.5rem;
+          }
         }
       }
     }
@@ -221,7 +267,7 @@ export default {
 }
 
 .swiper-container, .swiper-slide {
-  height: 100vh;
+  height: 100%;
   display: flex;
   .swiper-wrapper {
     // position: fixed;
@@ -235,7 +281,7 @@ export default {
         }
       }
       .slide-img {
-        height: 100vh;
+        height: 100%;
         width: 100%;
         background-size: cover!important;
         background-position: center;

@@ -9,27 +9,27 @@
 
 // Nav Hero Contrast Styles
 .hero-ui-Dark, .hero-contrast-Dark, .page-contrast-Dark:not(.hero-contrast-Light) {
-  .navbar #navMenu .navbar-item {
-    color: black
-  }
-  .processLogo g.logoFill {
-    fill: black!important
-  }
-  .navbar .navbar-brand .nav-burg span {
-    &:before, &:after {
-      background: black;
-    }
-  }
+  // .navbar #navMenu .navbar-item {
+  //   color: black
+  // }
+  // .processLogo g.logoFill {
+  //   fill: black!important
+  // }
+  // .navbar .navbar-brand .nav-burg span {
+  //   &:before, &:after {
+  //     background: black;
+  //   }
+  // }
 }
 .hero-ui-Light, .hero-contrast-Light, .page-contrast-Light:not(.hero-contrast-Dark){
-  .navbar #navMenu .navbar-item {
-    color: white
-  }
-  .navbar .navbar-brand .nav-burg span {
-    &:before, &:after {
-      background: white;
-    }
-  }
+  // .navbar #navMenu .navbar-item {
+  //   color: white
+  // }
+  // .navbar .navbar-brand .nav-burg span {
+  //   &:before, &:after {
+  //     background: white;
+  //   }
+  // }
 }
 
 // Page Contrast Styles //

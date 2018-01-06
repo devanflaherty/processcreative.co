@@ -2,7 +2,7 @@
   <article 
     class="work-card" :class="{'reveal' : reveal}"
     :style="`background-color:`"
-    v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', viewOffset: { bottom: 50 }}"
+    v-scroll-reveal="{duration: 1000, scale: 1, distance: 0, viewOffset: { bottom: 50 }}"
     @beforeReveal="wipe"
     :data-wio-id="post.id">
     <!-- Wipe transition -->
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 // import {TimelineMax} from 'gsap' // Need for slice stagger
 export default {
   props: ['post'],
@@ -49,6 +50,9 @@ export default {
   //     this.animateSlices()
   //   }
   // },
+  computed: {
+    ...mapGetters(['breakpoint'])
+  },
   methods: {
     toNewLines (str) {
       if (str) {
@@ -84,12 +88,11 @@ export default {
 
 .work-card {
   position: relative;
-  margin-bottom: 1rem;
   overflow: hidden;
   height: 0;
   padding-top: 41.75%;
   @include mobile() {
-    height: 75vh;
+    padding-top: 56.25%;
   }
   .wipe {
     top: 0;
@@ -121,7 +124,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: flex-start;
         .column {
           flex: 0 1 auto;
         }
@@ -152,6 +155,9 @@ export default {
         }
       }
       .work-quick-involvement {
+        @include mobile() {
+          display: none
+        }
         h4 {
           @include autoAlpha(0);
           transition: all 0.5s ease;
