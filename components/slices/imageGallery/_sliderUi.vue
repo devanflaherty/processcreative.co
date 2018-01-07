@@ -61,6 +61,9 @@ export default {
     @include touch() {
       margin: 0 3rem;
     }
+    @include mobile() {
+      margin: 0 1rem;
+    }
   }
 }
 .swiper-custom-pagination {

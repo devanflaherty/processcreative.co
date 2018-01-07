@@ -5,7 +5,7 @@
     </div>
     <SiteNav />
     <nuxt />
-    <SiteFooter />
+    <SiteFooter v-if="$route.name !== 'contact'"/>
   </main>
 </template>
 

@@ -61,7 +61,9 @@ Vue.mixin({
     }
   },
   mounted () {
-    this.$store.dispatch('toggleNavVis', true)
+    setTimeout(() => {
+      this.$store.dispatch('toggleNavVis', true)
+    }, 500)
   },
   destroy () {
     this.setHeroUiContrast()

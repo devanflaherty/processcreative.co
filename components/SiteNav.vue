@@ -140,6 +140,9 @@ export default {
     z-index: 100;
     justify-content: space-between;
     align-items: center;
+    .navbar-item {
+      padding: 0;
+    }
 
     .navbar-burger {
       transition: all 0.5s ease;

@@ -158,6 +158,9 @@ export default {
     padding: 2rem 3rem;
     color: black;
     line-height: 1;
+    @include mobile () {
+      padding: 2rem 1rem;
+    }
     p {
       margin-bottom: 0;
     }
