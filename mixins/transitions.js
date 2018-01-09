@@ -1,11 +1,5 @@
 import {TimelineMax, Back} from 'gsap'
 
-// if (process.browser) {
-//   var ScrollMagic = require('ScrollMagic')
-//   require('animation.gsap')
-//   // require('debug.addIndicators')
-// }
-
 const transitions = {
   methods: {
     beforeEnter (el) {
@@ -29,34 +23,6 @@ const transitions = {
       }
       done()
     } // afterLeave (el)
-    // staggerBeforeEnter (el) {
-    //   TweenMax.set(el, {
-    //     autoAlpha: 0,
-    //     y: 100
-    //   })
-    // },
-    // staggerEnter (el, done) {
-    //   var delay = el.dataset.index * 150
-    //   setTimeout(function () {
-    //     TweenMax.to(el, 1, {
-    //       autoAlpha: 1,
-    //       y: 0,
-    //       ease: Back.easeOut
-    //     })
-    //     done()
-    //   }, delay)
-    // },
-    // staggerLeave (el, done) {
-    //   var delay = el.dataset.index * 150
-    //   setTimeout(function () {
-    //     TweenMax.to(el, 1, {
-    //       autoAlpha: 0,
-    //       y: 100,
-    //       ease: Back.easeIn
-    //     })
-    //     done()
-    //   }, delay)
-    // }
   }
 }
 

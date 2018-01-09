@@ -18,7 +18,7 @@
             </div>
           </div>
 
-          <div data-swiper-parallax="25%" class="slide-img" :style="`background-image: url(${slide.gallery_image.url})`"></div>
+          <div v-lazy:background-image="slide.gallery_image.url" data-swiper-parallax="25%" class="slide-img"></div>
         </div>
       </div>
 

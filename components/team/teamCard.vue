@@ -27,7 +27,7 @@
             <div class="image-slice" :style="`background-image: url(${entry.member_avatar.url})`"></div>
           </div> -->
         </div>
-        <img :src="entry.member_avatar.large.url" style="visibility: hidden; opacity: 0;">
+        <img v-lazy="entry.member_avatar.large.url" style="visibility: hidden; opacity: 0;">
       </nuxt-link>
     </div>
   </article>

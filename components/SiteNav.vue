@@ -63,7 +63,6 @@ export default {
         this.disableScroll(true)
       } else {
         this.disableScroll(false)
-        this.modal = false
       }
     },
     breakpoint (newV, oldV) {
@@ -94,15 +93,6 @@ export default {
     },
     showMobileNav () {
       this.$store.dispatch('toggleMobileNav', !this.mobileNav)
-    },
-    toggleModal (m) {
-      if (m) {
-        this.disableScroll(true)
-        this.modal = m
-      } else {
-        this.disableScroll(false)
-        this.modal = !this.modal
-      }
     },
     disableScroll (bool) {
       if (bool) {

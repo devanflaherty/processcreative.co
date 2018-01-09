@@ -1,14 +1,11 @@
 <template>
 <div class="load-blur-wrap" :style="padding">
   <transition name='fade-in'>
-    <img v-if="loaded" :src="image.large.url" :alt="image.alt">
+    <img v-if="thumbLoaded" class="placeholder" v-lazy="image.placeholder.url" :alt="image.alt">
   </transition>
 
   <transition name='fade-in'>
-    <img v-if="thumbLoaded" class="placeholder" :src="image.placeholder.url" :alt="image.alt">
-    <!-- <div v-if="thumbLoaded" class="placeholder-thumb is-overlay" 
-      :style="`background-image: url(${hero})`">
-    </div> -->
+    <img v-if="loaded" :src="image.large.url" :alt="image.alt">
   </transition>
 </div>
 </template>

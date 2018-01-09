@@ -14,7 +14,7 @@
           </template>
           
           <template v-else-if="column.column_image.url && column.content_body.length === 0">
-            <img :src="column.column_image.url" v-if="column.column_image.url">
+            <img v-lazy="column.column_image.url" v-if="column.column_image.url">
           </template>
         </div>
       </div>

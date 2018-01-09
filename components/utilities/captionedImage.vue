@@ -3,7 +3,7 @@
     <div class="image-caption is-overlay">
       <div class="caption-content" v-html="$prismic.asHtml(caption)"></div>
     </div>
-    <img :src="img.url" :alt="img.alt">
+    <img v-lazy="img.url" :alt="img.alt">
   </div>
 </template>
 

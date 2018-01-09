@@ -69,22 +69,6 @@ const transitions = {
         .addTo(controller)
     })
     
-    // var heroUi = new ScrollMagic.Scene({
-    //   duration: '200%',
-    //   triggerElement: '#slider'
-    // })
-    //   .setTween(this.fadeY(this.$refs.pagination, -250))
-    //   .addIndicators({name:'pagination'})
-    //   .addTo(controller)
-    
-    // var slider = new ScrollMagic.Scene({
-    //   duration: '100%',
-    //   triggerHook: 'onEnter'
-    // })
-    //   .setTween(this.fadeOut('.slide-img'))
-    //   // .addIndicators({name:'headline'})
-    //   .addTo(controller)
-
     /* eslint-enable */
   }
 }

@@ -105,18 +105,18 @@ export default {
           autoAlpha: 0,
           y: 40
         })
-        .fromTo('#s', 0.66, {
+        .fromTo('#s', 0.5, {
           strokeDasharray: pathLength('s'),
           strokeDashoffset: pathLength('s')
         }, {
           strokeDashoffset: 0,
           ease: Quart.easeOut
         }, 0.35)
-        .staggerTo('#type > *', 0.5, {
+        .staggerTo('#type > *', 0.33, {
           autoAlpha: 1,
           y: 0,
           ease: Back.easeOut.config(2.5)
-        }, 0.25)
+        }, 0.125)
         .addCallback(() => {
           this.animated = true
         })

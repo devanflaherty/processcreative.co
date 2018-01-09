@@ -7,7 +7,7 @@
             <captionedImage :img="slide.gallery_image" :caption="slide.slide_caption" />
           </template>
           <template v-else>
-            <img :src="slide.gallery_image.url" :alt="slide.gallery_image.alt">
+            <img v-lazy="slide.gallery_image.url"  :alt="slide.gallery_image.alt">
           </template>
         </article>
       </div>
