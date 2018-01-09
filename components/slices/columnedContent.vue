@@ -46,7 +46,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h3 {
-  margin-bottom: 2rem;
+.column-slice {
+  h3 {
+    margin-bottom: 4rem;
+  }
+  img {
+    width: 100%;
+  }
 }
 </style>

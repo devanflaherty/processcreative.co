@@ -20,6 +20,12 @@
         </div>
       </div>
     </div>
+    {{page.content.text}}
+    <div class="container" v-if="page.content.text">
+      <div class="rich-text"
+        v-html="$prismic.asHtml(page.content)"
+        v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
+    </div>
     
     <!-- Repeatable Slices -->
     <component v-for="(slice, index) in page.slices" :key="index" 
