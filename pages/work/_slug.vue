@@ -93,12 +93,9 @@ export default {
   },
   mounted () {
     if (this.document) {
-      console.log(this.document)
+      this.$store.dispatch('toggleNavVis', true)
       this.$store.dispatch('toggleLoading', false)
-      this.setPageStyle(
-        this.entry.primary_color,
-        this.entry.page_contrast
-      )
+      this.setPageStyle(this.entry.primary_color, this.entry.page_contrast)
 
       this.$prismic.initApi().then(api => {
         api.toolbar()

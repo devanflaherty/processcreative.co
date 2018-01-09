@@ -169,6 +169,7 @@ export default {
     }
 
     if (this.document) {
+      this.$store.dispatch('toggleNavVis', true)
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(this.entry.primary_color, 'Light')
       this.setHeroUiContrast('Light')

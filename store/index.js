@@ -98,7 +98,13 @@ const createStore = () => {
         context.commit('TOGGLE_LOADING', bool)
       },
       toggleNavVis (context, bool) {
-        context.commit('TOGGLE_NAV_VIS', bool)
+        if (bool) {
+          setTimeout(() => {
+            context.commit('TOGGLE_NAV_VIS', bool)
+          }, 350)
+        } else {
+          context.commit('TOGGLE_NAV_VIS', bool)
+        }
       },
       toggleMobileNav (context, bool) {
         context.commit('TOGGLE_MOBILE_NAV', bool)

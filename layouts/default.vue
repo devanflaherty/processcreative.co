@@ -1,5 +1,8 @@
 <template>
   <main class="main">
+    <transition name="fade-in">
+      <h1 v-if="loading" class="home-loading has-text-white is-size-1">||</h1>
+    </transition>
     <div id="backgroundTransition" class="background-transition">
       <span class="bgSpan"></span>
     </div>
@@ -42,6 +45,16 @@ export default {
 </script>
 
 <style lang="scss">
+.home-loading {
+  position: fixed;
+  height: 60px;
+  width: 60px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
 .wio-link {
   position: absolute;
   z-index: 50;

@@ -9,7 +9,7 @@
   </defs>
   <router-link to="/" class="logo-link" :class="status">
     <rect id="Rectangle" fill="transparent" x="0" y="0" width="380" height="60"></rect>
-    <g id="samsonMark" :class="{'is-mobile': mobileNav}" transform="translate(0, 6.000000)"> <!-- translate(17.000000, 17.000000) -->
+    <g id="samsonMark" :class="{'is-mobile': mobileNav}" transform="translate(0, 7.000000)"> <!-- translate(17.000000, 17.000000) -->
       <path class="char" id="s" fill="none" :stroke="primaryColor" stroke-width="25" mask="url(#clip)" d="M38.3911952,12.546594 C20.7570474,3.02944477 10.3621029,3.46908759 7.20636164,13.8655224 C5.56999618,20.0652313 7.9664221,23.9679927 14.3956394,25.5738067 C24.9686765,28.061887 30.6456575,30.0279846 31.4265824,31.4720994 C32.5979697,33.6382718 33.9504302,34.0842484 33.9504302,39.5164452 C33.9504302,44.948642 30.0757048,47.4244272 26.0402128,48.71653 C22.0047207,50.0086328 10.8591228,49.2139225 0.729081691,39.5164452"></path>
       
       <g id="type" stroke="none" :fill="primaryColor" fill-rule="evenodd">
@@ -79,7 +79,7 @@ export default {
     },
     scrollAnimation (bool) {
       if (bool) {
-        TweenMax.to('#type', 0.33, {
+        TweenMax.to('#type', 1.25, {
           y: 40,
           autoAlpha: 0,
           ease: Back.easeOut.config(1.7)

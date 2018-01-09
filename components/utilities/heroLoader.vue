@@ -1,18 +1,19 @@
 <template>
 <div class="is-overlay hero-image" :class="{'work-hero-image': $route.name == 'work-slug'}">
-  <transition name='fade-in'>
-    <div v-if="loaded" class="master-image is-overlay" :class="{'loaded': loaded}"
-      :style="`background-image: url(${hero})`">
+  <transition name='fade-in' appear>
+    <div v-if="$route.name == 'work-slug'" class="placeholder-thumb is-overlay" 
+      :style="`background-image: url(${this.heroImage.placeholder.url})`">
     </div>
   </transition>
-  <transition name='fade-in'>
-    <div v-if="thumbLoaded" class="placeholder-thumb is-overlay" 
+
+  <transition name='fade-in' appear>
+    <div v-if="loaded" class="master-image is-overlay" :class="{'loaded': loaded}"
       :style="`background-image: url(${hero})`">
     </div>
   </transition>
 
   <transition name='fade-in' v-if="$route.name == 'work-slug'">
-    <div v-if="loaded || thumbLoaded" class="hero-fade" :style="`box-shadow: inset 0 -80px 50px -40px ${backgroundColor}`"></div>
+    <div v-if="loaded" class="hero-fade" :style="`box-shadow: inset 0 -80px 50px -40px ${backgroundColor}`"></div>
   </transition>
 </div>
 </template>
@@ -22,33 +23,43 @@ export default {
   props: ['hero-image'],
   data () {
     return {
-      hero: null,
-      thumbLoaded: false,
+      hero: this.heroImage.placeholder.url,
+      thumbLoaded: true,
       loaded: false
     }
   },
-  mounted () {
-    if (this.heroImage.placeholder) {
-      let thumb = new Image()
-      thumb.onload = () => {
-        this.thumbLoaded = true
-        this.hero = thumb.src
-      }
-      thumb.src = this.heroImage.placeholder.url
-    }
+  methods: {
+    setMain () {
+      return new Promise((resolve, reject) => {
+        let imgMain = new Image()
+        imgMain.onload = () => {
+          resolve(this.heroImage.large.url)
+        }
+        imgMain.onerror = reject
 
-    let imgMain = new Image()
-    imgMain.onload = () => {
+        imgMain.src = this.heroImage.large.url
+        return true
+      })
+    }
+  },
+  mounted () {
+    this.setMain().then((res) => {
       this.thumbLoaded = false
       this.loaded = true
-      this.hero = imgMain.src
-    }
-    imgMain.src = this.heroImage.large.url
+      this.hero = res
+
+      setTimeout(() => {
+        this.$emit('heroAvailable')
+      }, 500)
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.hero-image {
+  overflow: hidden;
+}
 .hero-fade {
   z-index: 5;
   display: block;

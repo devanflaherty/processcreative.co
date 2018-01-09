@@ -115,6 +115,7 @@ export default {
   },
   mounted () {
     if (this.teamPosts) {
+      this.$store.dispatch('toggleNavVis', true)
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(this.aboutPage.primary_color, this.aboutPage.page_contrast)
 

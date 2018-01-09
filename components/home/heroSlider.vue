@@ -21,9 +21,9 @@
                 </div>
               </div>
             </div>
-            <!-- <heroLoader :hero-image="slide.slide_image" data-swiper-parallax="25%" class="slide-img" /> -->
+            <!-- <heroLoader @heroAvailable="setHeroReady" :hero-image="slide.slide_image" data-swiper-parallax="25%" class="slide-img" /> -->
 
-            <div data-swiper-parallax="25%" class="slide-img" :style="`background-image: url(${slide.slide_image.url})`"></div>
+            <div data-swiper-parallax="25%" class="slide-img" :style="`background-image: url(${slide.slide_image.large.url})`"></div>
           </div>
         </div>
 
@@ -56,6 +56,7 @@ export default {
   mixins: [heroTransitions],
   data () {
     return {
+      heroReady: false,
       ticking: false,
       activeSlide: 0,
       slideUi: 'Light',
@@ -85,9 +86,6 @@ export default {
     ...mapGetters(['mobileNav'])
   },
   watch: {
-    loading () {
-      this.initSwiper()
-    },
     activeSlide (index) {
       let contrast = this.gallery[index].contrast
       this.slideUi = contrast
@@ -105,8 +103,11 @@ export default {
     }
   },
   methods: {
+    // setHeroReady () {
+    //   this.heroReady = true
+    // },
     isReady: async function () {
-      if (!this.loading && this.$refs.mySwiper) {
+      if (this.$refs.mySwiper) {
         return true
       }
     },
@@ -133,15 +134,10 @@ export default {
     },
     initSwiper () {
       this.isReady().then(() => {
+        this.$emit('sliderReady')
         this.$swiper('#slider', this.swiperOption)
       }).catch((err) => {
         console.log(err)
-      })
-    },
-    destroySwiper () {
-      this.isInit().then(() => {
-        console.log(this.$refs.mySwiper)
-        // this.$refs.mySwiper.swiper.destroy()
       })
     },
     setLogoColor () {
@@ -167,12 +163,20 @@ export default {
       }
       this.ticking = false
     }
+    // destroySwiper () {
+    //   this.isInit().then(() => {
+    //     console.log(this.$refs.mySwiper)
+    //     // this.$refs.mySwiper.swiper.destroy()
+    //   })
+    // },
   },
   created () {
     this.slideUi = this.gallery[0].contrast
     this.setLogoColor()
   },
   mounted () {
+    this.initSwiper()
+
     this.isInit().then(() => {
       window.addEventListener('scroll', this.raf)
       this.setHeroUiContrast(this.slideUi)

@@ -2,7 +2,7 @@
   <article 
     class="work-card" :class="{'reveal' : reveal}"
     :style="`background-color:`"
-    v-scroll-reveal="{duration: 1000, scale: 1, distance: 0, viewOffset: { bottom: 50 }}"
+    v-scroll-reveal="{duration: 1000, scale: 1, distance: 0, opacity: 1, viewOffset: { bottom: 50 }}"
     @beforeReveal="wipe"
     :data-wio-id="post.id">
     <!-- Wipe transition -->
@@ -26,10 +26,10 @@
 
       <div class="image-loader" ref="imageLoader">
         <div class="slice-wrap" v-for="(slice, i) in 1" :key="i">
-          <div class="image-slice" :style="`background-image: url(${entry.feature_image.url})`"></div>
+          <div class="image-slice" v-lazy:background-image="entry.feature_image.url"></div>
         </div>
       </div>
-      <img :src="entry.feature_image.url" style="visibility: hidden; opacity: 0;">
+      <img v-lazy="entry.feature_image.url" style="visibility: hidden; opacity: 0;">
     </nuxt-link>
   </article>
 </template>

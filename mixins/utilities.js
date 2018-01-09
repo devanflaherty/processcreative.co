@@ -20,14 +20,14 @@ Vue.mixin({
       this.setPageContrast(contrast)
       this.setPrimaryColor(primary)
     },
-    setBg (color, primary) {
-      let el = document.querySelector('.bgSpan')
-      let updateBg = () => {
-        el.style.backgroundColor = color
-        this.setPrimaryColor(primary)
-      }
-      window.requestAnimationFrame(updateBg)
-    },
+    // setBg (color, primary) {
+    //   let el = document.querySelector('.bgSpan')
+    //   let updateBg = () => {
+    //     el.style.backgroundColor = color
+    //     this.setPrimaryColor(primary)
+    //   }
+    //   window.requestAnimationFrame(updateBg)
+    // },
     setPrimaryColor (primary) {
       this.$store.dispatch('setPrimaryColor', primary)
     },
@@ -59,11 +59,6 @@ Vue.mixin({
     toNewLines (str) {
       return str.split('\n').join('<br>')
     }
-  },
-  mounted () {
-    setTimeout(() => {
-      this.$store.dispatch('toggleNavVis', true)
-    }, 500)
   },
   destroy () {
     this.setHeroUiContrast()

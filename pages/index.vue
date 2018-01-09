@@ -1,7 +1,7 @@
 <template>
-  <section id="home" class="page" :data-wio-id="document.id" v-show="!loading">
+  <section id="home" class="page" :data-wio-id="document.id">
     
-    <heroSlider :gallery="home.hero_slider" v-if="home.hero_slider" />
+    <heroSlider @sliderReady="setSliderAsReady" :gallery="home.hero_slider" v-if="home.hero_slider" />
     
     <section id="welcome" class="padding-large opening section">
       <div class="container">
@@ -20,8 +20,6 @@
               v-html="$prismic.asHtml(home.opening_statement)"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 100}"></div>
 
-            <!-- <a name="toBlack" v-waypoint.up="{offset: 0}" @collision="setBg('#000', '#fff')"></a> -->
-
             <h3 class="list-headline"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}">
               Capabilities
@@ -35,11 +33,7 @@
       </div>
     </section>
 
-    <!-- <a name="toBlack" v-waypoint.up="{offset: '25%'}" @collision="setBg('#000', '#fff')"></a>
-    <a name="toWhite" v-waypoint.down="{offset: '50%'}" @collision="setBg('#fff', '#000')"></a> -->
-
     <section id="featuredWork">
-      <!-- <a name="toWhite" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a> -->
       <div class="section" v-if="home.work_headline && home.work_statement">
         <div class="container">
           <div class="work-welcome columns">
@@ -53,18 +47,18 @@
               <div class="work-statement has-text-white rich-text" 
                 v-html="$prismic.asHtml(home.work_statement)"
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
-              <!-- <a name="toWhite" v-waypoint.down="{offset: 0}" @collision="setBg('#fff', '#000')"></a> -->
             </div>
           </div>
         </div>
       </div>
 
-      <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+      <div class="section work-cards" v-if="home.work_headline && home.work_statement">
+        <div class="container">
+          <workCard v-for="(post, index) in home.featured_work" :key="index" :post="post.work_post"/>
+        </div>
+      </div>
     </section>
     
-    <!-- <a name="toWhite" v-waypoint.up="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
-    <a name="toBlack" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a> -->
-
     <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
 </template>
@@ -133,6 +127,10 @@ export default {
     }
   },
   methods: {
+    setSliderAsReady () {
+      this.$store.dispatch('toggleLoading', false)
+      this.$store.dispatch('toggleNavVis', true)
+    },
     raf () {
       if (!this.ticking) {
         window.requestAnimationFrame(this.updateBgScrollAction)
@@ -144,7 +142,7 @@ export default {
       let trigger = wh / 2
       let scrollTop = window.scrollY
       if (scrollTop >= trigger) {
-        this.setBg('#000', '#fff')
+        this.setPrimaryColor('#fff')
       }
       this.ticking = false
     }
@@ -156,12 +154,10 @@ export default {
     this.setPageContrast()
   },
   mounted () {
-    // let way = document.querySelector('#waypoint')
     if (this.document) {
       this.$store.dispatch('setBackgroundColor', '#000')
       window.addEventListener('scroll', this.raf)
       this.raf()
-      this.$store.dispatch('toggleLoading', false)
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()
@@ -172,7 +168,7 @@ export default {
     window.removeEventListener('scroll', this.raf)
     // this.$waypoint.disableAllWaypoints()
     // this.$waypoint.destroyWaypoints()
-    this.setBg(null)
+    // this.setBg(null)
   }
 }
 </script>
@@ -190,6 +186,17 @@ export default {
   .work-welcome {
     padding-top: 4rem;
     padding-bottom: 4rem;
+  }
+}
+
+.work-cards {
+  @include mobile () {
+    padding: 0;
+    margin: 0;
+    .container {
+      padding: 0;
+      margin: 0;
+    }
   }
 }
 

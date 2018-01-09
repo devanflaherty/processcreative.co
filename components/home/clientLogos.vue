@@ -20,7 +20,7 @@
       <div ref="logo" class="client-logo column is-4-tablet is-5-mobile"
         v-for="(item, index) in logos" :key="index" >
         <div class="logo-pad">
-          <img :src="item.logo.url" :style="`height:${getHeight(item)}px`">
+          <img v-lazy="item.logo.url" :style="`height:${getHeight(item)}px`">
         </div>
       </div>
     </div>

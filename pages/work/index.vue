@@ -16,7 +16,12 @@
         </div>
       </div>
     </div>
-    <workCard v-for="(post, index) in workPosts" :key="index" :post="post"/>
+
+    <div class="section work-cards">
+      <div class="container">
+        <workCard v-for="(post, index) in workPosts" :key="index" :post="post"/>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -64,6 +69,7 @@ export default {
   mounted () {
     if (this.workPosts) {
       this.setHeroUiContrast()
+      this.$store.dispatch('toggleNavVis', true)
       this.$store.dispatch('toggleLoading', false)
       this.setPageStyle(this.workPage.primary_color, this.workPage.page_contrast)
     }
@@ -72,4 +78,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~assets/styles/mixins';
+
+.work-cards {
+  @include mobile () {
+    padding: 0;
+    margin: 0;
+    .container {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
 </style>
