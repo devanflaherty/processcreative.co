@@ -52,6 +52,10 @@ export default {
       title: this.$prismic.asText(this.page.title)
     }
   },
+  // validate ({ params, store }) {
+  // Check if `params.id` is an existing category
+  //   return store.state.categories.some((category) => category.id === params.id)
+  // }
   asyncData ({ app, params, error }) {
     return app.$prismic.initApi().then((ctx) => {
       return ctx.api.getByUID('pages', params.page).then((res) => {

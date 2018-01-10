@@ -39,7 +39,6 @@
     "sweet-scroll": "^2.2.1",
     "swiper": "^4.0.3",
     "vue-lazyload": "^1.1.4",
-    "vue-lodash": "^1.0.4",
     "vue-scroll-reveal": "^1.0.2",
     "waypoints": "^4.0.1"
   },

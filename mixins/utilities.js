@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import {mapGetters} from 'vuex'
-// import {TweenMax} from 'gsap'
-// require('ScrollToPlugin')
+let camelCase = require('lodash/camelCase')
 
 Vue.mixin({
   computed: {
@@ -20,14 +19,12 @@ Vue.mixin({
       this.setPageContrast(contrast)
       this.setPrimaryColor(primary)
     },
-    // setBg (color, primary) {
-    //   let el = document.querySelector('.bgSpan')
-    //   let updateBg = () => {
-    //     el.style.backgroundColor = color
-    //     this.setPrimaryColor(primary)
-    //   }
-    //   window.requestAnimationFrame(updateBg)
-    // },
+    setBg (color, primary) {
+      let el = document.querySelector('.bgSpan')
+
+      el.style.backgroundColor = color
+      this.setPrimaryColor(primary)
+    },
     setPrimaryColor (primary) {
       this.$store.dispatch('setPrimaryColor', primary)
     },
@@ -54,7 +51,7 @@ Vue.mixin({
       }
     },
     toCamelCase (str) {
-      return this._.camelCase(str)
+      return camelCase(str)
     },
     toNewLines (str) {
       return str.split('\n').join('<br>')

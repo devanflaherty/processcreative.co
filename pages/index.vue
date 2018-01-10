@@ -8,7 +8,7 @@
         <div class="columns">
           <div class="column is-4">
 
-            <!-- <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a> -->
+            <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
 
             <h3 class="opening-headline has-text-white"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
@@ -33,7 +33,10 @@
       </div>
     </section>
 
-    <section id="featuredWork">
+    <a name="toBlack" id="waypoint" v-waypoint.up="{offset: '0'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+
+    <section id="featuredWork" v-waypoint.down="{offset: '0'}" @collision="setBg('#fff', '#000')">
       <div class="section" v-if="home.work_headline && home.work_statement">
         <div class="container">
           <div class="work-welcome columns">
@@ -58,6 +61,9 @@
         </div>
       </div>
     </section>
+
+    <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" id="waypoint" v-waypoint.up="{offset: '0'}" @collision="setBg('#fff', '#000')"></a>
     
     <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
@@ -155,6 +161,7 @@ export default {
   },
   mounted () {
     if (this.document) {
+      this.$waypoint.enableWaypoints()
       this.$store.dispatch('setBackgroundColor', '#000')
       window.addEventListener('scroll', this.raf)
       this.raf()
@@ -166,8 +173,8 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.raf)
-    // this.$waypoint.disableAllWaypoints()
-    // this.$waypoint.destroyWaypoints()
+    this.$waypoint.disableAllWaypoints()
+    this.$waypoint.destroyWaypoints()
     // this.setBg(null)
   }
 }

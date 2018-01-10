@@ -28,13 +28,7 @@ module.exports = {
       { name: 'twitter:url', value: url }
     ],
     link: [
-      // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-      // { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-      // { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       { rel: 'image_src', href: unfurl }
-      // { rel: 'mask-icon', color: '#ffffff', href: '/safari-pinned-tab.svg' },
-      // { rel: 'manifest', href: '/manifest.json' }
     ],
     script: [
       {
@@ -60,13 +54,12 @@ module.exports = {
   ],
   plugins: [
     { src: `~plugins/vue-lazyload`, ssr: false },
-    { src: `~plugins/waypoints`, ssr: false },
     { src: `~plugins/vue-scroll-reveal`, ssr: false },
     { src: `~plugins/vue-swiper`, ssr: false },
     { src: `~mixins/utilities` },
-    { src: `~plugins/vue-lodash` },
     { src: `~plugins/slices` },
-    { src: `~plugins/prismic` }
+    { src: `~plugins/prismic` },
+    { src: `~plugins/waypoints`, ssr: false }
   ],
   router: {
     middleware: ['toggleMobileNav'],
@@ -91,7 +84,8 @@ module.exports = {
   },
   build: {
     // Load plugins in build
-    vendor: ['axios', 'vue-lazyload', 'vue-lodash', 'sweet-scroll', 'scrollreveal'],
+    // analyze: true,
+    vendor: ['axios', 'vue-lazyload', 'scrollreveal'],
     extend (config, ctx) {
       config.resolve.alias['TweenLite'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenLite.js')
       config.resolve.alias['TweenMax'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js')

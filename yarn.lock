@@ -7162,10 +7162,6 @@ vue-loader@^13.6.2:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-lodash@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vue-lodash/-/vue-lodash-1.0.4.tgz#99f4f2f5832ce0168c4d45618789288a638562cd"
-
 vue-meta@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-1.4.2.tgz#1442107969704be051df2921d9a3aeb9b0374a7d"
