@@ -6,7 +6,7 @@
         <div class="columns is-multiline">
           <div class="column is-12">
             <div class="vision-title">
-              <h1 v-scroll-reveal="{duration: 1000, scale: 1, distance: '200px'}">{{$prismic.asText(home.hero_vision)}}</h1>
+              <h1 v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '100px'}">{{$prismic.asText(home.hero_vision)}}</h1>
             </div>
           </div>
 
@@ -14,7 +14,7 @@
             <div class="reel">
               <responsiveVideo 
                 :embed="home.work_reel" 
-                v-scroll-reveal="{duration: 1000, scale: 1, distance: '200px', delay: 200}"/>
+                v-scroll-reveal="{duration: 1000, scale: 1, distance: '200px', delay: 200, viewFactor: 0.1}"/>
             </div>
           </div>
         </div>

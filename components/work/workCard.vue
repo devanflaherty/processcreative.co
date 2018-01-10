@@ -226,6 +226,16 @@ export default {
         width: 100%; // multiply by 100 for number of slices
         background-size: cover;
         background-position: center;
+        transition: opacity .5s ease;
+        &[lazy=loading] {
+          opacity: 0;
+        }
+        // &[lazy=error] {
+        //   /*your style here*/
+        // }
+        &[lazy=loaded] {
+          opacity: 1
+        }
       }
       &:nth-child(1) .image-slice {
         left: 0;
