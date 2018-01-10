@@ -20,10 +20,13 @@ Vue.mixin({
       this.setPrimaryColor(primary)
     },
     setBg (color, primary) {
-      let el = document.querySelector('.bgSpan')
+      let bg = document.querySelector('.bgSpan')
 
-      el.style.backgroundColor = color
-      this.setPrimaryColor(primary)
+      let updateBg = () => {
+        bg.style.backgroundColor = color
+        this.$store.dispatch('setPrimaryColor', primary)
+      }
+      window.requestAnimationFrame(updateBg)
     },
     setPrimaryColor (primary) {
       this.$store.dispatch('setPrimaryColor', primary)

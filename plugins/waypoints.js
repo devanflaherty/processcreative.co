@@ -69,29 +69,29 @@ var VueWaypoint = {
           enter: function(direction) {
             if (options.direction && options.direction == direction) {
               emit(vnode, 'enter' , {el: el, direction: direction})
-            } else {
+            } else if (!options.direction) {
               emit(vnode, 'enter' , {el: el, direction: direction})
             }
           },
           entered: function(direction) {
             if (options.direction && options.direction == direction) {
               emit(vnode, 'entered' , {el: el, direction: direction})
-            } else {
+            } else if (!options.direction) {
               emit(vnode, 'entered' , {el: el, direction: direction})
             }
           },
           exit: function(direction) {
             if (options.direction && options.direction == direction) {
               emit(vnode, 'exit' , {el: el, direction: direction})
-            } else {
+            } else if (!options.direction) {
               emit(vnode, 'exit' , {el: el, direction: direction})
             }
           },
           exited: function(direction) {
             if (options.direction && options.direction == direction) {
-              emit(vnode, 'exited' , {el: el, direction: direction})
-            } else {
-              emit(vnode, 'exited' , {el: el, direction: direction})
+              emit(vnode, 'exited', {el: el, direction: direction})
+            } else if (!options.direction) {
+              emit(vnode, 'exited', {el: el, direction: direction})
             }
           },
           offset: options.offset

@@ -33,25 +33,24 @@
       </div>
     </section>
 
-    <a name="toBlack" id="waypoint" v-waypoint.up="{offset: '0'}" @collision="setBg('#000', '#fff')"></a>
-    <a name="toWhite" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
-
     <section id="featuredWork" v-waypoint.down="{offset: '0'}" @collision="setBg('#fff', '#000')">
       <div class="section" v-if="home.work_headline && home.work_statement">
         <div class="container">
           <div class="work-welcome columns">
             <div class="column">
-              <h3 class="opening-headline has-text-white" 
+              <h3 class="opening-headline has-text-black" 
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
                 {{$prismic.asText(home.work_headline)}}
               </h3>
             </div>
             <div class="column">
-              <div class="work-statement has-text-white rich-text" 
+              <div class="work-statement has-text-black rich-text" 
                 v-html="$prismic.asHtml(home.work_statement)"
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
             </div>
           </div>
+          <a name="toWhite" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
+          <a name="toBlack" id="waypoint" v-waypoint.inview.up="{offset: '0'}" @exited="setBg('#000', '#fff', 'up')"></a>
         </div>
       </div>
 
@@ -62,8 +61,8 @@
       </div>
     </section>
 
-    <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
-    <a name="toWhite" id="waypoint" v-waypoint.up="{offset: '0'}" @collision="setBg('#fff', '#000')"></a>
+    <a name="toBlack" id="waypoint" v-waypoint.down="{offset: '90%'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" id="waypoint" v-waypoint.up="{offset: '90%'}" @collision="setBg('#fff', '#000')"></a>
     
     <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
@@ -94,7 +93,8 @@ export default {
   },
   data () {
     return {
-      ticking: false
+      ticking: false,
+      cords: {}
     }
   },
   head () {
