@@ -11,7 +11,7 @@
         <div class="column is-6">
           <div class="highlight-media">
             <template v-if="highlight.highlight_embed.html">
-              <responsiveVideo :embed="highlight.highlight_embed.html" />
+              <responsiveVideo :embed="highlight.highlight_embed" />
             </template>
             <template v-else>
               <captionedImage :img="highlight.highlight_thumbnail" :caption="highlight.highlight_caption" />

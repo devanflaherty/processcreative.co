@@ -9,26 +9,26 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Samson',
+    titleTemplate: '%s - Samson',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: desc },
       { name: 'theme-color', content: '#ffffff' },
       { name: 'robots', content: 'all' },
-      { property: 'og:url', content: url },
-      { property: 'og:image', content: unfurl },
-      { property: 'og:title', content: title },
-      { property: 'og:description', content: desc },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:domain', value: url },
-      { name: 'twitter:title', value: title },
-      { name: 'twitter:description', value: desc },
-      { name: 'twitter:image', content: unfurl },
-      { name: 'twitter:url', value: url }
+      { hid: 'description', name: 'description', content: desc },
+      { hid: 'og:url', property: 'og:url', content: url },
+      { hid: 'og:image', property: 'og:image', content: unfurl },
+      { hid: 'og:title', property: 'og:title', content: title },
+      { hid: 'og:description', property: 'og:description', content: desc },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'twitter:domain', name: 'twitter:domain', value: url },
+      { hid: 'twitter:title', name: 'twitter:title', value: title },
+      { hid: 'twitter:description', name: 'twitter:description', value: desc },
+      { hid: 'twitter:image', name: 'twitter:image', content: unfurl },
+      { hid: 'twitter:url', name: 'twitter:url', value: url }
     ],
     link: [
-      { rel: 'image_src', href: unfurl }
+      { hid: 'image_src', rel: 'image_src', href: unfurl }
     ],
     script: [
       {

@@ -1,26 +1,8 @@
 <template>
-  <section id="home" class="page">
-
-    <section id="vision" class="padding-large section">
-      <div class="container">
-        <div class="columns is-multiline">
-          <div class="column is-12">
-            <div class="vision-title">
-              <h1 v-scroll-reveal="{duration: 1000, scale: 1, distance: '200px'}">{{$prismic.asText(home.hero_vision)}}</h1>
-            </div>
-          </div>
-
-          <div class="column is-12">
-            <div class="reel">
-              <responsiveVideo 
-                :embed="home.work_reel" 
-                v-scroll-reveal="{duration: 1000, scale: 1, distance: '200px', delay: 200}"/>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-        
+  <section id="home" class="page" :data-wio-id="document.id">
+    
+    <heroSlider @sliderReady="setSliderAsReady" :gallery="home.hero_slider" v-if="home.hero_slider" />
+    
     <section id="welcome" class="padding-large opening section">
       <div class="container">
         <div class="columns">
@@ -87,12 +69,14 @@
 </template>
 
 <script>
+import heroSlider from '~/components/home/heroSlider'
 import clientLogos from '~/components/home/clientLogos'
 import {beforeEnter, enter} from '~/mixins/page-transitions'
 import {TimelineMax} from 'gsap'
 
 export default {
   components: {
+    heroSlider,
     clientLogos
   },
   asyncData ({ params, app, store }) {
@@ -109,7 +93,8 @@ export default {
   },
   data () {
     return {
-      ticking: false
+      ticking: false,
+      cords: {}
     }
   },
   head () {
@@ -147,18 +132,39 @@ export default {
       }
     }
   },
+  methods: {
+    setSliderAsReady () {
+      this.$store.dispatch('toggleLoading', false)
+      this.$store.dispatch('toggleNavVis', true)
+    },
+    raf () {
+      if (!this.ticking) {
+        window.requestAnimationFrame(this.updateBgScrollAction)
+        this.ticking = true
+      }
+    },
+    updateBgScrollAction () {
+      let wh = window.innerHeight
+      let trigger = wh / 2
+      let scrollTop = window.scrollY
+      if (scrollTop >= trigger) {
+        this.setPrimaryColor('#fff')
+      }
+      this.ticking = false
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
   beforeMount () {
-    this.setPageStyle('#fff')
+    this.setPageContrast()
   },
   mounted () {
     if (this.document) {
       this.$waypoint.enableWaypoints()
-      this.$store.dispatch('toggleLoading', false)
-      this.$store.dispatch('toggleNavVis', true)
       this.$store.dispatch('setBackgroundColor', '#000')
+      window.addEventListener('scroll', this.raf)
+      this.raf()
 
       this.$prismic.initApi().then((ctx) => {
         ctx.toolbar()
@@ -166,7 +172,7 @@ export default {
     }
   },
   beforeDestroy () {
-    // window.removeEventListener('scroll', this.raf)
+    window.removeEventListener('scroll', this.raf)
     this.$waypoint.disableAllWaypoints()
     this.$waypoint.destroyWaypoints()
     // this.setBg(null)
@@ -176,17 +182,6 @@ export default {
 
 <style scoped lang="scss">
 @import '~assets/styles/mixins';
-#vision {
-  padding-top: 50vh;
-  .vision-title h1 {
-    color: $white;
-    font-size: 4rem;
-    line-height: 1.2;
-  }
-  .reel {
-    padding-top: 15vh;
-  }
-}
 #welcome {
   min-height: 100%;
   padding-top: 200px;

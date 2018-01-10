@@ -62,6 +62,11 @@ if (process.browser) {
   // require('debug.addIndicators')
 }
 export default {
+  head () {
+    return {
+      title: this.$prismic.asText(this.entry.member_name)
+    }
+  },
   transition: {
     name: 'page',
     mode: 'out-in',

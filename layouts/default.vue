@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <transition name="fade-in">
-      <h1 v-if="loading" class="home-loading has-text-white is-size-1">||</h1>
+      <h1 v-if="loading && $route.name !== 'index'" class="home-loading has-text-white is-size-1">||</h1>
     </transition>
     <div id="backgroundTransition" class="background-transition">
       <span class="bgSpan"></span>
@@ -22,6 +22,35 @@ import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 import {mapGetters} from 'vuex'
 
 export default {
+  // head () {
+  //   return {
+  //     title: this.seoTitle,
+  //     meta: [
+  //       { vmid: 'description', name: 'description', content: this.desc },
+  //       { vmid: 'og:url', property: 'og:url', content: this.url },
+  //       { vmid: 'og:image', property: 'og:image', content: this.unfurl },
+  //       { vmid: 'og:title', property: 'og:title', content: this.title },
+  //       { vmid: 'og:description', property: 'og:description', content: this.desc },
+  //       { vmid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+  //       { vmid: 'twitter:domain', name: 'twitter:domain', value: this.url },
+  //       { vmid: 'twitter:title', name: 'twitter:title', value: this.title },
+  //       { vmid: 'twitter:description', name: 'twitter:description', value: this.desc },
+  //       { vmid: 'twitter:image', name: 'twitter:image', content: this.unfurl },
+  //       { vmid: 'twitter:url', name: 'twitter:url', value: this.url }
+  //     ],
+  //     link: [
+  //       { vmid: 'image_src', rel: 'image_src', href: this.unfurl }
+  //     ]
+  //   }
+  // },
+  // data () {
+  //   return {
+  //     url: 'https://wearesamson.com',
+  //     title: 'Samson',
+  //     desc: 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is equipped to serve individuals, agencies and brands with creative solutions.',
+  //     unfurl: 'https://wearesamson.com/unfurl.jpg'
+  //   }
+  // },
   components: {
     SiteNav,
     SiteFooter

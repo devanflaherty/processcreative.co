@@ -4,7 +4,7 @@
     ref="videoWrap"
     class="responsive-video"
     :style="`padding: ${padding}% 0 0 0`"
-    v-html="embed">
+    v-html="embed.html">
   </div>
 </div>
 </template>
@@ -25,13 +25,30 @@ export default {
       return pad
     }
   },
-  mounted () {
-    let wrap = this.$refs.videoWrap
-    let iframe = wrap.querySelector('iframe')
+  methods: {
+    getVideoDimensions () {
+      let wrap = this.$refs.videoWrap
+      let iframe = wrap.querySelector('iframe')
 
-    this.videoHeight = iframe.clientHeight
-    this.videoWidth = iframe.clientWidth
+      // videoHeight
+      if (this.embed.height) {
+        this.videoHeight = this.embed.height
+      } else {
+        this.videoHeight = iframe.clientHeight
+      }
+
+      // videoWidth
+      if (this.embed.width) {
+        this.videoWidth = this.embed.width
+      } else {
+        this.videoWidth = iframe.clientWidth
+      }
+    }
+  },
+  mounted () {
+    this.getVideoDimensions()
     this.videoReady = true
+    console.log(this.videoHeight, this.videoWidth)
   }
 }
 </script>

@@ -49,7 +49,23 @@ export default {
   },
   head () {
     return {
-      title: this.$prismic.asText(this.page.title)
+      title: this.seoTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seoDesc },
+        { hid: 'og:url', property: 'og:url', content: this.seoUrl },
+        { hid: 'og:image', property: 'og:image', content: this.seoImage },
+        { hid: 'og:title', property: 'og:title', content: this.seoTitle },
+        { hid: 'og:description', property: 'og:description', content: this.seoDesc },
+        { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+        { hid: 'twitter:domain', name: 'twitter:domain', value: this.seoUrl },
+        { hid: 'twitter:title', name: 'twitter:title', value: this.seoTitle },
+        { hid: 'twitter:description', name: 'twitter:description', value: this.seoDesc },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.seoImage },
+        { hid: 'twitter:url', name: 'twitter:url', value: this.seoUrl }
+      ],
+      link: [
+        { hid: 'image_src', rel: 'image_src', href: this.seoImage }
+      ]
     }
   },
   // validate ({ params, store }) {
@@ -77,6 +93,24 @@ export default {
         'has-text-black': this.page.page_contrast === 'Dark',
         'has-text-white': this.page.page_contrast === 'Light'
       }
+    },
+    seoTitle () {
+      if (this.page.meta_title > 0) {
+        return this.page.meta_title
+      } else {
+        return this.$prismic.asText(this.page.title)
+      }
+    },
+    seoDesc () {
+      if (this.page.meta_description) return this.page.meta_description
+      return this.$prismic.asText(this.page.approach)
+    },
+    seoImage () {
+      if (this.page.meta_image) return this.page.meta_image.url
+      return this.page.hero_image.large.url
+    },
+    seoUrl () {
+      return 'https://wearesamson.com' + this.$route.fullPath
     }
   },
   created () {

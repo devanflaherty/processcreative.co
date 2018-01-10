@@ -29,6 +29,11 @@
 import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 
 export default {
+  head () {
+    return {
+      title: 'Work'
+    }
+  },
   async asyncData ({ params, app, store }) {
     let [workPosts, workPage] = await Promise.all([
       app.$prismic.initApi().then((ctx) => {

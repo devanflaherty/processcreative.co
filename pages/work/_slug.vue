@@ -5,7 +5,6 @@
     class="page" 
     :class="contrast"
     v-show="!loading">
-    
     <WorkHero :class="{'add-margin': margin === 'marginHero'}" :entry="entry" />
 
     <section class="section" v-if="entry.highlight_video.html || entry.approach.length > 0">
@@ -17,7 +16,7 @@
         <responsiveVideo
           class="work-highlight-video"
           v-if="entry.highlight_video.html"
-          :embed="entry.highlight_video.html" 
+          :embed="entry.highlight_video" 
           v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '200px'}"/>
       </div>
     </section>
@@ -53,6 +52,27 @@ import { beforeEnter, enter, leave } from '~/mixins/page-transitions'
 import WorkHero from '~/components/work/workHero'
 
 export default {
+  head () {
+    return {
+      title: this.seoTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seoDesc },
+        { hid: 'og:url', property: 'og:url', content: this.seoUrl },
+        { hid: 'og:image', property: 'og:image', content: this.seoImage },
+        { hid: 'og:title', property: 'og:title', content: this.seoTitle },
+        { hid: 'og:description', property: 'og:description', content: this.seoDesc },
+        { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+        { hid: 'twitter:domain', name: 'twitter:domain', value: this.seoUrl },
+        { hid: 'twitter:title', name: 'twitter:title', value: this.seoTitle },
+        { hid: 'twitter:description', name: 'twitter:description', value: this.seoDesc },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.seoImage },
+        { hid: 'twitter:url', name: 'twitter:url', value: this.seoUrl }
+      ],
+      link: [
+        { hid: 'image_src', rel: 'image_src', href: this.seoImage }
+      ]
+    }
+  },
   components: {
     WorkHero
   },
@@ -75,6 +95,24 @@ export default {
     })
   },
   computed: {
+    seoTitle () {
+      if (this.entry.meta_title > 0) {
+        return this.entry.meta_title
+      } else {
+        return this.$prismic.asText(this.entry.title)
+      }
+    },
+    seoDesc () {
+      if (this.entry.meta_description) return this.entry.meta_description
+      return this.$prismic.asText(this.entry.approach)
+    },
+    seoImage () {
+      if (this.entry.meta_image) return this.entry.meta_image.url
+      return this.entry.feature_image.large.url
+    },
+    seoUrl () {
+      return 'https://wearesamson.com' + this.$route.fullPath
+    },
     contrast () {
       return {
         'has-text-black': this.entry.page_contrast === 'Dark',

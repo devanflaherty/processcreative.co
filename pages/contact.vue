@@ -49,7 +49,7 @@ import {beforeEnter, enter, leave} from '~/mixins/page-transitions'
 export default {
   head () {
     return {
-      title: 'contact'
+      title: 'Contact'
     }
   },
   transition: {
