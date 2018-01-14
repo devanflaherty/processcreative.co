@@ -16,7 +16,7 @@
             v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom'}"></div>
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-multiline">
         <teamCard v-for="(post, index) in teamPosts" :key="index" :post="post"/>
       </div>
     </div>

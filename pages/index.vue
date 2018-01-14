@@ -5,9 +5,11 @@
       <div class="container">
         <div class="columns is-multiline">
           <div class="column is-12">
-            <div class="vision-title">
-              <h1 v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '100px'}">{{$prismic.asText(home.hero_vision)}}</h1>
-            </div>
+            <transition name="fade-in">
+              <div class="vision-title" appear>
+                <h1 v-if="!loading" v-scroll-reveal="{duration: 1000, scale: 0.9, distance: '100px'}">{{$prismic.asText(home.hero_vision)}}</h1>
+              </div>
+            </transition>
           </div>
 
           <div class="column is-12">
@@ -26,7 +28,7 @@
         <div class="columns">
           <div class="column is-4">
 
-            <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#000', '#fff')"></a>
+            <a name="toBlack" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="changeBgColor('#000', '#fff', 'Light')"></a>
 
             <h3 class="opening-headline has-text-white"
               v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
@@ -51,7 +53,7 @@
       </div>
     </section>
 
-    <section id="featuredWork" v-waypoint.down="{offset: '0'}" @collision="setBg('#fff', '#000')">
+    <section id="featuredWork" v-waypoint.down="{offset: '0'}" @collision="changeBgColor('#fff', '#000', 'Dark')">
       <div class="section" v-if="home.work_headline && home.work_statement">
         <div class="container">
           <div class="work-welcome columns">
@@ -67,8 +69,8 @@
                 v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
             </div>
           </div>
-          <a name="toWhite" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="setBg('#fff', '#000')"></a>
-          <a name="toBlack" id="waypoint" v-waypoint.inview.up="{offset: '0'}" @exited="setBg('#000', '#fff', 'up')"></a>
+          <a name="toWhite" id="waypoint" v-waypoint.down="{offset: 'bottom-in-view'}" @collision="changeBgColor('#fff', '#000', 'Dark')"></a>
+          <a name="toBlack" id="waypoint" v-waypoint.inview.up="{offset: '0'}" @exited="changeBgColor('#000', '#fff', 'Light')"></a>
         </div>
       </div>
 
@@ -79,8 +81,8 @@
       </div>
     </section>
 
-    <a name="toBlack" id="waypoint" v-waypoint.down="{offset: '90%'}" @collision="setBg('#000', '#fff')"></a>
-    <a name="toWhite" id="waypoint" v-waypoint.up="{offset: '90%'}" @collision="setBg('#fff', '#000')"></a>
+    <!-- <a name="toBlack" id="waypoint" v-waypoint.down="{offset: '90%'}" @collision="setBg('#000', '#fff')"></a>
+    <a name="toWhite" id="waypoint" v-waypoint.up="{offset: '90%'}" @collision="setBg('#fff', '#000')"></a> -->
     
     <clientLogos :logos="home.clients" :clientsInfo="clientsInfo"/>
   </section>
@@ -147,6 +149,12 @@ export default {
       }
     }
   },
+  methods: {
+    changeBgColor (bg, primary, contrast) {
+      this.setBg(bg, primary)
+      this.setPageContrast(contrast)
+    }
+  },
   created () {
     this.$store.dispatch('toggleLoading', true)
   },
@@ -178,10 +186,16 @@ export default {
 @import '~assets/styles/mixins';
 #vision {
   padding-top: 50vh;
+  @include mobile () {
+    padding-top: 35vh;
+  }
   .vision-title h1 {
     color: $white;
     font-size: 4rem;
     line-height: 1.2;
+    @include mobile () {
+      font-size: 2.75rem;
+    }
   }
   .reel {
     padding-top: 15vh;

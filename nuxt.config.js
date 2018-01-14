@@ -1,9 +1,11 @@
-var path = require('path')
+const path = require('path')
+const Jarvis = require('webpack-jarvis')
+const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin')
 
-var url = 'https://wearesamson.com'
-var title = 'Samson'
-var desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is equipped to serve individuals, agencies and brands with creative solutions.'
-var unfurl = `${url}/unfurl.jpg`
+let url = 'https://wearesamson.com'
+let title = 'Samson'
+let desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is equipped to serve individuals, agencies and brands with creative solutions.'
+let unfurl = `${url}/unfurl.jpg`
 module.exports = {
   /*
   ** Headers of the page
@@ -86,6 +88,9 @@ module.exports = {
     // Load plugins in build
     // analyze: true,
     vendor: ['axios', 'vue-lazyload', 'scrollreveal'],
+    // plugins: [
+    //   new UglifyJSWebpackPlugin()
+    // ],
     extend (config, ctx) {
       config.resolve.alias['TweenLite'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenLite.js')
       config.resolve.alias['TweenMax'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js')
@@ -96,7 +101,8 @@ module.exports = {
       config.resolve.alias['debug.addIndicators'] = path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js')
       config.resolve.alias['ScrollToPlugin'] = path.resolve('node_modules', 'gsap/ScrollToPlugin.js')
 
-      if (ctx.isClient) {
+      if (ctx.isDev && ctx.isClient) {
+        config.plugins.push(new Jarvis())
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

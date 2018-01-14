@@ -40,7 +40,8 @@
     "swiper": "^4.0.3",
     "vue-lazyload": "^1.1.4",
     "vue-scroll-reveal": "^1.0.2",
-    "waypoints": "^4.0.1"
+    "waypoints": "^4.0.1",
+    "webpack-jarvis": "^0.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

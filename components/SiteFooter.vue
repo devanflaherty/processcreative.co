@@ -22,7 +22,7 @@
           </ul>
         </div>
 
-        <div class="new-business column is-12-touch is-4-desktop is-offset-4-desktop footer-column">
+        <div class="new-business column is-12-touch is-5-desktop is-offset-3-desktop footer-column">
           <h5><strong>New Business</strong></h5>
           <div v-html="$prismic.asHtml(contact.newBusiness)"></div>
         </div>

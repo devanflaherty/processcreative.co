@@ -4,13 +4,13 @@
 
     <div class="client-welcome columns" v-if="clientsInfo.headline && clientsInfo.statement">
       <div class="column">
-        <h3 class="opening-headline has-text-white" 
+        <h3 class="opening-headline has-text-black" 
           v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'left'}">
           {{$prismic.asText(clientsInfo.headline)}}
         </h3>
       </div>
       <div class="column">
-        <div class="client-statement has-text-white rich-text" 
+        <div class="client-statement has-text-black rich-text" 
           v-html="$prismic.asHtml(clientsInfo.statement)"
           v-scroll-reveal="{duration: 1000, scale: 1, distance: '100px', origin: 'bottom', delay: 200}"></div>
       </div>
