@@ -87,7 +87,8 @@ export default {
     let [teamPosts, aboutPage] = await Promise.all([
       app.$prismic.initApi().then((ctx) => {
         return ctx.api.query(
-          app.$prismic.predicates.at('document.type', 'team_posts')
+          app.$prismic.predicates.at('document.type', 'team_posts'),
+          { orderings: '[my.team_posts.post_position, my.team_posts.member_name]' }
         )
       }), app.$prismic.initApi().then((ctx) => {
         return ctx.api.getByUID('pages', 'about')
