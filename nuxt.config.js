@@ -5,7 +5,7 @@ const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin')
 let url = 'https://wearesamson.com'
 let title = 'Samson'
 let desc = 'We are an agency rooted in film production. Our in-house team of directors, designers and producers is equipped to serve individuals, agencies and brands with creative solutions.'
-let unfurl = `${url}/unfurl.jpg`
+let unfurl = `${url}/wearesamson.jpg`
 module.exports = {
   /*
   ** Headers of the page
@@ -88,9 +88,6 @@ module.exports = {
     // Load plugins in build
     // analyze: true,
     vendor: ['axios', 'vue-lazyload', 'scrollreveal'],
-    // plugins: [
-    //   new UglifyJSWebpackPlugin()
-    // ],
     extend (config, ctx) {
       config.resolve.alias['TweenLite'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenLite.js')
       config.resolve.alias['TweenMax'] = path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js')

@@ -207,7 +207,7 @@ export default {
   }
   &.reveal {
     .wipe {
-      top: -100%;
+      top: -101%;
     }
   }
 

@@ -8,7 +8,8 @@
           <h5><strong>Navigation</strong></h5>
           <ul>
             <li v-for="(link, index) in navigationMenu" :key="index">
-              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+              <nuxt-link v-if="link.link_url.link_type === 'Document'" :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+              <a v-else :href="$prismic.asLink(link.link_url)">{{link.link_label}}</a>
             </li>
           </ul>
         </div>
@@ -17,7 +18,8 @@
           <h5><strong>Connect</strong></h5>
           <ul>
             <li v-for="(link, index) in connectMenu" :key="index">
-              <nuxt-link :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+              <nuxt-link v-if="link.link_url.link_type === 'Document'" :to="$prismic.asLink(link.link_url)">{{link.link_label}}</nuxt-link>
+              <a v-else :href="$prismic.asLink(link.link_url)">{{link.link_label}}</a>
             </li>
           </ul>
         </div>
